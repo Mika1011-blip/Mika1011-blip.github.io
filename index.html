@@ -1018,18 +1018,48 @@ function distort(x,y){
  }
  return [px,py];
 }
+const glowCanvas=document.createElement('canvas'),glowCtx=glowCanvas.getContext('2d');
 function drawGridMesh(){
  ctx.strokeStyle=gridColor;ctx.lineWidth=.65;
+ const glowPath=new Path2D();
  for(const path of gridPaths){
   ctx.globalAlpha=.29*(path.seam?1-gridBlend[1]:1);
-  ctx.beginPath();const [cartesian,polar,oblique]=path.systems;
+  const line=new Path2D();const [cartesian,polar,oblique]=path.systems;
   for(let i=0;i<cartesian.length;i+=2){
    const x=cartesian[i]*gridBlend[0]+polar[i]*gridBlend[1]+oblique[i]*gridBlend[2];
    const y=cartesian[i+1]*gridBlend[0]+polar[i+1]*gridBlend[1]+oblique[i+1]*gridBlend[2];
-   const point=distort(x,y);if(i===0)ctx.moveTo(...point);else ctx.lineTo(...point);
+   const point=distort(x,y);if(i===0)line.moveTo(...point);else line.lineTo(...point);
   }
-  ctx.stroke();
+  ctx.stroke(line);glowPath.addPath(line);
  }
+ drawGridGlow(glowPath);
+}
+// Accretion-disk light: the warped lines near the pointer glow white-hot to orange, with a dark core.
+function drawGridGlow(glowPath){
+ const s=pointer.strength*.22;if(!state.distortion||s<.01)return;
+ if(glowCanvas.width!==canvas.width||glowCanvas.height!==canvas.height){glowCanvas.width=canvas.width;glowCanvas.height=canvas.height;}
+ const g=glowCtx,cx=pointer.x,cy=pointer.y,R=Math.min(W,H)*.32;
+ g.setTransform(1,0,0,1,0,0);g.globalCompositeOperation='source-over';g.globalAlpha=1;g.clearRect(0,0,glowCanvas.width,glowCanvas.height);
+ g.setTransform(dpr,0,0,dpr,0,0);
+ g.strokeStyle='#fff';g.lineWidth=.9;g.stroke(glowPath);
+ // Colour the lines by distance from the centre.
+ g.globalCompositeOperation='source-in';
+ const heat=g.createRadialGradient(cx,cy,0,cx,cy,R);
+ heat.addColorStop(0,'rgba(0,0,0,0)');heat.addColorStop(.05,'rgba(40,20,10,.25)');
+ heat.addColorStop(.1,'rgba(255,250,235,1)');heat.addColorStop(.2,'rgba(255,214,150,.95)');
+ heat.addColorStop(.38,'rgba(255,140,50,.65)');heat.addColorStop(.62,'rgba(220,70,20,.25)');heat.addColorStop(1,'rgba(160,30,10,0)');
+ g.fillStyle=heat;g.fillRect(0,0,W,H);
+ // Doppler beaming: one side of the swirling disk is brighter, slowly rotating.
+ g.globalCompositeOperation='destination-in';
+ const beam=g.createConicGradient(time*.6+performance.now()*.0004,cx,cy);
+ beam.addColorStop(0,'rgba(0,0,0,1)');beam.addColorStop(.5,'rgba(0,0,0,.45)');beam.addColorStop(1,'rgba(0,0,0,1)');
+ g.fillStyle=beam;g.fillRect(0,0,W,H);
+ const light=document.documentElement.dataset.theme==='light';
+ ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.globalCompositeOperation=light?'source-over':'lighter';
+ ctx.globalAlpha=s*(light?.4:1);ctx.filter='blur(16px)';ctx.drawImage(glowCanvas,0,0);ctx.globalAlpha=s*(light?.55:1);ctx.filter='blur(6px)';ctx.drawImage(glowCanvas,0,0);
+ ctx.globalAlpha=s*(light?.4:.9);ctx.filter='blur(2px)';ctx.drawImage(glowCanvas,0,0);
+ ctx.globalAlpha=s;ctx.filter='none';ctx.drawImage(glowCanvas,0,0);
+ ctx.restore();
 }
 function drawField(timestamp){
  frame=requestAnimationFrame(drawField);if(document.hidden)return;
