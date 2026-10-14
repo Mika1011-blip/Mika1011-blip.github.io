@@ -228,7 +228,8 @@ const PORTFOLIO = {
   "contact": {
     "github": "https://github.com/Mika1011-blip",
     "linkedin": "https://www.linkedin.com/in/minh-khang-t-b3bb84231/",
-    "email": "mr.thaiminhkhang@gmail.com"
+    "email": "mr.thaiminhkhang@gmail.com",
+    "cv": "https://drive.google.com/file/d/1lOkXwjfqcqhdokAwOmuKbZyO1t7HLHew/view?usp=sharing"
   },
   /* Media: { type:"gif", src:"media/x.gif", caption:"..." } · { type:"photo", ... } · { type:"youtube", id:"VIDEO_ID", caption:"..." } */
   "projects": [
@@ -457,8 +458,8 @@ const PORTFOLIO = {
      },
      "contact": {
       "low": [
-       "Contact channels below: GitHub, LinkedIn and email. Questions about the projects are welcome.",
-       "Minh Khang THAI. Reachable via GitHub, LinkedIn or email."
+       "Contact channels below: GitHub, LinkedIn, email and CV. Questions about the projects are welcome.",
+       "Minh Khang THAI. Reachable via GitHub, LinkedIn, email or CV."
       ],
       "medium": [
        "Want to talk about one of these projects, or about AI in general? Reach out, I'd be happy to hear from you.",
@@ -533,8 +534,8 @@ const WRITING_FR={"messous":{"low": ["MesSous : application web de budget assist
  },
  "contact": {
   "low": [
-   "Canaux de contact ci-dessous : GitHub, LinkedIn et e-mail. Les questions sur les projets sont les bienvenues.",
-   "Minh Khang THAI. Joignable via GitHub, LinkedIn ou e-mail."
+   "Canaux de contact ci-dessous : GitHub, LinkedIn, e-mail et CV. Les questions sur les projets sont les bienvenues.",
+   "Minh Khang THAI. Joignable via GitHub, LinkedIn, e-mail ou CV."
   ],
   "medium": [
    "Envie d'échanger sur l'un de ces projets, ou sur l'IA en général ? Écrivez-moi, je serai ravi d'en discuter.",
@@ -947,7 +948,7 @@ function closeProject(){
  transition(()=>{state.project=null;$('#project-detail').hidden=true;$('#stage').inert=false;$('#stage').removeAttribute('aria-hidden');},()=>previousFocus?.isConnected?previousFocus:$('#stage'));
 }
 function renderContact(){
- const items=[['github','GitHub','diag'],['linkedin','LinkedIn','diag'],['email',t('email'),'diag']];
+ const items=[['github','GitHub','diag'],['linkedin','LinkedIn','diag'],['email',t('email'),'diag'],['cv','CV','diag']];
  $('#contact-links').innerHTML=items.map(([key,label,ico])=>{
   let url=PORTFOLIO.contact[key];
   if(key==='email')url=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(url)?'mailto:'+url:'';else url=safeURL(url);
