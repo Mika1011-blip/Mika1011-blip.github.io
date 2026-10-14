@@ -131,6 +131,17 @@ html[data-temp=low] .text-caret{background:var(--temp-low)}html[data-temp=medium
 .gallery-btn{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--line);border-radius:50%;transition:background .2s,border-color .2s}
 .gallery-btn:hover{background:var(--soft);border-color:var(--fg)}
 .gallery-count{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--muted);min-width:48px;text-align:center}
+.absorb-counter{position:fixed;top:110px;right:4.8%;z-index:21;pointer-events:none;display:flex;align-items:baseline;gap:10px;font-family:var(--mono);color:var(--muted)}
+.absorb-counter .ac-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase}
+.absorb-counter .ac-value{position:relative;font-size:15px;color:var(--fg);font-variant-numeric:tabular-nums;display:inline-block}
+.absorb-counter .ac-value.bump{animation:acBump .32s cubic-bezier(.2,1.6,.4,1)}
+.ac-pop{position:absolute;right:0;top:-2px;font-size:12px;font-weight:700;color:var(--fg);white-space:nowrap;animation:acPop .9s cubic-bezier(.15,.8,.3,1) forwards}
+@keyframes acBump{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+@keyframes acPop{0%{opacity:0;transform:translateY(4px) scale(.6)}15%{opacity:1;transform:translateY(-6px) scale(1.25)}100%{opacity:0;transform:translateY(-30px) scale(1)}}
+@media(max-height:760px) and (min-width:901px){.absorb-counter{top:92px}}
+@media(max-width:900px){.absorb-counter{top:92px;right:5%}}
+@media(max-width:620px){.absorb-counter{top:86px}}
+@media(prefers-reduced-motion:reduce){.absorb-counter .ac-value.bump{animation-duration:.32s!important}.ac-pop{animation-duration:.9s!important}}
 </style>
 </head>
 <body>
@@ -173,6 +184,7 @@ html[data-temp=low] .text-caret{background:var(--temp-low)}html[data-temp=medium
   </div>
  </div><div class="lang-segment" role="group" data-i18n-aria="langGroup" aria-label="Language"><button class="lang-btn" data-lang="en" aria-pressed="true">EN</button><button class="lang-btn" data-lang="fr" aria-pressed="false">FR</button></div><button class="icon-btn" id="theme-toggle" aria-label="Switch to light theme" title="Switch theme"><svg class="icon"><use href="#i-sun"/></svg></button></div>
 </header>
+<div class="absorb-counter" id="absorb-counter" aria-hidden="true"><span class="ac-label" data-i18n="absorbed">Absorbed</span><span class="ac-value" id="absorb-value"><span id="absorb-num">0</span></span></div>
 <main class="stage" id="stage" tabindex="-1" aria-label="Introduction">
  <section class="slide" id="slide-intro" aria-labelledby="intro-heading">
   <div class="intro-layout">
@@ -649,6 +661,7 @@ const UI={
   "nav0": "Introduction",
   "nav1": "Projects",
   "nav2": "Contact",
+  "absorbed": "Absorbed",
   "brandAria": "Minh Khang THAI — return to introduction",
   "tempLabel": "Temperature",
   "low": "Low",
@@ -708,6 +721,7 @@ const UI={
   "nav0": "Introduction",
   "nav1": "Projets",
   "nav2": "Contact",
+  "absorbed": "Absorbées",
   "brandAria": "Minh Khang THAI — retour à l'introduction",
   "tempLabel": "Température",
   "low": "Faible",
@@ -1034,35 +1048,45 @@ function drawGridMesh(){
  }
  drawGridGlow(glowPath);
 }
-// Accretion-disk light: the warped lines near the pointer glow white-hot to orange, with a dark core.
+// Accretion-disk light: the warped lines near the pointer glow (white on dark, black on light), with a dark core.
+const shadeCanvas=document.createElement('canvas'),shadeCtx=shadeCanvas.getContext('2d');
+// Film-grain tile, punched out of the soft light so its shade looks grainy.
+const grainCanvas=document.createElement('canvas');grainCanvas.width=grainCanvas.height=192;
+(()=>{const g=grainCanvas.getContext('2d'),img=g.createImageData(192,192);for(let i=0;i<img.data.length;i+=4){img.data[i+3]=Math.random()*Math.random()*230;}g.putImageData(img,0,0);})();
+let grainPattern=null;
+function lightInk(){return document.documentElement.dataset.theme==='light'?'0,0,0':'255,255,255';}
+function fitCanvas(c){if(c.width!==canvas.width||c.height!==canvas.height){c.width=canvas.width;c.height=canvas.height;}}
 function drawGridGlow(glowPath){
- const s=pointer.strength*.22;if(!state.distortion||s<.01)return;
- if(glowCanvas.width!==canvas.width||glowCanvas.height!==canvas.height){glowCanvas.width=canvas.width;glowCanvas.height=canvas.height;}
- const g=glowCtx,cx=pointer.x,cy=pointer.y,R=Math.min(W,H)*.32;
+ const s=pointer.strength*.22*(1+absorbFlash*1.8);if(!state.distortion||s<.01)return;
+ fitCanvas(glowCanvas);fitCanvas(shadeCanvas);
+ const g=glowCtx,cx=pointer.x,cy=pointer.y,R=Math.min(W,H)*.32,ink=lightInk();
  g.setTransform(1,0,0,1,0,0);g.globalCompositeOperation='source-over';g.globalAlpha=1;g.clearRect(0,0,glowCanvas.width,glowCanvas.height);
  g.setTransform(dpr,0,0,dpr,0,0);
  g.strokeStyle='#fff';g.lineWidth=.9;g.stroke(glowPath);
- // Colour the lines by distance from the centre.
+ // Fade the lines by distance from the centre.
  g.globalCompositeOperation='source-in';
  const heat=g.createRadialGradient(cx,cy,0,cx,cy,R);
- heat.addColorStop(0,'rgba(0,0,0,0)');heat.addColorStop(.05,'rgba(40,20,10,.25)');
- heat.addColorStop(.1,'rgba(255,250,235,1)');heat.addColorStop(.2,'rgba(255,214,150,.95)');
- heat.addColorStop(.38,'rgba(255,140,50,.65)');heat.addColorStop(.62,'rgba(220,70,20,.25)');heat.addColorStop(1,'rgba(160,30,10,0)');
+ heat.addColorStop(0,'rgba('+ink+',0)');heat.addColorStop(.05,'rgba('+ink+',.15)');
+ heat.addColorStop(.1,'rgba('+ink+',1)');heat.addColorStop(.2,'rgba('+ink+',.9)');
+ heat.addColorStop(.38,'rgba('+ink+',.55)');heat.addColorStop(.62,'rgba('+ink+',.2)');heat.addColorStop(1,'rgba('+ink+',0)');
  g.fillStyle=heat;g.fillRect(0,0,W,H);
  // Doppler beaming: one side of the swirling disk is brighter, slowly rotating.
  g.globalCompositeOperation='destination-in';
  const beam=g.createConicGradient(time*.6+performance.now()*.0004,cx,cy);
  beam.addColorStop(0,'rgba(0,0,0,1)');beam.addColorStop(.5,'rgba(0,0,0,.45)');beam.addColorStop(1,'rgba(0,0,0,1)');
  g.fillStyle=beam;g.fillRect(0,0,W,H);
- const light=document.documentElement.dataset.theme==='light';
+ const light=ink==='0,0,0',sh=shadeCtx;
+ // Soft halo goes to the shade layer (grain is added there); the crisp lines go straight on screen.
+ sh.setTransform(1,0,0,1,0,0);sh.globalCompositeOperation='source-over';
+ sh.globalAlpha=Math.min(1,s*(light?.6:1));sh.filter='blur(16px)';sh.drawImage(glowCanvas,0,0);
+ sh.globalAlpha=Math.min(1,s*(light?.7:1));sh.filter='blur(6px)';sh.drawImage(glowCanvas,0,0);
+ sh.globalAlpha=Math.min(1,s*(light?.5:.9));sh.filter='blur(2px)';sh.drawImage(glowCanvas,0,0);sh.filter='none';
  ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.globalCompositeOperation=light?'source-over':'lighter';
- ctx.globalAlpha=s*(light?.4:1);ctx.filter='blur(16px)';ctx.drawImage(glowCanvas,0,0);ctx.globalAlpha=s*(light?.55:1);ctx.filter='blur(6px)';ctx.drawImage(glowCanvas,0,0);
- ctx.globalAlpha=s*(light?.4:.9);ctx.filter='blur(2px)';ctx.drawImage(glowCanvas,0,0);
- ctx.globalAlpha=s;ctx.filter='none';ctx.drawImage(glowCanvas,0,0);
+ ctx.globalAlpha=Math.min(1,s);ctx.drawImage(glowCanvas,0,0);
  ctx.restore();
 }
 // Star dust: drifts slowly, falls toward the pointer with inverse-square pull and swirls with the warp.
-let dust=[];
+let dust=[],absorbFlash=0;
 function spawnDust(p,edge){
  const a=Math.random()*Math.PI*2,speed=reducedMotion.matches?0:4+Math.random()*10;
  if(edge){const side=Math.floor(Math.random()*4);p.x=side===0?-5:side===1?W+5:Math.random()*W;p.y=side===2?-5:side===3?H+5:Math.random()*H;}
@@ -1070,6 +1094,16 @@ function spawnDust(p,edge){
  p.dvx=Math.cos(a)*speed;p.dvy=Math.sin(a)*speed;p.vx=p.dvx;p.vy=p.dvy;
  p.size=.6+Math.random()*.9;p.alpha=.25+Math.random()*.35;p.age=0;
  return p;
+}
+// Absorption counter: bumps and floats a "+1" each time a speck is swallowed.
+let absorbCount=0,lastPop=0;
+const absorbValue=$('#absorb-value'),absorbNum=$('#absorb-num');
+function countAbsorb(){
+ absorbCount++;absorbNum.textContent=absorbCount;
+ absorbValue.classList.remove('bump');void absorbValue.offsetWidth;absorbValue.classList.add('bump');
+ const now=performance.now();if(now-lastPop<90)return;lastPop=now;
+ const pop=document.createElement('span');pop.className='ac-pop';pop.textContent='+1';
+ absorbValue.appendChild(pop);pop.addEventListener('animationend',()=>pop.remove());
 }
 function drawDust(dt){
  const target=Math.round(Math.min(220,W*H/8000));
@@ -1091,7 +1125,8 @@ function drawDust(dt){
    p.vx+=(p.dvx-p.vx)*calm;p.vy+=(p.dvy-p.vy)*calm;
    const v=Math.hypot(p.vx,p.vy);if(v>700){p.vx*=700/v;p.vy*=700/v;}
    p.x+=p.vx*dt;p.y+=p.vy*dt;p.age+=dt;
-   if((s>.02&&r<horizon)||p.x<-20||p.x>W+20||p.y<-20||p.y>H+20){spawnDust(p,true);continue;}
+   if(s>.02&&r<horizon){absorbFlash=Math.min(1,absorbFlash+.35*p.alpha+.1);countAbsorb();spawnDust(p,true);continue;}
+   if(p.x<-20||p.x>W+20||p.y<-20||p.y>H+20){spawnDust(p,true);continue;}
   }
   const fade=moving?Math.min(1,p.age*2):1,v=Math.hypot(p.vx,p.vy);
   ctx.globalAlpha=p.alpha*fade*Math.min(1,.7+v/400);
@@ -1103,6 +1138,33 @@ function drawDust(dt){
  }
  ctx.globalAlpha=1;
 }
+// Each absorbed speck makes the mass flare with the disk's colours, then fade out.
+function drawAbsorbFlash(dt){
+ absorbFlash*=Math.exp(-dt*2.2);
+ const s=state.distortion?pointer.strength:0,f=absorbFlash*s,ink=lightInk(),light=ink==='0,0,0',calm=reducedMotion.matches;
+ fitCanvas(shadeCanvas);const sh=shadeCtx;
+ if(f>=.01){
+  // Vibration: the flare jitters and flickers, harder when the flash is strong.
+  const shake=calm?0:f*f*4,cx=pointer.x+(Math.random()-.5)*shake,cy=pointer.y+(Math.random()-.5)*shake;
+  const flicker=calm?1:1-f*.25*Math.random(),R=(28+f*40)*flicker;
+  const glow=sh.createRadialGradient(cx,cy,0,cx,cy,R);
+  glow.addColorStop(0,'rgba('+ink+',1)');glow.addColorStop(.25,'rgba('+ink+',.9)');
+  glow.addColorStop(.5,'rgba('+ink+',.45)');glow.addColorStop(.78,'rgba('+ink+',.12)');glow.addColorStop(1,'rgba('+ink+',0)');
+  sh.setTransform(dpr,0,0,dpr,0,0);sh.globalCompositeOperation='source-over';
+  sh.globalAlpha=Math.min(1,f*(light?.6:.85)*flicker);sh.fillStyle=glow;sh.beginPath();sh.arc(cx,cy,R,0,Math.PI*2);sh.fill();
+  // Hot core.
+  sh.globalAlpha=Math.min(1,f*(light?.7:1));sh.fillStyle='rgb('+ink+')';sh.filter='blur(2px)';
+  sh.beginPath();sh.arc(cx,cy,2+f*4*flicker,0,Math.PI*2);sh.fill();sh.filter='none';
+ }
+ // Grain the whole soft-light layer, then put it on screen and clear it for the next frame.
+ sh.setTransform(1,0,0,1,0,0);sh.globalAlpha=1;sh.globalCompositeOperation='destination-out';
+ if(!grainPattern)grainPattern=sh.createPattern(grainCanvas,'repeat');
+ const ox=calm?0:Math.floor(Math.random()*192),oy=calm?0:Math.floor(Math.random()*192);
+ sh.translate(-ox,-oy);sh.fillStyle=grainPattern;sh.fillRect(ox,oy,shadeCanvas.width,shadeCanvas.height);sh.setTransform(1,0,0,1,0,0);
+ sh.globalCompositeOperation='source-over';
+ ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.globalCompositeOperation=light?'source-over':'lighter';ctx.drawImage(shadeCanvas,0,0);ctx.restore();
+ sh.clearRect(0,0,shadeCanvas.width,shadeCanvas.height);
+}
 function drawField(timestamp){
  frame=requestAnimationFrame(drawField);if(document.hidden)return;
  if(timestamp-lastDraw<22)return;
@@ -1113,6 +1175,7 @@ function drawField(timestamp){
  ctx.clearRect(0,0,W,H);
  drawGridMesh();
  drawDust(dt);
+ drawAbsorbFlash(dt);
  if(pointer.strength>.03&&state.distortion){ctx.globalAlpha=pointer.strength*.18;ctx.strokeStyle=accentColor;ctx.lineWidth=.6;ctx.beginPath();ctx.arc(pointer.x,pointer.y,13+Math.sin(time)*2,0,Math.PI*2);ctx.stroke();}
  for(const p of particles){p.life-=dt*1.15;p.x+=p.vx*dt;p.y+=p.vy*dt;ctx.globalAlpha=Math.max(0,p.life)*.6;ctx.fillStyle=accentColor;ctx.fillRect(p.x,p.y,p.size,p.size);}particles=particles.filter(p=>p.life>0);
  ctx.globalAlpha=1;
