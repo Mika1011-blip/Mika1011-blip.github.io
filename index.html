@@ -1064,7 +1064,7 @@ function drawGridGlow(glowPath){
 // Star dust: drifts slowly, falls toward the pointer with inverse-square pull and swirls with the warp.
 let dust=[];
 function spawnDust(p,edge){
- const a=Math.random()*Math.PI*2,speed=4+Math.random()*10;
+ const a=Math.random()*Math.PI*2,speed=reducedMotion.matches?0:4+Math.random()*10;
  if(edge){const side=Math.floor(Math.random()*4);p.x=side===0?-5:side===1?W+5:Math.random()*W;p.y=side===2?-5:side===3?H+5:Math.random()*H;}
  else{p.x=Math.random()*W;p.y=Math.random()*H;}
  p.dvx=Math.cos(a)*speed;p.dvy=Math.sin(a)*speed;p.vx=p.dvx;p.vy=p.dvy;
@@ -1075,7 +1075,7 @@ function drawDust(dt){
  const target=Math.round(Math.min(220,W*H/8000));
  while(dust.length<target)dust.push(spawnDust({},false));
  if(dust.length>target)dust.length=target;
- const moving=!reducedMotion.matches,s=state.distortion?pointer.strength:0;
+ const moving=true,s=state.distortion?pointer.strength:0;
  const G=2.2e6*s,horizon=12;
  ctx.fillStyle=accentColor;ctx.strokeStyle=accentColor;
  for(const p of dust){
