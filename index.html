@@ -1061,6 +1061,48 @@ function drawGridGlow(glowPath){
  ctx.globalAlpha=s;ctx.filter='none';ctx.drawImage(glowCanvas,0,0);
  ctx.restore();
 }
+// Star dust: drifts slowly, falls toward the pointer with inverse-square pull and swirls with the warp.
+let dust=[];
+function spawnDust(p,edge){
+ const a=Math.random()*Math.PI*2,speed=4+Math.random()*10;
+ if(edge){const side=Math.floor(Math.random()*4);p.x=side===0?-5:side===1?W+5:Math.random()*W;p.y=side===2?-5:side===3?H+5:Math.random()*H;}
+ else{p.x=Math.random()*W;p.y=Math.random()*H;}
+ p.dvx=Math.cos(a)*speed;p.dvy=Math.sin(a)*speed;p.vx=p.dvx;p.vy=p.dvy;
+ p.size=.6+Math.random()*.9;p.alpha=.25+Math.random()*.35;p.age=0;
+ return p;
+}
+function drawDust(dt){
+ const target=Math.round(Math.min(220,W*H/8000));
+ while(dust.length<target)dust.push(spawnDust({},false));
+ if(dust.length>target)dust.length=target;
+ const moving=!reducedMotion.matches,s=state.distortion?pointer.strength:0;
+ const G=2.2e6*s,horizon=12;
+ ctx.fillStyle=accentColor;ctx.strokeStyle=accentColor;
+ for(const p of dust){
+  if(moving){
+   const dx=pointer.x-p.x,dy=pointer.y-p.y,r2=dx*dx+dy*dy,r=Math.sqrt(r2)||1;
+   if(s>.02){
+    const acc=G/Math.max(r2,900);
+    // Radial pull plus a tangential swirl, matching the grid's rotation.
+    p.vx+=(dx/r*acc-dy/r*acc*.55)*dt;p.vy+=(dy/r*acc+dx/r*acc*.55)*dt;
+   }
+   // Far from the pull, ease back to the calm drift.
+   const calm=Math.min(1,dt*.6*(1-Math.min(1,s*30000/Math.max(r2,1))));
+   p.vx+=(p.dvx-p.vx)*calm;p.vy+=(p.dvy-p.vy)*calm;
+   const v=Math.hypot(p.vx,p.vy);if(v>700){p.vx*=700/v;p.vy*=700/v;}
+   p.x+=p.vx*dt;p.y+=p.vy*dt;p.age+=dt;
+   if((s>.02&&r<horizon)||p.x<-20||p.x>W+20||p.y<-20||p.y>H+20){spawnDust(p,true);continue;}
+  }
+  const fade=moving?Math.min(1,p.age*2):1,v=Math.hypot(p.vx,p.vy);
+  ctx.globalAlpha=p.alpha*fade*Math.min(1,.7+v/400);
+  if(v>40){
+   // Streak length grows with speed, so acceleration is visible.
+   const k=Math.min(.06,.02+v/12000);
+   ctx.lineWidth=p.size;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x-p.vx*k,p.y-p.vy*k);ctx.stroke();
+  }else ctx.fillRect(p.x,p.y,p.size,p.size);
+ }
+ ctx.globalAlpha=1;
+}
 function drawField(timestamp){
  frame=requestAnimationFrame(drawField);if(document.hidden)return;
  if(timestamp-lastDraw<22)return;
@@ -1070,6 +1112,7 @@ function drawField(timestamp){
  pointer.x+=(pointer.targetX-pointer.x)*.14;pointer.y+=(pointer.targetY-pointer.y)*.14;pointer.strength+=(pointer.targetStrength-pointer.strength)*.1;
  ctx.clearRect(0,0,W,H);
  drawGridMesh();
+ drawDust(dt);
  if(pointer.strength>.03&&state.distortion){ctx.globalAlpha=pointer.strength*.18;ctx.strokeStyle=accentColor;ctx.lineWidth=.6;ctx.beginPath();ctx.arc(pointer.x,pointer.y,13+Math.sin(time)*2,0,Math.PI*2);ctx.stroke();}
  for(const p of particles){p.life-=dt*1.15;p.x+=p.vx*dt;p.y+=p.vy*dt;ctx.globalAlpha=Math.max(0,p.life)*.6;ctx.fillStyle=accentColor;ctx.fillRect(p.x,p.y,p.size,p.size);}particles=particles.filter(p=>p.life>0);
  ctx.globalAlpha=1;
