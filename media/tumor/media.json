@@ -1,0 +1,64 @@
+{
+  "items": [
+    {
+      "file": "01-brief-project-introduction.mp4",
+      "caption": "Brief project introduction.",
+      "captionFr": "Brève présentation du projet."
+    },
+    {
+      "file": "02-annotation-features-complete.mp4",
+      "caption": "Annotation features, start to finish.",
+      "captionFr": "Fonctionnalités d'annotation, du début à la fin."
+    },
+    {
+      "file": "03-home.png",
+      "caption": "Home page.",
+      "captionFr": "Page d'accueil."
+    },
+    {
+      "file": "04-explorer.png",
+      "caption": "Case Explorer: MRI cases, modalities and metadata.",
+      "captionFr": "Explorateur de cas : IRM, modalités et métadonnées."
+    },
+    {
+      "file": "05-case-previews.png",
+      "caption": "Case previews.",
+      "captionFr": "Aperçus des cas."
+    },
+    {
+      "file": "06-new-case-modal.png",
+      "caption": "Creating a new case.",
+      "captionFr": "Création d'un nouveau cas."
+    },
+    {
+      "file": "07-annotation.png",
+      "caption": "Annotation workspace: 3D mesh, slice annotation and brush controls.",
+      "captionFr": "Espace d'annotation : maillage 3D, annotation des coupes et pinceau."
+    },
+    {
+      "file": "08-annotation-user-mesh.png",
+      "caption": "3D mesh rebuilt from the user's annotation.",
+      "captionFr": "Maillage 3D reconstruit à partir de l'annotation de l'utilisateur."
+    },
+    {
+      "file": "09-annotation-seg-mesh.png",
+      "caption": "3D mesh from the segmentation.",
+      "captionFr": "Maillage 3D issu de la segmentation."
+    },
+    {
+      "file": "10-gif-previews.mp4",
+      "caption": "Animated case previews.",
+      "captionFr": "Aperçus animés des cas."
+    },
+    {
+      "file": "11-slice-scrub-annotation.mp4",
+      "caption": "Scrubbing through slices while annotating.",
+      "captionFr": "Défilement des coupes pendant l'annotation."
+    },
+    {
+      "file": "12-tumour-reveal-3d.mp4",
+      "caption": "Revealing the tumour in 3D.",
+      "captionFr": "Révélation de la tumeur en 3D."
+    }
+  ]
+}

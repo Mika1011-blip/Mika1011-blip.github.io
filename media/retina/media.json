@@ -1,0 +1,17 @@
+{
+  "items": [
+    {
+      "file": "01-upload-preprocessing-and-predicted-classification.webp",
+      "caption": "Upload, preprocessing and predicted classification, with the AI assistant's explanation.",
+      "captionFr": "Import, prétraitement et classification prédite, avec l'explication de l'assistant IA."
+    },
+    {
+      "order": 2,
+      "type": "youtube",
+      "id": "vAXBjRanhzs",
+      "start": 79,
+      "caption": "Video walkthrough",
+      "captionFr": "Présentation vidéo"
+    }
+  ]
+}

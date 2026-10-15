@@ -1,0 +1,29 @@
+{
+  "items": [
+    {
+      "file": "01-guided-onboarding-choosing-a-goal.webp",
+      "caption": "Guided onboarding: choosing a goal.",
+      "captionFr": "Onboarding guidé : choix d'un objectif."
+    },
+    {
+      "file": "02-generated-budget-categories-with-priorities.webp",
+      "caption": "Generated budget categories with priorities and allocations.",
+      "captionFr": "Catégories de budget générées, avec priorités et allocations."
+    },
+    {
+      "file": "03-ai-priority-review-follow-up.webp",
+      "caption": "AI priority review: follow-up questions from the assistant.",
+      "captionFr": "Revue des priorités par l'IA : questions de suivi de l'assistant."
+    },
+    {
+      "file": "04-a-suggested-answer-rewrite-to.webp",
+      "caption": "A suggested answer rewrite, to confirm or keep as is.",
+      "captionFr": "Une reformulation suggérée, à confirmer ou à ignorer."
+    },
+    {
+      "file": "05-priorities-updated-after-the-review.webp",
+      "caption": "Priorities updated after the review.",
+      "captionFr": "Priorités mises à jour après la revue."
+    }
+  ]
+}
