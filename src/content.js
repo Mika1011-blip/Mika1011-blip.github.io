@@ -36,8 +36,9 @@ export const PROJECTS = [
         notes: [
           { text: { en: 'the 3D volume, built from the slices', fr: 'le volume 3D, construit à partir des coupes' }, at: [5, 0], w: 31, from: [18, 7], to: [25.6, 47], ring: [8.3, 13.4] },
           { text: { en: 'paint the tumour, one slice at a time', fr: 'peindre la tumeur, coupe par coupe' }, at: [64, 0], w: 33, from: [76, 7], to: [76, 40] },
-          { text: { en: 'brush size and opacity', fr: 'taille et opacité du pinceau' }, at: [13, 91.5], w: 26, from: [37, 91.5], to: [56, 81] },
-          { text: { en: 'scrub the neighbouring slices', fr: 'faire défiler les coupes voisines' }, at: [71, 92.5], w: 28, from: [76, 92], to: [75, 76] },
+          { text: { en: 'scrub the neighbouring slices', fr: 'faire défiler les coupes voisines' }, at: [3, 91], w: 23, from: [25, 92], to: [53.5, 74.5] },
+          { text: { en: 'brush size and opacity', fr: 'taille et opacité du pinceau' }, at: [34, 91], w: 22, from: [46, 90.5], to: [55.5, 81] },
+          { text: { en: 'apply, undo or clear your strokes', fr: 'appliquer, annuler ou effacer' }, at: [68, 91.5], w: 30, from: [85, 91], to: [86, 83] },
         ],
       },
       {
@@ -59,6 +60,20 @@ export const PROJECTS = [
       },
     ],
     video: { src: 'media/tumor/02-annotation-features-complete.mp4', poster: 'media/tumor/09-annotation-seg-mesh.png' },
+    // every screen and clip, shown as a contact sheet at the foot of the page
+    gallery: [
+      { src: 'media/tumor/03-home.png', thumb: 'media/tumor/thumbs/03-home.webp', w: 3840, h: 2160, caption: { en: 'Home page.', fr: 'Page d’accueil.' } },
+      { src: 'media/tumor/04-explorer.png', thumb: 'media/tumor/thumbs/04-explorer.webp', w: 3840, h: 2160, caption: { en: 'Case Explorer: MRI cases, modalities and metadata.', fr: 'Explorateur de cas : IRM, modalités et métadonnées.' } },
+      { src: 'media/tumor/05-case-previews.png', thumb: 'media/tumor/thumbs/05-case-previews.webp', w: 3840, h: 2160, caption: { en: 'A case: previews on three axes, and each modality’s shape and voxel spacing.', fr: 'Un cas : aperçus sur trois axes, et la forme et l’espacement des voxels de chaque modalité.' } },
+      { src: 'media/tumor/06-new-case-modal.png', thumb: 'media/tumor/thumbs/06-new-case-modal.webp', w: 3840, h: 2160, caption: { en: 'Creating a new case from one or more NIfTI files.', fr: 'Créer un cas à partir d’un ou plusieurs fichiers NIfTI.' } },
+      { src: 'media/tumor/07-annotation.png', thumb: 'media/tumor/thumbs/07-annotation.webp', w: 3840, h: 2160, caption: { en: 'Annotation workspace: 3D mesh, slice annotation and brush controls.', fr: 'Espace d’annotation : maillage 3D, annotation des coupes et pinceau.' } },
+      { src: 'media/tumor/08-annotation-user-mesh.png', thumb: 'media/tumor/thumbs/08-annotation-user-mesh.webp', w: 3840, h: 2160, caption: { en: '3D mesh rebuilt from the user’s annotation.', fr: 'Maillage 3D reconstruit à partir de l’annotation de l’utilisateur.' } },
+      { src: 'media/tumor/09-annotation-seg-mesh.png', thumb: 'media/tumor/thumbs/09-annotation-seg-mesh.webp', w: 3840, h: 2160, caption: { en: '3D mesh from the segmentation.', fr: 'Maillage 3D issu de la segmentation.' } },
+      { video: 'media/tumor/01-brief-project-introduction.mp4', caption: { en: 'A brief project introduction.', fr: 'Une brève présentation du projet.' } },
+      { video: 'media/tumor/11-slice-scrub-annotation.mp4', caption: { en: 'Scrubbing through slices while annotating.', fr: 'Faire défiler les coupes pendant l’annotation.' } },
+      { video: 'media/tumor/12-tumour-reveal-3d.mp4', caption: { en: 'Revealing the tumour in 3D.', fr: 'Révéler la tumeur en 3D.' } },
+      { video: 'media/tumor/10-gif-previews.mp4', caption: { en: 'Animated case previews.', fr: 'Aperçus animés des cas.' } },
+    ],
     en: {
       name: 'MRI Annotation',
       category: 'Medical imaging platform',
@@ -134,6 +149,13 @@ export const PROJECTS = [
     repo: '',
     cover: { src: 'media/messous/02-generated-budget-categories-with-priorities.webp', w: 1353, h: 721 },
     stack: ['Python', 'Flask', 'SQLite', 'CSV analysis', 'AI assistant'],
+    gallery: [
+      { src: 'media/messous/01-guided-onboarding-choosing-a-goal.webp', w: 1353, h: 705, caption: { en: 'Guided onboarding: choosing a goal.', fr: 'Onboarding guidé : choisir un objectif.' } },
+      { src: 'media/messous/02-generated-budget-categories-with-priorities.webp', w: 1353, h: 721, caption: { en: 'Generated budget categories with priorities.', fr: 'Catégories de budget générées, avec leurs priorités.' } },
+      { src: 'media/messous/03-ai-priority-review-follow-up.webp', w: 1353, h: 741, caption: { en: 'AI priority review: follow-up questions from the assistant.', fr: 'Revue des priorités par l’IA : questions de suivi de l’assistant.' } },
+      { src: 'media/messous/04-a-suggested-answer-rewrite-to.webp', w: 1353, h: 781, caption: { en: 'A suggested answer rewrite, to confirm or keep as is.', fr: 'Une reformulation suggérée, à confirmer ou à ignorer.' } },
+      { src: 'media/messous/05-priorities-updated-after-the-review.webp', w: 1353, h: 701, caption: { en: 'Priorities updated after the review.', fr: 'Priorités mises à jour après la revue.' } },
+    ],
     figures: [
       {
         src: 'media/messous/01-guided-onboarding-choosing-a-goal.webp', w: 1353, h: 705, side: 'left',
@@ -286,6 +308,9 @@ export const UI = {
     code: 'Code',
     notesLabel: 'Notes on the screenshot',
     watch: 'Watch the walkthrough',
+    galleryHead: 'Every screen',
+    galleryNote: 'Open a screen at full size in a new tab.',
+    fullSize: 'full size, opens in a new tab',
     letterHead: 'A letter, sampled',
     letterNote: 'This letter is written token by token from a small hand-built model. Set the temperature and resample.',
     temperature: 'Temperature',
@@ -344,6 +369,9 @@ export const UI = {
     code: 'Code',
     notesLabel: 'Notes sur la capture',
     watch: 'Voir la présentation',
+    galleryHead: 'Tous les écrans',
+    galleryNote: 'Ouvrez un écran en grand dans un nouvel onglet.',
+    fullSize: 'en grand, s’ouvre dans un nouvel onglet',
     letterHead: 'Une lettre, échantillonnée',
     letterNote: 'Cette lettre est écrite jeton par jeton par un petit modèle fait main. Réglez la température et rééchantillonnez.',
     temperature: 'Température',

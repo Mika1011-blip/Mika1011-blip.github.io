@@ -79,6 +79,25 @@ function video(p, t, base, u) {
   return `<figure class="pp-video">${media}<figcaption>${esc(t.videoCaption || '')}</figcaption></figure>`;
 }
 
+// Every screen and clip of the project, as a contact sheet of small prints at the
+// foot of the page; the annotated figures above keep only the key screens.
+function gallery(p, lang, base, u) {
+  if (!p.gallery) return '';
+  const item = (g, k) => {
+    const cap = `<figcaption>${esc(g.caption[lang])}</figcaption>`;
+    const media = g.video
+      ? `<video controls muted playsinline preload="metadata" src="${base}${g.video}"></video>`
+      : `<a href="${base}${g.src}" target="_blank" rel="noopener"><img src="${base}${g.thumb || g.src}" alt="${esc(g.caption[lang])}" width="${g.w}" height="${g.h}" loading="lazy" decoding="async"><span class="visually-hidden"> (${u.fullSize})</span></a>`;
+    return `<figure class="sheet-print${g.video ? ' is-video' : ''}" style="--r:${[-0.8, 0.6, -0.3, 0.9][k % 4]}deg">${media}${cap}</figure>`;
+  };
+  return `
+    <section class="pp-gallery" aria-labelledby="gallery-h">
+      <h2 id="gallery-h">${u.galleryHead}</h2>
+      <p class="pp-gallery-note">${u.galleryNote}</p>
+      <div class="sheet-grid">${p.gallery.map(item).join('')}</div>
+    </section>`;
+}
+
 export function renderProjectPage({ id, lang, base }) {
   const i = PROJECTS.findIndex((p) => p.id === id);
   if (i < 0) return null;
@@ -117,6 +136,8 @@ export function renderProjectPage({ id, lang, base }) {
       </div>
       ${video(p, t, base, u)}
     </section>
+
+    ${gallery(p, lang, base, u)}
 
     <a class="next-card" href="${projectHref(base, next.id)}">
       <span>
