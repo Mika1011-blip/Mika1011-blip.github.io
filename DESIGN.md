@@ -31,6 +31,31 @@ DESIGN.md format in [VoltAgent/awesome-design-md](https://github.com/VoltAgent/a
 | `--soft` | `rgba(255,255,255,.06)` | `rgba(0,0,0,.05)` | Hover fills |
 | `--canvas` | `#8c8c8c` | `#6a6a6a` | Background particle field |
 
+### Redesign: the physicist's notebook (branch `redesign`, `src/styles.css`)
+
+| Token | Value | Role |
+|---|---|---|
+| `--bg` | `#e6dbc7` | Sand paper: page ground, notebook pages, text on cobalt |
+| `--surface` | `#ddd0b9` | Raised paper: cards, frames, fields |
+| `--ink` | `#062b8a` | Cobalt: text, buttons, the desk under the notebook and the contact section |
+| `--muted` | `#3a5aa8` | Categories and labels |
+| `--ink-2` | `#1a3f9e` | Lighter cobalt (a ribbon, coupon fields) |
+| `--tone-1` … `--tone-4` | `#d9cbb0` → `#bba681` | Paper tones, back to front; `--tone-1` is the gutter strip at the spine |
+| `--red` | `#b3291f` | Correction pen: notes, arrows, underlines, page numbers, margin rule |
+| `--marker` | `#f2c84b` | Highlighter: tape, highlights, focus rings on cobalt |
+| `--pen` | `#1d1b19` | Black pen outlines (`.ink`, the book outline) |
+| `--print` | `#f5f0e6` | Photo print border |
+| `--print-edge` | `#c9bca4` | Print thickness edge (1–2 px stepped, no blur); lighter steps are `color-mix` of it with `--print` |
+| `--coffee` | `#a88f62` | Coffee-ring scribble on the notebook page |
+| `--shadow-hard` | `rgb(1 10 40 / .45)` | Flat book shadow on the cobalt desk |
+
+Focus rings are cobalt on paper and yellow (`--marker`) on cobalt.
+
+### House-rule exceptions (intentional)
+- **Hard shadow under the notebook.** `.book-shadow` is a flat block of `--shadow-hard` offset 12 px / 14 px with no blur. It is the only shadow on the site and reads as a printed offset, not a soft drop shadow.
+- **Decorative equations layer.** `.equations` in the Projects section is about 25 hand-written equations and 7 line sketches in sand on cobalt (two in yellow). It is one `aria-hidden`, `pointer-events: none` layer behind the book, with nothing focusable. It is thinned below 900 px and hidden below 760 px.
+- **Page-turn lighting.** The cast shadow of the turning leaf (`.cast`) uses gradients, marked `taste-skill-ignore`.
+
 ### Invariants
 - Define every colour as a token on `:root` / `html[data-theme]`. Use no raw hex values in components.
 - Body text must meet a contrast of ≥ 4.5:1 and large text/UI ≥ 3:1, in **both** themes.
@@ -70,6 +95,8 @@ DESIGN.md format in [VoltAgent/awesome-design-md](https://github.com/VoltAgent/a
 | Project slider | Cards that open a `role="dialog" aria-modal` detail view |
 | Contact | Links and an optional CV |
 | Toast | Transient feedback |
+| Notebook gallery (redesign) | Flat open book on the cobalt desk: pen outline + double spine (`#rough`), fixed 720 px pages (`overflow: hidden`), ribbons behind the right page, photo print with tape and caption, “Open the project” button, margin scribbles (`aria-hidden`). Phones (≤ 760 px) get one tall page per project with no turning. |
+| Project page (redesign) | `projects/<id>/`, pre-rendered from `content.js` by `vite.config.js`: top bar, header with a details card, annotated figures (notes and arrows placed in percent of the figure, numbered pins on phones), video with “What it taught me” slips, next-project card. |
 | Icon button | 38px round. **Touch targets must be ≥ 44px**, so this needs fixing in the redesign |
 
 ## 6. Imagery

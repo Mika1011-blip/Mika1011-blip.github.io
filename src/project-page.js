@@ -23,17 +23,17 @@ function arrow([fx, fy], [tx, ty]) {
   const c2 = [fx + dx * 0.72 + nx * k * 0.5, fy + dy * 0.72 + ny * k * 0.5];
   const a = Math.atan2(ty - c2[1], tx - c2[0]), h = 13, s = 0.5;
   const p = (n) => n.toFixed(1);
-  return `<path d="M${p(fx)} ${p(fy)} C ${p(c1[0])} ${p(c1[1])}, ${p(c2[0])} ${p(c2[1])}, ${p(tx)} ${p(ty)}"/>`
-    + `<path d="M${p(tx - h * Math.cos(a - s))} ${p(ty - h * Math.sin(a - s))} L${p(tx)} ${p(ty)} L${p(tx - h * Math.cos(a + s))} ${p(ty - h * Math.sin(a + s))}"/>`;
+  return `<path pathLength="1" d="M${p(fx)} ${p(fy)} C ${p(c1[0])} ${p(c1[1])}, ${p(c2[0])} ${p(c2[1])}, ${p(tx)} ${p(ty)}"/>`
+    + `<path pathLength="1" d="M${p(tx - h * Math.cos(a - s))} ${p(ty - h * Math.sin(a - s))} L${p(tx)} ${p(ty)} L${p(tx - h * Math.cos(a + s))} ${p(ty - h * Math.sin(a + s))}"/>`;
 }
 
 function figure(f, i, lang, base, u) {
   const { H, frameH } = figureBox(f);
   const px = ([x, y]) => [(x / 100) * FIG.w, (y / 100) * H];
-  const ink = f.notes.map((n) => {
+  const ink = f.notes.map((n, k) => {
     const to = px(n.to);
-    const ring = n.ring ? `<ellipse cx="${to[0].toFixed(1)}" cy="${to[1].toFixed(1)}" rx="${((n.ring[0] / 100) * FIG.w).toFixed(1)}" ry="${((n.ring[1] / 100) * H).toFixed(1)}"/>` : '';
-    return arrow(px(n.from), to) + ring;
+    const ring = n.ring ? `<ellipse pathLength="1" cx="${to[0].toFixed(1)}" cy="${to[1].toFixed(1)}" rx="${((n.ring[0] / 100) * FIG.w).toFixed(1)}" ry="${((n.ring[1] / 100) * H).toFixed(1)}"/>` : '';
+    return `<g style="--k:${k}">${arrow(px(n.from), to)}${ring}</g>`;
   }).join('');
   // on a phone the arrows give way to numbered pins on the print
   const pins = f.notes.map((n, k) => {
@@ -46,21 +46,21 @@ function figure(f, i, lang, base, u) {
   const hid = `fig-${i + 1}`;
   return `
   <section class="pp-fig is-${f.side}" aria-labelledby="${hid}">
+    <div class="pp-fig-copy">
+      <h2 id="${hid}">${esc(f.head[lang])}</h2>
+      ${f.body[lang].map((b) => `<p>${esc(b)}</p>`).join('')}
+    </div>
     <figure class="annot" style="aspect-ratio:${FIG.w} / ${H};--top:${((FIG.band / H) * 100).toFixed(2)}%">
       <div class="annot-frame">${pic}<span aria-hidden="true">${pins}</span></div>
       <svg class="annot-ink" viewBox="0 0 ${FIG.w} ${H}" aria-hidden="true"><g>${ink}</g></svg>
       <figcaption><ol class="annot-notes" aria-label="${u.notesLabel}">${f.notes.map((n) =>
         `<li style="left:${n.at[0]}%;top:${n.at[1]}%;width:${n.w || 30}%">${esc(n.text[lang])}</li>`).join('')}</ol></figcaption>
     </figure>
-    <div class="pp-fig-copy">
-      <h2 id="${hid}">${esc(f.head[lang])}</h2>
-      ${f.body[lang].map((b) => `<p>${esc(b)}</p>`).join('')}
-    </div>
   </section>`;
 }
 
 // The phrase to circle in red pen, if the lede has one.
-const circled = '<svg viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path d="M8 22 C 6 6, 100 2, 114 16 C 122 30, 40 40, 12 30 C 2 26, 6 14, 22 8"/></svg>';
+const circled = '<svg viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M8 22 C 6 6, 100 2, 114 16 C 122 30, 40 40, 12 30 C 2 26, 6 14, 22 8"/></svg>';
 function lede(t) {
   const body = esc(t.body);
   if (!t.circle || !body.includes(esc(t.circle))) return body;
@@ -85,7 +85,8 @@ export function renderProjectPage({ id, lang, base }) {
   const p = PROJECTS[i], t = p[lang], u = UI[lang];
   const next = PROJECTS[nextIndex(i, PROJECTS.length)], nt = next[lang];
   const html = `
-  <main class="pp">
+  <a class="skip" href="#main">${u.skip}</a>
+  <main class="pp" id="main">
     <nav class="pp-bar" aria-label="${u.projectNav}">
       <a href="${base}?project=${p.id}#work"><span aria-hidden="true">←</span> ${u.allProjects}</a>
       ${langToggle(lang)}
@@ -95,7 +96,7 @@ export function renderProjectPage({ id, lang, base }) {
     <header class="pp-head">
       <div class="pp-head-copy">
         <p class="pp-cat">${esc(t.category)}</p>
-        <h1>${esc(t.name)}</h1>
+        <h1 translate="no">${esc(t.name)}</h1>
         <p class="pp-lede">${lede(t)}</p>
       </div>
       <dl class="pp-card">
@@ -110,17 +111,17 @@ export function renderProjectPage({ id, lang, base }) {
     ${p.figures.map((f, k) => figure(f, k, lang, base, u)).join('')}
 
     <section class="pp-learn${p.video ? '' : ' is-solo'}" aria-labelledby="learned-h">
-      ${video(p, t, base, u)}
       <div class="pp-lessons">
         <h2 id="learned-h">${u.learnedHead}</h2>
         <div class="slips">${t.learned.map((l) => `<p class="slip">${esc(l)}${inkSvg()}</p>`).join('')}</div>
       </div>
+      ${video(p, t, base, u)}
     </section>
 
     <a class="next-card" href="${projectHref(base, next.id)}">
       <span>
         <span class="next-k">${u.nextProject}</span>
-        <span class="next-n">${esc(nt.name)}</span>
+        <span class="next-n" translate="no">${esc(nt.name)}</span>
         <span class="next-c">${esc(nt.category)}</span>
       </span>
       <span class="next-arrow" aria-hidden="true">→</span>

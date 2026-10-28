@@ -3,19 +3,20 @@
 import { esc, inkSvg, neighbourhoodDrawing } from './shared.js';
 
 // The equations on the desk, placed as in the 1440 × 1180 design (x, y in px,
-// turned into percent of the section). `thin` ones go below 900 px; `hi` are
+// turned into percent of the section). `thin` ones go below 900 px, and those in
+// the bottom band below 1100 px, where they would meet the buttons; `hi` are
 // written in highlighter yellow.
 const EQUATIONS = [
   [20, 22, 20, 0.4, -4, '∂L/∂w = (ŷ − y)·x'],
   [360, 20, 20, 0.35, 2, 'P(A|B) = P(B|A) P(A) / P(B)', 'thin'],
-  [690, 30, 20, 0.35, -2, '∇×B = μ<sub>0</sub>J + μ<sub>0</sub>ε<sub>0</sub> ∂E/∂t'],
+  [690, 30, 20, 0.35, -2, '∇×B = μ<sub>0</sub>J + μ<sub>0</sub>ε<sub>0</sub> ∂E/∂t', 'thin'],
   [1010, 20, 42, 0.5, -6, 'E = mc<sup>2</sup>'],
-  [1200, 92, 24, 0.4, 4, 'iℏ ∂ψ/∂t = Ĥψ'],
+  [1200, 92, 24, 0.4, 4, 'iℏ ∂ψ/∂t = Ĥψ', 'thin'],
   [970, 146, 22, 0.45, -2, 'softmax(z<sub>i</sub>) = e<sup>z<sub>i</sub>/T</sup> / Σ<sub>j</sub> e<sup>z<sub>j</sub>/T</sup>', 'thin'],
   [1240, 190, 18, 0.75, 3, 'T ↑ → more chaos', 'hi'],
-  [18, 290, 22, 0.4, -6, '∇·E = ρ/ε<sub>0</sub>', 'thin'],
+  [28, 290, 22, 0.4, -6, '∇·E = ρ/ε<sub>0</sub>', 'thin'],
   [40, 370, 30, 0.45, 4, 'F = ma'],
-  [14, 580, 20, 0.4, -3, 'Δx·Δp ≥ ℏ/2'],
+  [28, 580, 20, 0.4, -3, 'Δx·Δp ≥ ℏ/2'],
   [56, 630, 72, 0.25, 0, '∑', 'thin'],
   [30, 760, 26, 0.45, 6, 'λ = h/p'],
   [40, 980, 26, 0.45, -5, 'dS ≥ 0', 'thin'],
@@ -53,13 +54,13 @@ const SKETCHES = [
 ];
 
 const place = (x, y) => `left:${(x / 14.4).toFixed(2)}%;top:${(y / 11.8).toFixed(2)}%`;
-const flags = (f) => (f ? ` is-${f}` : '');
+const flags = (f, y) => (f ? ` is-${f}` : '') + (y >= 960 ? ' is-low' : '');
 
 function equations() {
   const eqs = EQUATIONS.map(([x, y, s, o, r, html, f]) =>
-    `<p class="eq${flags(f)}" style="${place(x, y)};font-size:${s}px;opacity:${o};rotate:${r}deg">${html}</p>`).join('');
+    `<p class="eq${flags(f, y)}" style="${place(x, y)};font-size:${s}px;opacity:${o};rotate:${r}deg">${html}</p>`).join('');
   const sk = SKETCHES.map(([x, y, w, h, vb, inner, f]) =>
-    `<svg class="sketch${flags(f)}" viewBox="${vb}" style="${place(x, y)};width:${w}px;height:${h}px">${inner}</svg>`).join('');
+    `<svg class="sketch${flags(f, y)}" viewBox="${vb}" style="${place(x, y)};width:${w}px;height:${h}px">${inner}</svg>`).join('');
   return `<div class="equations" aria-hidden="true">${eqs}${sk}</div>`;
 }
 
@@ -93,7 +94,7 @@ export const projectHref = (base, id) => `${base}projects/${id}/`;
 function leftPage(p, u, base) {
   return `${scribblesLeft}
     <p class="page-cat">${esc(p.t.category)}</p>
-    <h3 class="page-title">${esc(p.t.name)}</h3>
+    <h3 class="page-title" translate="no">${esc(p.t.name)}</h3>
     ${underline}
     ${print(p, base)}
     <div class="page-actions">
@@ -138,7 +139,7 @@ export function workSection(P, u) {
       <div class="book" data-book tabindex="-1" aria-roledescription="notebook">
         <div class="book-body">
           <div class="ribbons" role="group" aria-label="${u.workHead}">
-            ${P.map((p) => `<button type="button" class="ribbon" data-tab><span>${esc(p.t.name)}</span></button>`).join('')}
+            ${P.map((p) => `<button type="button" class="ribbon" data-tab><span translate="no">${esc(p.t.name)}</span></button>`).join('')}
           </div>
           <div class="book-block">
             <i class="book-shadow" aria-hidden="true"></i>

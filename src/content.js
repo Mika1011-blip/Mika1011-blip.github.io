@@ -244,6 +244,7 @@ export const PROJECTS = [
 export const UI = {
   en: {
     cv: 'CV',
+    skip: 'Skip to content',
     navLabel: 'Sections',
     nav: ['About', 'Projects', 'Contact'],
     ballsLabel: 'Masses on the paper',
@@ -308,6 +309,7 @@ export const UI = {
   },
   fr: {
     cv: 'CV',
+    skip: 'Aller au contenu',
     navLabel: 'Sections',
     nav: ['À propos', 'Projets', 'Contact'],
     ballsLabel: 'Masses sur le papier',

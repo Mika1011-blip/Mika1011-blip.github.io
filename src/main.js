@@ -37,6 +37,7 @@ function render() {
 
   // Three sections: who (with the sampled letter), the project notebook, contact.
   app.innerHTML = `
+  <a class="skip" href="#main">${u.skip}</a>
   <header class="bar">
     <a class="wordmark" href="#intro">Minh Khang Thai</a>
     <nav class="bar-nav" aria-label="${u.navLabel}">
@@ -48,7 +49,7 @@ function render() {
     </div>
   </header>
 
-  <main>
+  <main id="main">
     <section class="s-intro" id="intro" aria-labelledby="intro-title">
       <div class="hero-copy">
         <h1 id="intro-title">${u.title}</h1>
