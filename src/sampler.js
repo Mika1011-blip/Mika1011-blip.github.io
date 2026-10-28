@@ -68,7 +68,9 @@ function draw(probs) {
 }
 
 // mount(root, lang, ui) wires the controls inside root and returns a cleanup function.
-export function mountSampler(root, lang, { reducedMotion }) {
+// Writes token by token even with reduced motion: text appearing in place is
+// not movement, and the pace is what shows the sampling.
+export function mountSampler(root, lang) {
   const out = root.querySelector('[data-letter]');
   const slider = root.querySelector('[data-temp]');
   const tOut = root.querySelector('[data-temp-value]');
@@ -106,7 +108,7 @@ export function mountSampler(root, lang, { reducedMotion }) {
           if (k > 0) { para = document.createElement('p'); out.appendChild(para); }
           if (part) para.append(part);
         });
-        return reducedMotion ? step() : (timer = setTimeout(step, 30));
+        return (timer = setTimeout(step, 30));
       }
       const probs = softmax(item.options, T());
       const pick = draw(probs);
@@ -117,7 +119,7 @@ export function mountSampler(root, lang, { reducedMotion }) {
       span.textContent = text;
       para.append(span);
       renderDist();
-      reducedMotion ? step() : (timer = setTimeout(step, 140));
+      timer = setTimeout(step, 140);
     };
     out.classList.add('is-writing');
     step();

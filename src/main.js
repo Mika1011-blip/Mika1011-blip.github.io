@@ -145,7 +145,7 @@ function render() {
   app.querySelectorAll(INKED).forEach(inkOutline);
 
   stopSampler();
-  stopSampler = mountSampler(app.querySelector('[data-sampler]'), lang, { reducedMotion });
+  stopSampler = mountSampler(app.querySelector('[data-sampler]'), lang);
   observeReveals();
 }
 
