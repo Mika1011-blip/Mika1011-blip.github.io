@@ -36,7 +36,7 @@ export function mountBook(root, { pages, reducedMotion, at = 0 }) {
 
   let index = at;
   let flip = null;      // the leaf in the air, if any
-  let queue = [];       // further turns requested while one is in flight
+  let queue = [];       // the rest of a multi-page jump from a ribbon
   let raf = 0;
 
   function paint(side, i) { (side === 'left' ? left : right).innerHTML = pages[i][side]; }
@@ -149,8 +149,9 @@ export function mountBook(root, { pages, reducedMotion, at = 0 }) {
     f.bend += (want - f.bend) * Math.min(1, dt * 14);
     pose(f);
     if (!f.held && Math.abs(f.target - f.theta) < 0.002 && Math.abs(f.omega) < 0.02) {
-      land(f);
+      // clear the frame first: landing may start the next turn of a jump
       raf = 0; last = 0;
+      land(f);
       return;
     }
     raf = requestAnimationFrame(tick);
@@ -163,8 +164,10 @@ export function mountBook(root, { pages, reducedMotion, at = 0 }) {
     sync();
   }
 
+  // Clicks and keys while a page is in the air are ignored, so the reader waits
+  // for it to land instead of stacking up turns.
   function turn(dir) {
-    if (flip) { queue.push(dir); return; }
+    if (flip) return;
     if (flat()) { const to = index + dir; if (to >= 0 && to < pages.length) swap(to); return; }
     flip = start(dir, false);
     if (!flip) return;
@@ -172,12 +175,11 @@ export function mountBook(root, { pages, reducedMotion, at = 0 }) {
     run();
   }
   function go(to) {
-    if (to === index || to < 0 || to >= pages.length) return;
+    if (flip || to === index || to < 0 || to >= pages.length) return;
     if (flat()) { swap(to); return; }
     const dir = Math.sign(to - index);
-    queue = [];
-    const steps = Math.abs(to - index);
-    for (let s = 0; s < steps; s++) turn(dir);
+    queue = Array(Math.abs(to - index) - 1).fill(dir);
+    turn(dir);
   }
 
   // ---- dragging a page by hand ----
