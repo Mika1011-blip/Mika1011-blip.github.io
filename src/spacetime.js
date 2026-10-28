@@ -9,6 +9,10 @@ const WELL = 1500;      // depth of the grid deformation per unit mass
 const DRAG = 26;        // velocity drag on the grid per unit mass
 const SOFT = 70;        // softening length, px
 const MAX_SPEED = 1.6;  // px per frame
+const MAX_BODIES = 12;
+// Muted, earthy inks: nothing neon.
+const PALETTE = ['#d08c60', '#7fa384', '#e3b75a', '#6b7fa8', '#a56b7f', '#8c6a4f', '#5f8f8a', '#c46a5a', '#9a8fbf', '#b8a05a', '#6f8f5a', '#c98b9a'];
+const OUTLINE = '#1d1b19';
 
 export function mountSpacetime(canvas, { reducedMotion, band }) {
   let bandY = 0;
@@ -39,16 +43,36 @@ export function mountSpacetime(canvas, { reducedMotion, band }) {
     draw();
   }
 
+  function makeBody(x, y, vx, vy, m) {
+    return {
+      x, y, vx, vy, m,
+      color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
+      blink: 1 + Math.random() * 4, // seconds until the next blink
+      lid: 0,                        // 0 open … 1 shut
+      wobble: Math.random() * 6.28,  // phase for the scribbled outline
+    };
+  }
+
   function seed() {
     const n = w < 640 ? 3 : 4;
     bodies = Array.from({ length: n }, (_, i) => {
       const a = (i / n) * Math.PI * 2 + 0.6;
-      return {
-        x: w * (0.5 + Math.cos(a) * 0.36), y: bandY + Math.sin(a) * 30,
-        vx: -Math.sin(a) * 0.8, vy: Math.cos(a) * 0.12,
-        m: [1.4, 0.8, 1.1, 0.6][i],
-      };
+      return makeBody(w * (0.5 + Math.cos(a) * 0.36), bandY + Math.sin(a) * 30, -Math.sin(a) * 0.8, Math.cos(a) * 0.12, [1.4, 0.8, 1.1, 0.6][i]);
     });
+  }
+
+  function add() {
+    if (bodies.length >= MAX_BODIES) return bodies.length;
+    const a = Math.random() * Math.PI * 2;
+    bodies.push(makeBody(w * (0.15 + Math.random() * 0.7), bandY + (Math.random() - 0.5) * 60,
+      Math.cos(a) * 0.9, Math.sin(a) * 0.3, 0.5 + Math.random() * 1.1));
+    if (reducedMotion) draw();
+    return bodies.length;
+  }
+  function remove() {
+    if (bodies.length > 1) bodies.pop();
+    if (reducedMotion) draw();
+    return bodies.length;
   }
 
   function step() {
@@ -121,33 +145,111 @@ export function mountSpacetime(canvas, { reducedMotion, band }) {
     bodies.forEach(drawBody);
   }
 
-  function drawBody(b, n) {
-    const r = 7 + b.m * 7;
-    ctx.fillStyle = ink; ctx.strokeStyle = ink; ctx.lineWidth = 1.4;
-    // ink blot, two loose circles
-    ctx.beginPath(); ctx.arc(b.x, b.y, r, 0, Math.PI * 2); ctx.fill();
-    ctx.globalAlpha = 0.5;
-    ctx.beginPath(); ctx.ellipse(b.x + 1.2, b.y - 0.8, r + 4, r + 3, 0.4, 0.2, Math.PI * 1.85); ctx.stroke();
-    ctx.globalAlpha = 1;
-    // velocity arrow, in red pen
+  // A wobbly closed loop around (x, y): the radius wanders a little, and the
+  // wander changes a few times a second so the line "boils" like stop-motion ink.
+  function scribble(x, y, rx, ry, seed, passes = 2) {
+    for (let p = 0; p < passes; p++) {
+      ctx.beginPath();
+      const steps = 18, start = seed + p * 1.7;
+      for (let i = 0; i <= steps + 1; i++) {
+        const a = (i / steps) * Math.PI * 2 + start * 0.3;
+        const k = 1 + Math.sin(a * 3 + start) * 0.035 + Math.sin(a * 5 + start * 2) * 0.025;
+        const px = x + Math.cos(a) * rx * k, py = y + Math.sin(a) * ry * k;
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+    }
+  }
+
+  function mood(b) {
     const sp = Math.hypot(b.vx, b.vy);
+    const near = bodies.reduce((d, o) => (o === b ? d : Math.min(d, Math.hypot(o.x - b.x, o.y - b.y))), Infinity);
+    const toPointer = pointer.m > 0.3 ? Math.hypot(pointer.x - b.x, pointer.y - b.y) : Infinity;
+    if (toPointer < 140) return 'delighted';
+    if (near < 70) return 'worried';
+    if (sp > 1.15) return 'whee';
+    return 'calm';
+  }
+
+  function drawBody(b, n) {
+    const r = 11 + b.m * 8;
+    const sp = Math.hypot(b.vx, b.vy);
+    const ux = sp > 0.01 ? b.vx / sp : 1, uy = sp > 0.01 ? b.vy / sp : 0;
+    const boil = Math.floor(frame / 7) + b.wobble * 10;
+
+    // body: coloured fill, squashed a little along its velocity
+    const stretch = Math.min(0.12, sp * 0.06);
+    ctx.save();
+    ctx.translate(b.x, b.y);
+    ctx.rotate(Math.atan2(uy, ux));
+    ctx.scale(1 + stretch, 1 - stretch);
+    ctx.fillStyle = b.color;
+    ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = OUTLINE; ctx.lineWidth = 2; ctx.lineJoin = 'round';
+    scribble(0, 0, r, r, boil);
+    ctx.restore();
+
+    // face: eyes follow the cursor if it is near, otherwise look where it is going
+    const m = mood(b);
+    let lx = ux, ly = uy;
+    if (pointer.m > 0.3) { const dx = pointer.x - b.x, dy = pointer.y - b.y, d = Math.hypot(dx, dy); if (d < 420) { lx = dx / d; ly = dy / d; } }
+    const eyeR = r * 0.24, gap = r * 0.36, ey = b.y - r * 0.18;
+    for (const s of [-1, 1]) {
+      const ex = b.x + s * gap;
+      ctx.fillStyle = '#fbf7ef';
+      ctx.beginPath(); ctx.ellipse(ex, ey, eyeR, eyeR * (1 - b.lid * 0.92) + 0.4, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = OUTLINE; ctx.lineWidth = 1.3; ctx.stroke();
+      if (b.lid < 0.6) {
+        ctx.fillStyle = OUTLINE;
+        const pr = m === 'whee' ? eyeR * 0.38 : eyeR * 0.5;
+        ctx.beginPath(); ctx.arc(ex + lx * eyeR * 0.42, ey + ly * eyeR * 0.42, pr, 0, Math.PI * 2); ctx.fill();
+      }
+      // brows: worried tilts them up in the middle
+      if (m === 'worried') {
+        ctx.beginPath(); ctx.moveTo(ex - s * eyeR, ey - eyeR * 1.5); ctx.lineTo(ex + s * eyeR * 0.6, ey - eyeR * 2.1); ctx.stroke();
+      }
+    }
+    // mouth
+    const my = b.y + r * 0.36;
+    ctx.strokeStyle = OUTLINE; ctx.lineWidth = 1.6; ctx.lineCap = 'round';
+    ctx.beginPath();
+    if (m === 'whee') { ctx.fillStyle = OUTLINE; ctx.ellipse(b.x, my, r * 0.16, r * 0.2, 0, 0, Math.PI * 2); ctx.fill(); }
+    else if (m === 'worried') { ctx.moveTo(b.x - r * 0.28, my + 1); ctx.quadraticCurveTo(b.x - r * 0.1, my - 3, b.x, my); ctx.quadraticCurveTo(b.x + r * 0.1, my + 3, b.x + r * 0.28, my - 1); ctx.stroke(); }
+    else if (m === 'delighted') {
+      ctx.moveTo(b.x - r * 0.32, my - 2); ctx.quadraticCurveTo(b.x, my + r * 0.4, b.x + r * 0.32, my - 2); ctx.closePath();
+      ctx.fillStyle = OUTLINE; ctx.fill();
+      ctx.fillStyle = 'rgb(200 80 80 / 0.35)';
+      ctx.beginPath(); ctx.arc(b.x - r * 0.6, my - 2, r * 0.14, 0, Math.PI * 2); ctx.arc(b.x + r * 0.6, my - 2, r * 0.14, 0, Math.PI * 2); ctx.fill();
+    } else { ctx.moveTo(b.x - r * 0.26, my - 1); ctx.quadraticCurveTo(b.x, my + r * 0.22, b.x + r * 0.26, my - 1); ctx.stroke(); }
+
+    // velocity arrow, in red pen
     ctx.strokeStyle = red; ctx.lineWidth = 1.8;
     if (sp > 0.05) {
-      const ux = b.vx / sp, uy = b.vy / sp, len = r + 14 + sp * 22;
-      const ex = b.x + ux * len, ey = b.y + uy * len;
+      const len = r + 14 + sp * 22;
+      const ex = b.x + ux * len, ey2 = b.y + uy * len;
       ctx.beginPath();
-      ctx.moveTo(b.x + ux * (r + 6), b.y + uy * (r + 6)); ctx.lineTo(ex, ey);
-      ctx.moveTo(ex, ey); ctx.lineTo(ex - ux * 8 - uy * 5, ey - uy * 8 + ux * 5);
-      ctx.moveTo(ex, ey); ctx.lineTo(ex - ux * 8 + uy * 5, ey - uy * 8 - ux * 5);
+      ctx.moveTo(b.x + ux * (r + 6), b.y + uy * (r + 6)); ctx.lineTo(ex, ey2);
+      ctx.moveTo(ex, ey2); ctx.lineTo(ex - ux * 8 - uy * 5, ey2 - uy * 8 + ux * 5);
+      ctx.moveTo(ex, ey2); ctx.lineTo(ex - ux * 8 + uy * 5, ey2 - uy * 8 - ux * 5);
       ctx.stroke();
     }
     ctx.fillStyle = red;
-    ctx.font = 'italic 14px "Public Sans", sans-serif';
-    ctx.fillText(`m${'₁₂₃₄'[n] || ''}`, b.x + r + 6, b.y - r - 4);
+    ctx.font = '700 16px "Kalam", cursive';
+    ctx.fillText(`m${n + 1}`, b.x + r + 6, b.y - r - 2);
   }
 
+  function blinkStep(dt) {
+    for (const b of bodies) {
+      b.blink -= dt;
+      if (b.blink <= 0) { b.lid = Math.min(1, b.lid + dt * 14); if (b.lid >= 1) b.blink = 2 + Math.random() * 4; }
+      else if (b.lid > 0) b.lid = Math.max(0, b.lid - dt * 10);
+    }
+  }
+
+  let frame = 0;
   function loop() {
-    step(); draw();
+    frame++;
+    step(); blinkStep(1 / 60); draw();
     raf = visible && !document.hidden ? requestAnimationFrame(loop) : 0;
   }
   function start() { if (!raf && !reducedMotion) raf = requestAnimationFrame(loop); }
@@ -172,4 +274,5 @@ export function mountSpacetime(canvas, { reducedMotion, band }) {
   if (reducedMotion) pointer.m = 0;
   resize();
   start();
+  return { add, remove, count: () => bodies.length };
 }

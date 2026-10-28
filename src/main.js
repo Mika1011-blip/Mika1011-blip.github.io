@@ -14,8 +14,23 @@ function storedLang() {
 }
 let lang = storedLang();
 let stopSampler = () => {};
+let space = null; // the spacetime paper, once mounted
 
 // A row of semicircular scallops, drawn as one SVG path.
+// Black pen outlines, drawn twice and a little off, like a quick sketch around
+// each paper object. The SVG stretches to the element; the stroke keeps its width.
+const INKED = '.sheet, .plate, .coupon, .postcard, .page-plate, .button, .stamp, .dist, .field';
+function roughRect(j) {
+  const r = () => (Math.random() - 0.5) * j;
+  const o = () => -1.2 + Math.random() * 1.6; // corners overshoot like a hand-drawn box
+  return `M${o()} ${r()} L${100 + r()} ${o()} L${100 - o()} ${100 + r()} L${r()} ${100 - o()} Z`;
+}
+function inkOutline(el) {
+  if (el.querySelector(':scope > .ink')) return;
+  el.insertAdjacentHTML('beforeend', `<svg class="ink" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <path d="${roughRect(1.2)}"/><path class="ink-2" d="${roughRect(1.8)}"/></svg>`);
+}
+
 // Flat along the top, bumps hanging down; `flip` mirrors it for a top edge.
 function scallops(n, flip = false) {
   const wdt = 100 / n;
@@ -97,6 +112,11 @@ function render() {
       <div class="hero-copy">
         <h1 id="intro-title">${u.title}</h1>
         <p class="lede">${u.lede}</p>
+        <div class="ball-tools" role="group" aria-label="${u.ballsLabel}">
+          <button type="button" class="button is-sketch" data-ball="add">+ ${u.addBall}</button>
+          <button type="button" class="button is-sketch" data-ball="remove">− ${u.removeBall}</button>
+          <span class="ball-count" data-ball-count aria-live="polite"></span>
+        </div>
       </div>
       <div class="intro-split" data-split>
         <div class="intro-left">
@@ -222,6 +242,15 @@ function render() {
     reducedMotion,
   });
 
+  const count = app.querySelector('[data-ball-count]');
+  const showCount = (n) => { count.textContent = u.ballCount(n); };
+  app.querySelectorAll('[data-ball]').forEach((b) => b.addEventListener('click', () => {
+    if (space) showCount(b.dataset.ball === 'add' ? space.add() : space.remove());
+  }));
+  if (space) showCount(space.count());
+
+  app.querySelectorAll(INKED).forEach(inkOutline);
+
   stopSampler();
   stopSampler = mountSampler(app.querySelector('[data-sampler]'), lang, { reducedMotion });
   observeReveals();
@@ -244,10 +273,11 @@ const paper = document.querySelector('.paper');
 const fitPaper = () => { paper.style.height = `${document.getElementById('intro').offsetHeight + 80}px`; };
 new ResizeObserver(fitPaper).observe(app);
 fitPaper();
-mountSpacetime(document.getElementById('spacetime'), {
+space = mountSpacetime(document.getElementById('spacetime'), {
   reducedMotion,
   band: () => {
     const lede = app.querySelector('.lede'), split = app.querySelector('[data-split]');
     return (lede.getBoundingClientRect().bottom + split.getBoundingClientRect().top) / 2 - paper.getBoundingClientRect().top;
   },
 });
+app.querySelector('[data-ball-count]').textContent = UI[lang].ballCount(space.count());
