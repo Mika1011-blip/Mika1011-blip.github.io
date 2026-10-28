@@ -114,7 +114,7 @@ Current breakpoints are `1700 / 1100 / 900 / 620` px wide, plus height-based twe
 ## 8. Motion
 
 - Current motion: a canvas particle field, grain overlay, word-by-word text reveal, a "lightning" word effect, slide dissolve (`.24s` blur and `.42s` transform), and a breathing live dot.
-- **Invariants:** animate only `transform`/`opacity` (and `filter` sparingly). Every animation has a `prefers-reduced-motion: reduce` fallback. Pause the canvas when the tab is hidden. Motion should explain structure, not decorate.
+- **Invariants:** animate only `transform`/`opacity` (and `filter` sparingly). Every animation has a `prefers-reduced-motion: reduce` fallback. Pause the canvas when the tab is hidden. Motion should explain structure, not decorate. With reduced motion the spacetime masses do not drift on their own; they move only while the cursor pulls them (motion the reader starts) and then come to rest.
 
 ## 9. Accessibility (non-negotiable)
 

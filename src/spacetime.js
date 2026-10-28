@@ -45,7 +45,8 @@ export function mountSpacetime(canvas, { reducedMotion, band }) {
 
   function makeBody(x, y, vx, vy, m) {
     return {
-      x, y, vx, vy, m,
+      x, y, m,
+      vx: reducedMotion ? 0 : vx, vy: reducedMotion ? 0 : vy, // with reduced motion they wait to be pulled
       color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
       blink: 1 + Math.random() * 4, // seconds until the next blink
       lid: 0,                        // 0 open … 1 shut
@@ -93,7 +94,15 @@ export function mountSpacetime(canvas, { reducedMotion, band }) {
       // a soft spring keeps the system on the page, in a flat band between the
       // name and the folders, so the ink blots stay off the headline
       ax += (w * 0.5 - b.x) * 0.00003; ay += (bandY - b.y) * 0.0006;
+      // soft walls near the edges, so a slung mass turns back instead of
+      // wandering off the page for half a minute
+      const edge = Math.max(48, w * 0.06);
+      if (b.x < edge) ax += (edge - b.x) * 0.002;
+      else if (b.x > w - edge) ax -= (b.x - (w - edge)) * 0.002;
       b.vy *= 0.985;
+      // with reduced motion the masses only move while the cursor pulls them,
+      // and come to rest once it lets go
+      if (reducedMotion && pointer.target === 0) { b.vx *= 0.9; b.vy *= 0.9; }
       b.vx += ax; b.vy += ay;
       const sp = Math.hypot(b.vx, b.vy);
       if (sp > MAX_SPEED) { b.vx *= MAX_SPEED / sp; b.vy *= MAX_SPEED / sp; }
@@ -250,19 +259,23 @@ export function mountSpacetime(canvas, { reducedMotion, band }) {
   function loop() {
     frame++;
     step(); blinkStep(1 / 60); draw();
-    raf = visible && !document.hidden ? requestAnimationFrame(loop) : 0;
+    raf = visible && !document.hidden && (!reducedMotion || pulling() || moving()) ? requestAnimationFrame(loop) : 0;
   }
-  function start() { if (!raf && !reducedMotion) raf = requestAnimationFrame(loop); }
+  const pulling = () => pointer.target > 0 || pointer.m > 0.02;
+  const moving = () => bodies.some((b) => Math.abs(b.vx) + Math.abs(b.vy) > 0.02);
+  // Reduced motion: nothing drifts on its own; the loop runs only while the
+  // reader's cursor is pulling (motion they start themselves) and until the
+  // masses settle.
+  function start() { if (!raf && (!reducedMotion || pulling())) raf = requestAnimationFrame(loop); }
 
   // The canvas sits under the page content, so listen on the window.
-  const release = () => { pointer.target = 0; if (reducedMotion) { pointer.m = 0; draw(); } };
+  const release = () => { pointer.target = 0; };
   window.addEventListener('pointermove', (e) => {
     const r = canvas.getBoundingClientRect();
     const x = e.clientX - r.left, y = e.clientY - r.top;
     if (y < 0 || y > r.height) return release();
     pointer.x = x; pointer.y = y;
-    if (e.pointerType === 'mouse' || e.pressure > 0) pointer.target = 2.2;
-    if (reducedMotion) { pointer.m = pointer.target; draw(); }
+    if (e.pointerType === 'mouse' || e.pressure > 0) { pointer.target = 2.2; start(); }
   }, { passive: true });
   document.documentElement.addEventListener('pointerleave', release);
   window.addEventListener('pointerup', (e) => { if (e.pointerType !== 'mouse') release(); });
