@@ -55,3 +55,8 @@ Actions workflow that deploys `dist/` to Pages.
 2. Run the taste skill to choose a new direction, then update `DESIGN.md`.
 3. Rename the HTML file to `index.html` before pushing, and enable Pages (main / root).
 4. This folder is not a git repo yet. Run `git init` when you're ready.
+
+## Local patches
+
+- `design-taste-frontend/scripts/lib/cdp.mjs`: always sets `prefers-reduced-motion` explicitly (no-preference unless asked). This machine has Windows animation effects off, which otherwise made every inspector run a reduced-motion run and failed the motion check.
+- Run the inspector with `--allow gradient`: the project notebook uses gradients only for physical lighting (spine curvature, the shadow a turning page casts). These lines carry `taste-skill-ignore`.

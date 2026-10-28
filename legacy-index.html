@@ -1,0 +1,1371 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111111">
+<meta name="description" content="Minh Khang THAI: passionate about mathematics, physics and complexity, on a path into AI engineering at EFREI. Selected projects in machine learning and medical imaging.">
+<title>Minh Khang THAI — Portfolio</title>
+<style>
+:root{color-scheme:dark;--bg:#111111;--fg:#ececec;--muted:#a3a3a3;--line:rgba(255,255,255,.15);--accent:#f4f4f4;--panel:#1b1b1b;--soft:rgba(255,255,255,.06);--glass:rgba(17,17,17,.88);--canvas:#8c8c8c;--shadow:rgba(0,0,0,.25);--serif:Georgia,'Times New Roman',serif;--sans:Arial,Helvetica,sans-serif;--mono:'SFMono-Regular',Consolas,'Liberation Mono',monospace}
+html[data-theme="light"]{color-scheme:light;--bg:#f2f2f2;--fg:#1c1c1c;--muted:#5f5f5f;--line:rgba(0,0,0,.17);--accent:#111111;--panel:#e6e6e6;--soft:rgba(0,0,0,.05);--glass:rgba(242,242,242,.91);--canvas:#6a6a6a;--shadow:rgba(0,0,0,.09)}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{background:var(--bg);color:var(--fg);font-family:var(--sans);transition:background .35s,color .35s}button,a,input{font:inherit}button,a{-webkit-tap-highlight-color:transparent}button{color:inherit;cursor:pointer}button{border:0;background:none}button:disabled{cursor:default}a{color:inherit;text-decoration:none}button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:5px}::selection{background:var(--accent);color:var(--bg)}[hidden]{display:none!important}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}svg{display:block}.icon{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.mono,.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}.muted{color:var(--muted)}
+#field{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}.field-shade{position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(90deg,var(--bg) 0%,transparent 73%);opacity:.6}.grain{position:fixed;inset:0;pointer-events:none;z-index:8;opacity:.032;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.6' filter='url(%23n)'/%3E%3C/svg%3E")}
+.site-header{position:fixed;top:0;left:0;right:0;height:94px;padding:0 4.8%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);z-index:20;background:linear-gradient(var(--bg) 35%,transparent)}.brand{display:flex;align-items:center;gap:13px;text-align:left;padding:8px 0}.brand-name{font-size:12px;font-weight:600;letter-spacing:.15em;line-height:1.45}.header-nav{display:flex;gap:32px}.nav-btn{font-size:12px;padding:12px 0;color:var(--muted);position:relative;white-space:nowrap}.nav-btn small{font-family:var(--mono);font-size:9px;opacity:.6;margin-right:7px}.nav-btn[aria-current="page"]{color:var(--fg)}.nav-btn:after{content:'';position:absolute;bottom:3px;left:0;height:1px;width:0;background:var(--accent);transition:width .3s}.nav-btn:hover:after,.nav-btn[aria-current="page"]:after{width:100%}.header-tools{display:flex;align-items:center;gap:14px}.location{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--muted);margin-right:10px}.live-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 9px var(--accent);animation:breathe 3s infinite}.icon-btn{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--line);border-radius:50%;transition:background .2s,transform .25s}.icon-btn:hover{background:var(--soft);transform:rotate(9deg)}
+.stage{position:fixed;inset:94px 0 116px;z-index:2;transition:filter .24s ease,opacity .24s ease,transform .42s ease;outline:none}.stage.dissolving{filter:blur(16px);opacity:0;transform:translateY(12px) scale(.985);pointer-events:none}.slide{height:100%;max-width:1600px;margin:0 auto;padding:35px 4.8% 24px;position:relative}.intro-layout{display:grid;grid-template-columns:57% 43%;align-items:center;height:100%}.intro-copy{max-width:690px;padding-right:25px;z-index:2}.eyebrow{display:flex;align-items:center;gap:12px;color:var(--accent);margin:0 0 24px}.eyebrow:before{content:'';width:24px;height:1px;background:currentColor}.hero-title{font-size:clamp(62px,6.7vw,104px);font-weight:400;line-height:.99;letter-spacing:-.075em;margin:0 0 28px}.hero-title em{font-family:var(--serif);font-weight:400;letter-spacing:-.06em;color:var(--accent)}.hero-title .period{font-family:var(--sans);color:var(--accent)}.generated{font-size:clamp(15px,1.18vw,18px);line-height:1.75;min-height:112px;max-width:565px;color:var(--muted);margin:0 0 24px}.word{animation:wordIn .4s both;display:inline-block;white-space:pre}.text-caret{display:inline-block;width:5px;height:15px;vertical-align:middle;background:var(--accent);margin-left:3px;animation:blink .8s infinite}.hero-meta{display:flex;gap:28px;border-top:1px solid var(--line);padding-top:19px;margin-top:12px}.meta-block{display:flex;flex-direction:column;gap:7px}.meta-block .mono{font-size:9px;color:var(--muted)}.meta-block strong{font-weight:400;font-size:12px}.primary-link{display:inline-flex;align-items:center;gap:34px;padding:13px 0;margin-top:21px;font-size:13px;border-bottom:1px solid var(--accent);transition:gap .3s}.primary-link:hover{gap:44px}.primary-link .icon{color:var(--accent)}.hero-visual{height:100%;position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:40px 0 36px 8px;pointer-events:none}.visual-top{display:flex;justify-content:space-between;align-items:flex-start;font-family:var(--mono);font-size:10px;line-height:1.7;color:var(--muted);letter-spacing:.06em}.model-label{border-left:1px solid var(--accent);padding-left:12px}.visual-coordinate{writing-mode:vertical-rl;padding-top:2px}.field-cross{position:absolute;width:15px;height:15px;top:20%;left:17%;opacity:.65}.field-cross:before,.field-cross:after{content:'';position:absolute;background:var(--accent)}.field-cross:before{top:7px;width:15px;height:1px}.field-cross:after{left:7px;width:1px;height:15px}.field-cross.two{top:73%;left:90%}.singularity-caption{align-self:center;font-family:var(--mono);text-align:center;font-size:10px;letter-spacing:.07em;color:var(--muted);padding-bottom:2px}.singularity-caption .equation{font-family:var(--serif);font-style:italic;font-size:23px;color:var(--fg);letter-spacing:.02em;display:block;margin-bottom:14px}.coordinate-tag{display:flex;gap:18px;font-size:9px}.coordinate-tag span{border-top:1px solid var(--line);padding-top:9px}.visual-caption{display:flex;justify-content:space-between;color:var(--muted);font-size:9px;font-family:var(--mono);letter-spacing:.08em}.visual-caption .cursor-note{color:var(--accent)}
+.section-heading{display:flex;justify-content:space-between;gap:30px;align-items:flex-end;margin-bottom:28px}.section-heading .eyebrow{margin-bottom:15px}.section-title{font-size:clamp(40px,4.5vw,67px);font-weight:400;line-height:1.04;letter-spacing:-.06em;margin:0}.section-title em{color:var(--accent);font-family:var(--serif);font-weight:400}.section-summary{font-size:13px;line-height:1.7;color:var(--muted);max-width:320px;margin:0;min-height:44px}.section-summary.generated{font-size:13px;margin:0;min-height:66px}.project-slide{display:flex;flex-direction:column;justify-content:center}.project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.project-card{text-align:left;padding:0;display:flex;flex-direction:column;width:100%;border:1px solid var(--line);background:var(--glass);overflow:hidden;position:relative;transition:transform .35s,border-color .3s,box-shadow .3s}.project-card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 14px 35px var(--shadow)}.project-card:hover .project-art{transform:scale(1.04)}.project-art{height:clamp(130px,18vh,210px);background:var(--soft);position:relative;overflow:hidden;transition:transform .5s}.project-art svg{width:100%;height:100%;color:var(--accent)}.art-index{position:absolute;top:15px;left:18px;z-index:1;font-family:var(--mono);font-size:10px;color:var(--muted)}.art-type{position:absolute;bottom:13px;right:15px;font-family:var(--mono);font-size:8px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;background:var(--bg);padding:5px 7px}.project-card-body{padding:22px 21px 18px;flex:1;display:flex;flex-direction:column}.project-category{font-family:var(--mono);color:var(--accent);font-size:9px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:10px}.project-card h3{font-size:22px;font-weight:400;letter-spacing:-.035em;margin:0 0 12px;overflow-wrap:anywhere;line-height:1.2}.project-card p{font-size:12px;line-height:1.7;color:var(--muted);margin:0 0 22px}.project-card-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:13px;margin-top:auto;font-size:11px}.project-card-footer .icon{transition:transform .3s}.project-card:hover .project-card-footer .icon{transform:translate(3px,-3px)}.projects-caption{display:flex;justify-content:space-between;margin-top:20px;font-family:var(--mono);font-size:9px;letter-spacing:.04em;color:var(--muted)}
+.contact-layout{display:grid;grid-template-columns:1.05fr 1fr;gap:10%;height:100%;align-items:center}.contact-copy .section-title{font-size:clamp(64px,6.3vw,95px);margin-bottom:25px}.contact-copy .generated{max-width:430px}.availability{display:flex;align-items:center;gap:11px;font-size:12px;margin-top:36px}.availability .live-dot{width:7px;height:7px}.contact-links{border-top:1px solid var(--line)}.contact-row{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;padding:24px 3px;border-bottom:1px solid var(--line);transition:padding .3s,background .3s}.contact-row:hover{padding-left:12px;background:var(--soft)}.contact-row .row-left{display:flex;align-items:center;gap:20px}.contact-row .row-number{font-family:var(--mono);font-size:10px;color:var(--muted)}.contact-row .row-label{font-size:24px;letter-spacing:-.03em}.contact-row .row-sub{display:block;font-family:var(--mono);font-size:9px;margin-top:6px;color:var(--muted);letter-spacing:.04em}.contact-footnote{font-size:10px;line-height:1.8;color:var(--muted);margin-top:18px;max-width:330px}
+.site-footer{position:fixed;bottom:0;left:0;right:0;height:116px;z-index:20;padding:21px 4.8% 20px;background:linear-gradient(transparent,var(--bg) 28%);display:flex;align-items:center;justify-content:space-between;gap:20px}.generation-controls{display:flex;align-items:center;gap:16px}.temp-control{display:flex;align-items:center;gap:12px}.control-label{font-family:var(--mono);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}.temp-segment{display:flex;border:1px solid var(--line);padding:4px;gap:2px;border-radius:4px}.temp-btn{font-family:var(--mono);font-size:10px;letter-spacing:.02em;padding:8px 12px;border-radius:2px;color:var(--muted);transition:background .2s,color .2s}.temp-btn[aria-pressed="true"]{background:var(--accent);color:var(--bg)}.generation-state{display:flex;gap:6px;align-items:center;font-family:var(--mono);font-size:9px;color:var(--muted)}.generation-state .state-dot{width:4px;height:4px;border-radius:50%;background:var(--accent)}.footer-caption{font-family:var(--mono);font-size:9px;letter-spacing:.04em;color:var(--muted);margin-top:12px}.page-indicator{display:flex;gap:17px;align-items:center;text-align:left;padding:0;flex-shrink:0}.progress-ring{height:58px;width:58px;position:relative}.progress-ring svg{width:100%;height:100%;transform:rotate(-90deg)}.progress-ring circle{fill:none;stroke-width:1}.ring-track{stroke:var(--line)}.ring-value{stroke:var(--accent);stroke-dasharray:163.36;stroke-dashoffset:147.024;transition:stroke-dashoffset .15s linear}.progress-text{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:12px}.page-indicator-label{display:flex;flex-direction:column;gap:7px;font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.08em;min-width:100px}.page-indicator-label .next-label{display:flex;align-items:center;gap:8px;font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:12px;color:var(--muted)}.page-indicator-label .icon{width:13px;height:13px}.page-indicator:hover .next-label{color:var(--accent)}.page-dots{display:flex;gap:6px;margin-top:10px}.page-dots i{width:15px;height:2px;background:var(--line)}.page-dots i.active{background:var(--accent)}
+.project-dialog{position:fixed;inset:94px 0 116px;z-index:12;background:var(--glass);backdrop-filter:blur(20px);border:0;color:var(--fg);display:flex;flex-direction:column;margin:0;width:100%;max-width:none;height:auto;max-height:none;padding:0;transition:filter .25s,opacity .25s,transform .3s}.project-dialog.dissolving{filter:blur(14px);opacity:0;transform:translateY(12px);pointer-events:none}.detail-toolbar{display:flex;align-items:center;justify-content:space-between;padding:17px 4.8%;border-bottom:1px solid var(--line);flex-shrink:0}.back-button{display:flex;gap:10px;align-items:center;font-size:12px;padding:5px 0}.back-button:hover{color:var(--accent)}.back-button .icon{width:16px;height:16px}.detail-toolbar .mono{font-size:9px;color:var(--muted)}.detail-body{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--accent) transparent;min-height:0;flex:1;padding:32px 4.8% 50px;outline:none;scroll-behavior:smooth}.detail-inner{max-width:1300px;margin:auto}.detail-header{display:grid;grid-template-columns:1.1fr 1fr;gap:9%;margin-bottom:30px;align-items:start}.detail-title{font-size:clamp(34px,3.8vw,60px);line-height:1.07;letter-spacing:-.055em;overflow-wrap:anywhere;font-weight:400;margin:0 0 18px}.detail-category{font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin:0 0 15px}.detail-header .generated{font-size:14px;min-height:78px;margin:0}.detail-credit{border-left:1px solid var(--accent);padding:6px 0 6px 20px;margin-top:28px}.detail-credit .mono{font-size:9px;color:var(--muted)}.detail-credit p{font-size:13px;line-height:1.7;margin:10px 0 0}.detail-media{border:1px solid var(--line);background:var(--soft);margin-bottom:30px;min-height:240px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}.media-empty{text-align:center;padding:35px}.media-empty .icon{width:30px;height:30px;margin:0 auto 18px;color:var(--accent)}.media-empty h3{font-size:17px;font-weight:400;letter-spacing:-.02em;margin:0 0 12px}.media-empty p{font-size:12px;color:var(--muted);line-height:1.7;margin:0;max-width:360px}.media-empty .mono{display:block;font-size:8px;margin-top:20px;color:var(--muted)}.detail-media img{max-width:100%;max-height:620px;object-fit:contain;display:block}.media-gallery{display:grid;gap:20px}.media-item{margin:0;border:1px solid var(--line);background:var(--soft);overflow:hidden}.media-item img{display:block;width:100%;max-height:620px;object-fit:contain}.media-item figcaption{padding:13px 17px;font-family:var(--mono);font-size:10px;color:var(--muted);border-top:1px solid var(--line)}.youtube-wrap{aspect-ratio:16/9;width:100%;background:var(--bg)}.youtube-wrap iframe{width:100%;height:100%;border:0}.youtube-load{height:100%;width:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;border:0}.youtube-load .icon{width:32px;height:32px;color:var(--accent)}.youtube-load span{font-size:13px}.youtube-load small{font-size:10px;color:var(--muted)}.detail-sections{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 60px}.detail-section{padding:23px 0;border-top:1px solid var(--line)}.detail-section h3{font-weight:400;font-size:20px;letter-spacing:-.03em;margin:0 0 15px;display:flex;align-items:center;gap:17px}.detail-section h3 span{font-family:var(--mono);font-size:10px;color:var(--accent)}.detail-section p{font-size:13px;line-height:1.85;color:var(--muted);margin:0}.detail-end{margin-top:25px;padding-top:22px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:20px}.repo-link{font-size:12px;display:flex;align-items:center;gap:12px}.repo-link:hover{color:var(--accent)}.draft-badge{font-family:var(--mono);font-size:9px;color:var(--muted)}.toast{position:fixed;bottom:128px;left:50%;transform:translateX(-50%);z-index:70;border:1px solid var(--line);background:var(--panel);box-shadow:0 8px 40px var(--shadow);padding:15px 20px;border-radius:4px;font-size:12px;width:max-content;max-width:90vw;text-align:center;animation:toastIn .25s both}.mobile-hint{display:none}.noscript{position:fixed;inset:94px 5% 116px;z-index:50;padding:35px;background:var(--bg)}
+@keyframes wordIn{from{opacity:0;filter:blur(4px);transform:translateY(4px)}to{opacity:1;filter:blur(0);transform:none}}@keyframes blink{50%{opacity:0}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes breathe{50%{opacity:.45;box-shadow:0 0 3px var(--accent)}}@keyframes toastIn{from{opacity:0;translate:0 7px}to{opacity:1;translate:0 0}}
+@media(min-width:1700px){.site-header,.site-footer{padding-left:calc((100vw - 1446px)/2);padding-right:calc((100vw - 1446px)/2)}}
+@media(max-height:760px) and (min-width:901px){.site-header{height:78px}.stage,.project-dialog{top:78px;bottom:102px}.site-footer{height:102px}.slide{padding-top:20px;padding-bottom:14px}.hero-title{font-size:clamp(60px,6vw,87px);margin-bottom:21px}.eyebrow{margin-bottom:18px}.generated{font-size:14px;line-height:1.65;min-height:88px;margin-bottom:15px}.hero-meta{padding-top:14px}.primary-link{margin-top:13px;padding:9px 0}.hero-visual{padding:22px 0}.project-art{height:140px}.project-card-body{padding:16px}.project-card h3{font-size:19px;margin-bottom:9px}.project-card p{font-size:11px;margin-bottom:16px}.section-heading{margin-bottom:21px}.section-title{font-size:49px}.projects-caption{margin-top:13px}.contact-row{padding:18px 3px}.contact-copy .section-title{font-size:73px}.contact-copy .generated{min-height:100px}.generation-state{display:none}}
+@media(max-height:700px) and (min-width:901px){.project-art{height:100px}.project-card-body{padding:15px}.project-card h3{font-size:18px}.project-card p{margin-bottom:12px}.section-heading{margin-bottom:17px}.projects-caption{font-size:8px}.hero-title{font-size:72px}.hero-visual{padding-top:10px;padding-bottom:10px}.contact-copy .section-title{font-size:65px}.contact-row{padding:16px 0}}
+@media(max-width:1100px){.location{display:none}.header-nav{gap:23px}.intro-layout{grid-template-columns:59% 41%}.hero-meta{gap:19px}.meta-block strong{font-size:11px}.generation-state{display:none}.hero-visual{padding-left:0}.project-grid{gap:14px}.project-card-body{padding:19px 16px}.project-card h3{font-size:19px}.section-summary{max-width:250px}.contact-layout{gap:7%}.contact-row .row-label{font-size:22px}}
+@media(max-width:900px){.site-header{height:78px;padding:0 5%}.brand-name{font-size:10px}.header-nav{gap:20px}.nav-btn{font-size:11px}.nav-btn small{display:none}.icon-btn{width:34px;height:34px}.header-tools{gap:8px}.stage,.project-dialog{top:78px;bottom:124px}.slide{padding:30px 6%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}.intro-layout{min-height:440px;grid-template-columns:1fr .45fr}.hero-title{font-size:clamp(53px,7.8vw,76px)}.intro-copy{padding-right:10px}.generated{font-size:14px;min-height:106px}.hero-meta{flex-wrap:wrap;gap:16px}.hero-visual{padding:23px 0}.visual-top{font-size:8px}.visual-coordinate,.coordinate-tag,.visual-caption{display:none}.singularity-caption{font-size:8px}.singularity-caption .equation{font-size:16px}.field-cross.two{left:80%}.section-title{font-size:48px}.project-slide{justify-content:flex-start}.project-grid{gap:12px}.project-art{height:128px}.project-card-body{padding:16px 12px}.project-card h3{font-size:17px}.project-card p{font-size:11px}.project-category{font-size:8px}.project-card-footer{font-size:10px}.projects-caption{font-size:8px}.section-heading{gap:20px}.section-summary.generated{font-size:11px;max-width:240px}.site-footer{height:124px;padding:15px 5%;gap:15px}.generation-controls{gap:10px;flex-wrap:wrap}.control-label{font-size:8px}.temp-control{gap:8px}.temp-btn{padding:8px 9px;font-size:9px}.footer-caption{font-size:8px}.page-indicator{gap:10px}.progress-ring{width:48px;height:48px}.page-indicator-label{min-width:80px;font-size:8px}.page-indicator-label .next-label{font-size:11px}.contact-copy .section-title{font-size:65px}.contact-row{padding:21px 0}.contact-row .row-label{font-size:21px}.contact-row .row-left{gap:12px}.contact-footnote{font-size:9px}.detail-toolbar{padding:14px 6%}.detail-body{padding:28px 6% 40px}.detail-header{gap:5%}.detail-title{font-size:37px}.detail-credit{margin-top:22px;padding-left:15px}.detail-sections{gap:0 30px}.detail-section p{font-size:12px}.mobile-hint{display:inline}.desktop-hint{display:none}}
+@media(max-width:620px){.site-header{height:72px}.brand{gap:9px}.brand-name{font-size:9px}.header-nav{gap:15px}.nav-btn{font-size:10px}.header-tools{gap:6px}.icon-btn,.icon-btn .icon{height:14px;width:14px}.stage,.project-dialog{top:72px;bottom:126px}.slide{padding:29px 6% 24px}.intro-layout{display:block;min-height:0;height:auto}.intro-copy{max-width:100%;padding:0}.hero-title{font-size:clamp(53px,11.5vw,76px);margin-bottom:22px}.eyebrow{font-size:9px;margin-bottom:23px}.generated{font-size:13px;line-height:1.8;min-height:120px;margin-bottom:17px}.hero-meta{gap:20px;padding-top:16px}.meta-block strong{font-size:10px}.meta-block .mono{font-size:8px}.primary-link{font-size:12px;margin-top:18px}.hero-visual{display:none}.section-heading{display:block;margin-bottom:23px}.section-title{font-size:48px;margin-bottom:18px}.section-summary.generated{font-size:12px;max-width:100%;min-height:54px}.project-grid{grid-template-columns:1fr;gap:16px}.project-card{flex-direction:row;min-height:182px}.project-art{width:33%;height:auto;min-height:182px;flex-shrink:0}.project-art svg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.art-index{left:12px;top:12px;font-size:8px}.art-type{left:8px;right:8px;bottom:10px;font-size:6px;line-height:1.6;text-align:center}.project-card-body{padding:19px 16px;width:67%}.project-card h3{font-size:19px}.project-card p{font-size:11px;margin-bottom:17px}.projects-caption{line-height:1.7;display:block;margin-top:18px}.projects-caption span{display:block}.site-footer{height:126px;padding:15px 6%;align-items:center}.generation-controls{gap:8px;max-width:250px}.control-label{display:none}.temp-control{gap:6px}.temp-segment{padding:3px}.temp-btn{padding:7px 8px;font-size:8px}.footer-caption{font-size:7px;line-height:1.6;max-width:210px;margin-top:8px}.page-indicator{flex-direction:column;gap:5px;align-items:center}.page-indicator-label{font-size:7px;min-width:0;text-align:center;gap:4px}.page-indicator-label .next-label{justify-content:center;font-size:10px}.page-dots{display:none}.progress-ring{width:44px;height:44px}.progress-text{font-size:10px}.contact-layout{display:block;height:auto}.contact-copy .section-title{font-size:64px;line-height:1.03}.contact-copy .generated{min-height:95px;max-width:100%}.availability{margin-top:15px;margin-bottom:35px;font-size:11px}.contact-row{padding:20px 0}.contact-row .row-label{font-size:23px}.contact-footnote{font-size:10px;margin-bottom:5px}.detail-toolbar .mono{font-size:7px}.back-button{font-size:11px}.detail-header{display:block}.detail-title{font-size:39px}.detail-header .generated{min-height:86px}.detail-credit{margin-top:20px;margin-bottom:25px}.detail-media{min-height:220px;margin-bottom:23px}.detail-sections{display:block}.detail-section{padding:22px 0}.detail-section h3{font-size:20px}.detail-section p{font-size:12px}.detail-end{flex-direction:column;align-items:flex-start}.toast{bottom:138px;font-size:11px}.project-card:hover{transform:translateY(-2px)}}
+@media(max-height:560px) and (min-width:621px){.slide{overflow-y:auto;overscroll-behavior:contain}.intro-layout{min-height:380px}.project-slide{justify-content:flex-start}.contact-layout{min-height:400px}.hero-visual{min-height:340px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+/* Layout for the simplified interface. */
+.project-card{min-height:220px}.project-card-body{width:100%;padding:28px 24px}.project-cover{width:100%;height:180px;object-fit:contain;background:var(--soft)}
+.detail-header{display:block;max-width:800px}.detail-header .generated{min-height:62px}
+.page-indicator{flex-direction:column;gap:8px;align-items:center}.page-indicator-label{min-width:0}.page-indicator-label .next-label{justify-content:center}
+.setting-row{border-top:0;padding-top:0;margin-top:0}.media-empty{font-size:12px;color:var(--muted)}
+@media(max-width:620px){.project-card{flex-direction:column;min-height:160px}.project-card-body{width:100%;padding:24px}.project-cover{height:160px}.hero-title{font-size:64px}.page-indicator{gap:5px}}
+
+/* Introduction temperature and word-spawn lighting. */
+:root{--temp-low:#74d2d3;--temp-medium:#e6b15c;--temp-high:#f08977}
+html[data-theme="light"]{--temp-low:#147e82;--temp-medium:#995b13;--temp-high:#b44538}
+.hero-title{font-size:clamp(58px,6.1vw,92px);line-height:1.03;letter-spacing:-.06em}
+.intro-copy{max-width:740px;padding-right:12px}
+.intro-text-block{display:block}
+.intro-text-block .generated{margin-bottom:0;min-height:185px}
+.temp-control{position:relative;flex-direction:row;align-items:center;gap:12px;padding-top:0}
+.temp-slot{display:flex;align-items:center}
+.temp-control .control-label{display:block;font-size:9px;line-height:1.4;cursor:help;padding:0}
+.temp-btn[data-temp="low"]{--temp-base:var(--temp-low)}
+.temp-btn[data-temp="medium"]{--temp-base:var(--temp-medium)}
+.temp-btn[data-temp="high"]{--temp-base:var(--temp-high)}
+.temp-btn[aria-pressed="true"]{background:var(--temp-base);color:var(--bg)}
+.temp-btn:hover{box-shadow:inset 0 -1px 0 var(--temp-base)}
+.temp-tooltip{--tt-hide:translateY(-6px);--tt-show:none;position:absolute;right:0;left:auto;top:calc(100% + 14px);width:360px;max-width:calc(100vw - 40px);padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:4px;color:var(--muted);font-size:11px;line-height:1.55;box-shadow:0 10px 35px var(--shadow);z-index:35;opacity:0;visibility:hidden;transform:var(--tt-hide);pointer-events:none;transition:opacity .18s,transform .18s,visibility .18s}
+.temp-tooltip p{margin:0 0 8px}.temp-tooltip p:last-child{margin:0}.temp-tooltip strong{font-weight:500;color:var(--fg)}
+@media(hover:hover){.temp-control:hover .temp-tooltip{opacity:1;visibility:visible;transform:var(--tt-show)}}
+.temp-control:has(:focus-visible) .temp-tooltip,.temp-control.show-info .temp-tooltip{opacity:1;visibility:visible;transform:var(--tt-show)}
+.tt-title{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg)}
+.tt-levels{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:5px}
+.tt-levels li{display:grid;grid-template-columns:82px 1fr;gap:8px;align-items:baseline;padding-left:14px;position:relative;transition:color .2s}
+.tt-levels li:before{content:'';position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--lvl);opacity:.4}
+.tt-levels b{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:400;color:var(--lvl)}
+.tt-levels li[data-level=low]{--lvl:var(--temp-low)}.tt-levels li[data-level=medium]{--lvl:var(--temp-medium)}.tt-levels li[data-level=high]{--lvl:var(--temp-high)}
+.temp-control[data-temperature=low] li[data-level=low],.temp-control[data-temperature=medium] li[data-level=medium],.temp-control[data-temperature=high] li[data-level=high]{color:var(--fg)}
+.temp-control[data-temperature=low] li[data-level=low]:before,.temp-control[data-temperature=medium] li[data-level=medium]:before,.temp-control[data-temperature=high] li[data-level=high]:before{opacity:1;box-shadow:0 0 8px var(--lvl)}
+.temp-tooltip .tt-note{font-family:var(--mono);font-size:9px;letter-spacing:.03em;opacity:.8}
+.temp-control[data-temperature=low]{--temp-cur:var(--temp-low)}.temp-control[data-temperature=medium]{--temp-cur:var(--temp-medium)}.temp-control[data-temperature=high]{--temp-cur:var(--temp-high)}
+.temp-value{margin-left:6px;color:var(--temp-cur);letter-spacing:.04em}
+/* In the bottom bar (phones) the panel opens upwards. */
+.temp-control.in-footer .temp-tooltip{--tt-hide:translateY(6px);top:auto;bottom:calc(100% + 14px);left:0;right:auto}
+.tt-title span{color:var(--muted)}
+.tt-status{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9px;letter-spacing:.04em;color:var(--fg);padding-top:10px;border-top:1px solid var(--line)}
+.tt-status i{flex:none;width:6px;height:6px;border-radius:50%;background:var(--temp-cur);box-shadow:0 0 8px var(--temp-cur)}
+.tt-status.live i{animation:ttPulse .9s ease-in-out infinite}
+@keyframes ttPulse{50%{opacity:.3;box-shadow:0 0 2px var(--temp-cur)}}
+.temperature-word{animation:wordLightning .9s cubic-bezier(.2,.6,.3,1) both}
+.word-done{display:inline-block;white-space:pre}
+html[data-temp=low] .text-caret{background:var(--temp-low)}html[data-temp=medium] .text-caret{background:var(--temp-medium)}html[data-temp=high] .text-caret{background:var(--temp-high)}
+/* Generated text: invisible copies reserve the final height; the live text streams on top. */
+.generated{display:grid}.gen-ghosts,.gen-live{grid-area:1/1;min-width:0}.gen-ghosts{display:grid;visibility:hidden}.gen-ghosts>span{grid-area:1/1}
+@keyframes wordLightning{
+ 0%{opacity:0;color:var(--word-spark);text-shadow:0 0 1px var(--word-spark),0 0 6px var(--word-glow);filter:blur(3px);transform:translateY(3px)}
+ 8%{opacity:1;color:var(--word-spark);text-shadow:0 0 2px var(--word-spark),0 0 9px var(--word-glow),0 0 20px var(--word-glow);filter:blur(0);transform:none}
+ 24%{color:var(--word-flash);text-shadow:0 0 1px var(--word-spark),0 0 7px var(--word-glow),0 0 14px var(--word-glow)}
+ 58%{color:var(--word-flash);text-shadow:0 0 5px var(--word-glow)}
+ 100%{opacity:1;color:var(--muted);text-shadow:0 0 0 transparent;filter:blur(0);transform:none}
+}
+@keyframes wordLightningCalm{
+ 0%{opacity:0;color:var(--word-spark);text-shadow:0 0 1px var(--word-spark),0 0 6px var(--word-glow)}
+ 8%{opacity:1;color:var(--word-spark);text-shadow:0 0 2px var(--word-spark),0 0 9px var(--word-glow),0 0 20px var(--word-glow)}
+ 24%{color:var(--word-flash);text-shadow:0 0 1px var(--word-spark),0 0 7px var(--word-glow),0 0 14px var(--word-glow)}
+ 58%{color:var(--word-flash);text-shadow:0 0 5px var(--word-glow)}
+ 100%{opacity:1;color:var(--muted);text-shadow:0 0 0 transparent}
+}
+@keyframes wordFade{from{opacity:0}to{opacity:1}}
+.site-footer{justify-content:space-between}
+@media(max-width:1100px){.temp-btn{padding:8px 9px}.temp-label-text{display:none}.temp-value{margin-left:0}.temp-value:before{content:'T ';color:var(--muted)}}
+@media(max-width:900px){.intro-text-block{display:flex;flex-direction:column;gap:20px}.intro-text-block .generated{min-height:150px}.temp-control{gap:10px}.hero-title{font-size:clamp(54px,7.4vw,76px)}}
+@media(max-width:620px){.brand-name{font-size:9px;letter-spacing:.08em}.hero-title{font-size:clamp(42px,11.7vw,64px)}.intro-text-block .generated{min-height:150px}.temp-control{gap:10px}.temp-control .control-label{font-size:8px}.temp-btn{padding:8px 10px;font-size:9px}.temp-tooltip{font-size:10px;width:300px}}
+/* Reduced motion keeps the word-by-word reveal and the colour flash, without blur or movement. */
+@media(prefers-reduced-motion:reduce){.generated .word{animation-name:wordFade!important;animation-duration:.35s!important}.generated .temperature-word{animation-name:wordLightningCalm!important;animation-duration:.9s!important}}
+/* Projects: the generated description sits under the section title. */
+.section-heading{display:block}.section-heading .section-summary,.section-heading .section-summary.generated{max-width:620px;margin-top:14px;font-size:13px}
+/* Introduction profile panel (facts from the CV). */
+.profile-card{align-self:center;justify-self:end;width:100%;max-width:440px;border-top:1px solid var(--line);z-index:2}
+.pf-row{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.pf-k{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+.pf-v{display:flex;flex-direction:column;gap:3px;min-width:0}.pf-v strong{font-weight:400;font-size:13px;color:var(--fg)}.pf-v span{font-size:11.5px;line-height:1.5;color:var(--muted)}
+.pf-v span+strong{margin-top:6px}
+@media(max-height:760px) and (min-width:901px){.pf-row{padding:8px 0}.pf-v strong{font-size:12px}.pf-v span{font-size:11px}}
+@media(max-width:900px){.intro-layout{display:block;height:auto}.profile-card{max-width:none;margin-top:28px}}
+.intro-copy .eyebrow{margin-bottom:10px}.seek-detail{margin:0 0 22px 36px;font-family:var(--mono);font-size:10px;line-height:1.7;letter-spacing:.03em;color:var(--muted)}
+.pf-v .pf-eq{font-size:13px;color:var(--fg)}
+@media(max-width:620px){.seek-detail{margin-left:0;font-size:9px}}
+.slide{scrollbar-width:none}.slide::-webkit-scrollbar{display:none}
+/* Project pages: stack chips, repo link and bullet lists. */
+.detail-meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;margin-top:22px}
+.stack-chips{display:flex;flex-wrap:wrap;gap:6px}.stack-chip{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:5px 8px;border-radius:2px}
+.detail-list{margin:0;padding:0;list-style:none;display:grid;gap:8px}.detail-list li{position:relative;padding-left:18px;font-size:13px;line-height:1.7;color:var(--muted)}.detail-list li:before{content:'';position:absolute;left:0;top:.85em;width:9px;height:1px;background:var(--fg)}
+.lang-segment{display:flex;border:1px solid var(--line);padding:3px;gap:2px;border-radius:4px}.lang-btn{font-family:var(--mono);font-size:10px;letter-spacing:.04em;padding:7px 8px;border-radius:2px;color:var(--muted);transition:background .2s,color .2s}.lang-btn[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+@media(max-width:620px){.lang-btn{padding:5px 5px;font-size:8px}.lang-segment{padding:2px}}
+/* Four projects: one row on desktop, covers kept short. */
+.project-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.project-card{min-height:0}.project-cover{height:clamp(90px,15vh,150px);object-fit:cover;object-position:top}.project-card-body{padding:18px 18px 16px}.project-card h3{font-size:19px}
+.project-slide{overflow-y:auto;overscroll-behavior:contain}
+@media(max-width:1100px){.project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.project-grid{grid-template-columns:1fr}}
+/* Project media gallery: main view plus a queue of previews. */
+.gallery{margin-bottom:30px}
+.gallery .media-item{border:1px solid var(--line);background:var(--soft);margin:0}
+.gallery-frame{height:clamp(200px,48vh,440px);display:flex;align-items:center;justify-content:center;background:var(--bg);overflow:hidden}
+.gallery-frame img,.gallery-frame video{width:100%;height:100%;max-height:none;object-fit:contain;display:block}
+.gallery-frame video{background:#000}
+.gallery-frame .youtube-wrap{width:100%;height:100%;aspect-ratio:auto}
+.gallery-nav{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:14px}
+.gallery-btn{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--line);border-radius:50%;transition:background .2s,border-color .2s}
+.gallery-btn:hover{background:var(--soft);border-color:var(--fg)}
+.gallery-count{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--muted);min-width:48px;text-align:center}
+.gallery-queue{display:flex;gap:10px;overflow-x:auto;margin-top:14px;padding:4px 2px 10px;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.queue-item{flex:0 0 auto;width:136px;padding:0;text-align:left;border:1px solid var(--line);background:var(--bg);opacity:.55;transition:opacity .25s,border-color .25s,transform .25s;cursor:pointer;position:relative}
+.queue-item:hover,.queue-item:focus-visible{opacity:.95;transform:translateY(-2px)}
+.queue-item.active{opacity:1;border-color:var(--fg)}
+.queue-item.next{opacity:.85}
+.queue-thumb{display:block;aspect-ratio:16/10;overflow:hidden;background:var(--soft)}
+.queue-thumb img,.queue-thumb video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.q-num,.q-type,.q-tag{position:absolute;font-family:var(--mono);font-size:9px;letter-spacing:.08em;line-height:1;padding:3px 5px;background:var(--glass);color:var(--fg)}
+.q-num{top:5px;left:5px}
+.q-type{top:5px;right:5px}
+.q-tag{bottom:5px;left:5px;text-transform:uppercase;opacity:0;transition:opacity .25s}
+.queue-item.active .q-tag,.queue-item.next .q-tag{opacity:1}
+.queue-item.active .q-tag{background:var(--fg);color:var(--bg)}
+@media(max-width:620px){.queue-item{width:104px}}
+.absorb-counter{position:fixed;top:110px;right:4.8%;z-index:21;pointer-events:none;display:flex;align-items:baseline;gap:10px;font-family:var(--mono);color:var(--muted)}
+.absorb-counter .ac-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase}
+.absorb-counter .ac-value{position:relative;font-size:15px;color:var(--fg);font-variant-numeric:tabular-nums;display:inline-block}
+.absorb-counter .ac-value.bump{animation:acBump .32s cubic-bezier(.2,1.6,.4,1)}
+.ac-pop{position:absolute;right:0;top:-2px;font-size:12px;font-weight:700;color:var(--fg);white-space:nowrap;animation:acPop .9s cubic-bezier(.15,.8,.3,1) forwards}
+@keyframes acBump{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+@keyframes acPop{0%{opacity:0;transform:translateY(4px) scale(.6)}15%{opacity:1;transform:translateY(-6px) scale(1.25)}100%{opacity:0;transform:translateY(-30px) scale(1)}}
+@media(max-height:760px) and (min-width:901px){.absorb-counter{top:92px}}
+@media(max-width:900px){.absorb-counter{top:92px;right:5%}}
+@media(max-width:620px){.absorb-counter{top:86px}}
+@media(prefers-reduced-motion:reduce){.absorb-counter .ac-value.bump{animation-duration:.32s!important}.ac-pop{animation-duration:.9s!important}}
+
+/* Grainy glass: frosted panels with film grain, for controls and text containers. */
+:root{--glass-tint:rgba(255,255,255,.045);--glass-tint-hover:rgba(255,255,255,.085);--glass-edge:rgba(255,255,255,.13);--glass-hi:rgba(255,255,255,.07);--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .11 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+html[data-theme="light"]{--glass-tint:rgba(255,255,255,.42);--glass-tint-hover:rgba(255,255,255,.62);--glass-edge:rgba(0,0,0,.1);--glass-hi:rgba(255,255,255,.7);--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.icon-btn,.temp-segment,.lang-segment,.gallery-btn,.toast,.absorb-counter,.profile-card,.contact-row,.stack-chip,.book-page,.book-tab,.book-turn{background-color:var(--glass-tint);background-image:var(--grain);backdrop-filter:blur(14px) saturate(1.15);-webkit-backdrop-filter:blur(14px) saturate(1.15);border:1px solid var(--glass-edge);box-shadow:inset 0 1px 0 var(--glass-hi),0 10px 30px -18px var(--shadow)}
+.icon-btn:hover,.gallery-btn:hover,.book-tab:hover,.book-turn:hover:not(:disabled){background-color:var(--glass-tint-hover)}
+.absorb-counter{padding:8px 12px;border-radius:4px}
+.profile-card{padding:6px 22px;border-radius:6px}
+.contact-links{border-top:0;display:flex;flex-direction:column;gap:10px}
+.contact-row{padding:22px 22px;border-radius:6px;transition:background-color .3s,transform .3s,border-color .3s}
+.contact-row:hover{padding-left:22px;background-color:var(--glass-tint-hover);border-color:var(--fg);transform:translateX(6px)}
+@media(max-width:620px){.contact-row{padding:16px 16px}}
+
+/* Projects as a glass book: one project per spread, pages turn on the spine. */
+.book{display:flex;flex-direction:column;gap:12px;width:100%}
+.book-tabs{display:flex;flex-wrap:wrap;gap:8px}
+.book-tab{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--muted);padding:8px 12px;border-radius:4px;transition:background-color .2s,color .2s,border-color .2s}
+.book-tab[aria-current="true"]{color:var(--fg);border-color:var(--fg)}
+.book-body{display:flex;align-items:center;gap:14px;perspective:1700px}
+.book-turn{flex:0 0 auto;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;transition:background-color .2s,opacity .2s}
+.book-turn:disabled{opacity:.3;cursor:default}
+.book-spread{flex:1;min-width:0;position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));height:clamp(240px,calc(100vh - 430px),480px);perspective:6000px;transform:rotateX(9deg);transform-origin:50% 100%;margin-bottom:10px}
+/* Page curve: light falls off toward the spine and the outer edge. */
+.book-page.left:before,.book-page.right:before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0}
+.book-page.left:before{background:linear-gradient(90deg,rgba(0,0,0,.18),transparent 14%,transparent 70%,rgba(255,255,255,.03) 92%,rgba(0,0,0,.1))}
+.book-page.right:before{background:linear-gradient(270deg,rgba(0,0,0,.18),transparent 14%,transparent 70%,rgba(255,255,255,.03) 92%,rgba(0,0,0,.1))}
+.page-inner{position:relative;z-index:1}
+.turn-shade{position:absolute;top:0;bottom:0;width:50%;pointer-events:none;z-index:2;background:linear-gradient(var(--shade-dir,90deg),rgba(0,0,0,.55),rgba(0,0,0,.1));opacity:0}
+.book-page{position:relative;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.book-page.left{border-radius:8px 2px 2px 8px;border-right:0}
+.book-page.right{border-radius:2px 8px 8px 2px}
+/* Spine shading where the pages meet. */
+.book-page.left:after,.book-page.right:after{content:'';position:absolute;top:0;bottom:0;width:38px;pointer-events:none}
+.book-page.left:after{right:0;background:linear-gradient(90deg,transparent,rgba(0,0,0,.28))}
+.book-page.right:after{left:0;background:linear-gradient(270deg,transparent,rgba(0,0,0,.28))}
+html[data-theme="light"] .book-page.left:after{background:linear-gradient(90deg,transparent,rgba(0,0,0,.09))}
+html[data-theme="light"] .book-page.right:after{background:linear-gradient(270deg,transparent,rgba(0,0,0,.09))}
+.page-inner{flex:1;display:flex;flex-direction:column;padding:26px 30px 20px;min-height:0;gap:14px}
+.page-cover{flex:1;min-height:0;border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--soft);display:grid;place-items:center}
+.page-cover img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.page-cover .page-cover-empty{font-family:var(--serif);font-style:italic;font-size:40px;color:var(--muted)}
+.page-kicker{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:12px}
+.page-title{font-family:var(--serif);font-weight:400;font-size:clamp(26px,2.6vw,38px);letter-spacing:-.02em;line-height:1.08;margin:0}
+.page-text{font-size:13px;line-height:1.75;color:var(--muted);margin:0}
+.page-chips{display:flex;flex-wrap:wrap;gap:6px}
+.page-open{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--line);padding-top:14px;font-size:12px;width:100%;text-align:left;color:var(--fg)}
+.page-open .icon{transition:transform .3s}.page-open:hover .icon{transform:translate(3px,-3px)}
+.page-folio{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em}
+/* The turning leaf: two faces, hinged on the spine. */
+.book-leaf{position:absolute;top:0;bottom:0;width:50%;transform-style:preserve-3d;z-index:3;pointer-events:none}
+.book-leaf.fwd{left:50%}.book-leaf.back{left:0}
+.book-leaf.fwd{transform-origin:left center}.book-leaf.back{transform-origin:right center}
+.leaf-face{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.leaf-face.back{transform:rotateY(180deg)}
+.leaf-face .book-page{position:absolute;inset:0;background-color:var(--panel)}
+.leaf-face .leaf-light{position:absolute;inset:0;pointer-events:none;z-index:4}
+@media(max-width:760px){.book-spread{grid-template-columns:1fr;height:auto}.book-page.left{border-radius:8px 8px 2px 2px;border-right:1px solid var(--glass-edge);border-bottom:0;height:180px}.book-page.right{border-radius:2px 2px 8px 8px}.book-page.left:after,.book-page.right:after{display:none}.book-turn{width:38px;height:38px}.page-inner{padding:18px}}
+</style>
+</head>
+<body>
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-diag" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></symbol>
+<symbol id="i-media" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 6 3-6 3Z"/></symbol>
+</defs></svg>
+<canvas id="field" aria-hidden="true"></canvas><div class="field-shade"></div>
+<header class="site-header">
+ <button class="brand" data-section="0" data-i18n-aria="brandAria" aria-label="Minh Khang THAI — return to introduction"><span class="brand-name">Minh Khang<br>THAI</span></button>
+ <nav class="header-nav" aria-label="Portfolio sections">
+  <button class="nav-btn" data-section="0" aria-current="page" data-i18n="nav0">Introduction</button>
+  <button class="nav-btn" data-section="1" data-i18n="nav1">Projects</button>
+  <button class="nav-btn" data-section="2" data-i18n="nav2">Contact</button>
+ </nav>
+ <div class="header-tools"><div class="temp-slot" id="header-temp-slot">
+  <div class="temp-control" id="temperature-control" data-temperature="medium">
+  <button type="button" class="control-label" id="temperature-label" aria-describedby="temperature-tooltip"><span class="temp-label-text" data-i18n="tempLabel">Temperature</span><span class="temp-value" id="temperature-value">0.7</span></button>
+  <div class="temp-segment" role="group" aria-label="Sampling temperature">
+  <button class="temp-btn" data-temp="low" aria-pressed="false" aria-describedby="temperature-tooltip" data-i18n="low">Low</button>
+  <button class="temp-btn" data-temp="medium" aria-pressed="true" aria-describedby="temperature-tooltip" data-i18n="medium">Medium</button>
+  <button class="temp-btn" data-temp="high" aria-pressed="false" aria-describedby="temperature-tooltip" data-i18n="high">High</button>
+  </div>
+  <div class="temp-tooltip" id="temperature-tooltip" role="tooltip">
+  <p class="tt-title" data-i18n-html="ttTitle"></p>
+  <p data-i18n="ttBody"></p>
+  <ul class="tt-levels">
+  <li data-level="low" data-i18n-html="ttLow"></li>
+  <li data-level="medium" data-i18n-html="ttMed"></li>
+  <li data-level="high" data-i18n-html="ttHigh"></li>
+  </ul>
+  <p class="tt-status"><i aria-hidden="true"></i><span id="temperature-status">model ready</span></p>
+  <p class="tt-note" data-i18n="ttNote"></p>
+  </div>
+  </div>
+ </div><div class="lang-segment" role="group" data-i18n-aria="langGroup" aria-label="Language"><button class="lang-btn" data-lang="en" aria-pressed="true">EN</button><button class="lang-btn" data-lang="fr" aria-pressed="false">FR</button></div><button class="icon-btn" id="theme-toggle" aria-label="Switch to light theme" title="Switch theme"><svg class="icon"><use href="#i-sun"/></svg></button></div>
+</header>
+<div class="absorb-counter" id="absorb-counter" aria-hidden="true"><span class="ac-label" data-i18n="absorbed">Absorbed</span><span class="ac-value" id="absorb-value"><span id="absorb-num">0</span></span></div>
+<main class="stage" id="stage" tabindex="-1" aria-label="Introduction">
+ <section class="slide" id="slide-intro" aria-labelledby="intro-heading">
+  <div class="intro-layout">
+   <div class="intro-copy">
+    <p class="eyebrow" data-i18n="eyebrow">Drawn to complexity</p>
+    <h1 class="hero-title" id="intro-heading">Minh Khang<br><em>THAI</em></h1>
+    <div class="intro-text-block">
+     <div class="generated" id="intro-generated"></div>
+    </div>
+   </div>
+   <aside class="profile-card" aria-label="Profile">
+    <div class="pf-row"><span class="pf-k" data-i18n="pfProgramme">Programme</span><div class="pf-v"><strong>EFREI · Big Data &amp; Machine Learning</strong><span data-i18n="pfProgSub">Engineering programme</span></div></div>
+    <div class="pf-row"><span class="pf-k" data-i18n="pfLanguages">Languages</span><div class="pf-v"><span class="pf-eq" data-i18n="langEn">English · C1</span><span class="pf-eq" data-i18n="langFr">French · B2–C1</span><span class="pf-eq" data-i18n="langVi">Vietnamese · native</span></div></div>
+    <div class="pf-row"><span class="pf-k" data-i18n="pfInterests">Interests</span><div class="pf-v"><strong data-i18n="interests">Gym 6+ yrs · Boxing 3+ · Skiing 3+ · Chess</strong><span data-i18n="interestsSub">Lately: climbing, hiking, surfing, piano</span></div></div>
+   </aside>
+  </div>
+ </section>
+ <section class="slide project-slide" id="slide-projects" aria-labelledby="projects-heading" hidden>
+  <div class="section-heading"><div><h2 class="section-title" id="projects-heading" data-i18n-html="projectsTitle">Selected <em>projects.</em></h2></div><div class="section-summary generated" id="projects-generated"></div></div>
+  <div class="book" id="project-grid"></div>
+ </section>
+ <section class="slide" id="slide-contact" aria-labelledby="contact-heading" hidden>
+  <div class="contact-layout"><div class="contact-copy"><h2 class="section-title" id="contact-heading"><em>Contact.</em></h2><div class="generated" id="contact-generated"></div></div><div><div class="contact-links" id="contact-links"></div></div></div>
+ </section>
+</main>
+<section class="project-dialog" id="project-detail" role="dialog" aria-modal="true" aria-labelledby="detail-title" hidden>
+ <div class="detail-toolbar"><button class="back-button" id="back-projects"><svg class="icon"><use href="#i-back"/></svg><span data-i18n="back">Back to projects</span></button></div>
+ <div class="detail-body" id="detail-body" tabindex="0"><div class="detail-inner" id="detail-content"></div></div>
+</section>
+<footer class="site-footer">
+ <div class="temp-slot" id="footer-temp-slot"></div>
+ <button class="page-indicator" id="next-section" aria-label="Next page: projects"><span class="progress-ring"><svg viewBox="0 0 58 58" aria-hidden="true"><circle class="ring-track" cx="29" cy="29" r="26"/><circle class="ring-value" id="ring-value" cx="29" cy="29" r="26"/></svg><span class="progress-text" id="progress-text">10%</span></span><span class="page-indicator-label"><span class="next-label"><span id="next-label">next page</span><svg class="icon"><use href="#i-arrow"/></svg></span></span></button>
+</footer>
+<div class="toast" id="toast" role="status" hidden></div><div class="sr-only" id="generation-announcement" aria-live="polite"></div>
+<noscript><div class="noscript"><h1>Minh Khang THAI</h1><p>Engineering student at EFREI, Big Data & Machine Learning.</p><p>Selected projects: LifeIsGood, AI-Assisted MRI Annotation, MesSous, RetinaSight.</p><p>Enable JavaScript for the interactive portfolio, project views and theme controls.</p></div></noscript>
+<script>
+'use strict';
+/* ───────────────────── EDIT CONTENT HERE ─────────────────────
+Project media lives in media/<project id>/, not in this file.
+ Each folder holds numbered files (01-intro.mp4, 02-home.png, ...) that play in number order,
+ plus media.json listing them with captions:
+ { "items": [ { "file": "01-intro.mp4", "caption": "...", "captionFr": "..." },
+              { "order": 2, "type": "youtube", "id": "VIDEO_ID", "start": 0, "caption": "..." } ] }
+ Videos (.mp4/.webm) autoplay muted on loop; images are .png/.jpg/.webp/.gif.
+Media is fetched from those folders, so open the page through a web server (GitHub Pages), not as a local file. Remote media needs an internet connection.
+Keep prepared writing versions factually aligned with profile/project updates.
+The project metadata below is intentionally a draft: no invented architecture,
+metrics, frameworks, diagnostic claims or unverified feature lists.
+───────────────────────────────────────────────────────────── */
+const PORTFOLIO = {
+  "profile": {
+    "name": "Minh Khang THAI",
+    "programme": "EFREI · Big Data & Machine Learning"
+  },
+  "contact": {
+    "github": "https://github.com/Mika1011-blip",
+    "linkedin": "https://www.linkedin.com/in/minh-khang-t-b3bb84231/",
+    "email": "mr.thaiminhkhang@gmail.com",
+    "cv": "https://drive.google.com/file/d/135Q7szxnbsOcCX3VeLkeyFmMrtNc9cVc/view?usp=sharing"
+  },
+  /* Media: { type:"gif", src:"media/x.gif", caption:"..." } · { type:"photo", ... } · { type:"youtube", id:"VIDEO_ID", caption:"..." } */
+  "projects": [
+ {
+  "id": "lifeisgood",
+  "name": "LifeIsGood",
+  "category": "Housing intelligence assistant",
+  "short": "Finds rental listings, shows what is around each address and estimates whether the rent is fair.",
+  "mission": "LifeIsGood aims to give users the best possible insight into a property and its surroundings: transport, bars, restaurants, supermarkets and other points of interest nearby. Each point of interest is categorised and turned into data for our price-prediction model, which then estimates a fair price for the user.",
+  "features": [
+   "Collects rental listings and filters them by budget, size and area.",
+   "Finds the points of interest around any address: transport, shops, schools, healthcare.",
+   "Estimates a fair rent for each listing with machine-learning models.",
+   "An AI assistant that answers questions about listings in plain language."
+  ],
+  "contribution": [
+   "Built almost the entire application; only the Python graphs were made by teammates.",
+   "Developed the AI features and the assistant.",
+   "Integrated OpenStreetMap and located nearby points of interest for any given address.",
+   "Optimised the speed of heavy data processing."
+  ],
+  "learned": [
+   "Working with OpenStreetMap and geospatial data.",
+   "Predicting prices with machine learning (K-Means clustering, CatBoost).",
+   "Using open models and turning them into product features.",
+   "Making large data pipelines fast enough for an interactive app."
+  ],
+  "stack": [
+   "Python",
+   "Streamlit",
+   "Web scraping",
+   "NLP",
+   "K-Means",
+   "CatBoost",
+   "PostGIS",
+   "OpenStreetMap"
+  ],
+  "repo": "https://github.com/Mika1011-blip/LifeIsGood",
+  "mediaDir": "media/lifeisgood/"
+ },
+ {
+  "id": "tumor",
+  "name": "AI-Assisted MRI Annotation",
+  "category": "Medical imaging platform",
+  "short": "Explore MRI scans in 2D and 3D in the browser, annotate tumours and rebuild them as 3D volumes.",
+  "mission": "Built to help students learn tumour annotation with AI assistance. A student's annotation is scored against one of two references: an AI segmentation, or a specialist's annotation (the teacher's). The AI offers a quick first pass and can point out details that most people would miss.",
+  "features": [
+   "Upload MRI scans (NIfTI) and organise them into cases with notes.",
+   "Browse 2D slices and preview the whole scan as a 3D model.",
+   "Annotate the tumour slice by slice, with undo and redo.",
+   "Rebuild the 2D annotations into a 3D tumour volume shown alongside the scan."
+  ],
+  "contribution": [
+   "Built everything shown here from A to Z; work by other contributors is not part of this presentation.",
+   "Medical-image processing pipeline for NIfTI scans.",
+   "3D MRI preview in the browser with Three.js.",
+   "2D slice annotation and the reconstruction of slices into 3D volumes.",
+   "Backend, storage and the full web interface."
+  ],
+  "learned": [
+   "Handling medical imaging formats and volumes (NIfTI).",
+   "Rendering 3D medical data in the browser.",
+   "Building a complete web platform: API, database, file storage and Docker."
+  ],
+  "next": [
+   "A tumour-segmentation model to pre-annotate scans automatically (in progress).",
+   "A dedicated medical viewer (Cornerstone3D) for richer 3D inspection."
+  ],
+  "stack": [
+   "FastAPI",
+   "React",
+   "TypeScript",
+   "Three.js",
+   "PostgreSQL",
+   "MinIO",
+   "Docker",
+   "NIfTI"
+  ],
+  "repo": "",
+  "mediaDir": "media/tumor/"
+ },
+ {
+  "id": "messous",
+  "name": "MesSous",
+  "category": "AI-assisted budgeting app",
+  "short": "Turns your goals and daily constraints into an editable budget plan, with an AI assistant along the way.",
+  "mission": "MesSous makes personal budgeting more structured, transparent and approachable. Instead of starting from a blank spreadsheet, the app starts from the user's financial goals and daily constraints, then produces categories and recommendations that can be reviewed and adjusted.",
+  "features": [
+   "Guided onboarding that captures goals, income profile, living situation and focus areas.",
+   "Automatic budget categories, with a built-in fallback when AI services are unavailable.",
+   "Editable priorities and budget allocations, with an AI-assisted review of the user's answers.",
+   "CSV import to review and summarise spending.",
+   "A chat assistant that keeps track of the conversation."
+  ],
+  "learned": [
+   "Designing a guided product flow, from a vague goal to a concrete plan.",
+   "Integrating AI features with graceful fallbacks so the core app always works.",
+   "Building a secure Flask web app: sessions, data storage and CSV processing."
+  ],
+  "stack": [
+   "Python",
+   "Flask",
+   "SQLite",
+   "CSV analysis",
+   "AI chat assistant"
+  ],
+  "repo": "",
+  "mediaDir": "media/messous/"
+ },
+ {
+  "id": "retina",
+  "name": "RetinaSight",
+  "category": "Diabetic retinopathy screening",
+  "short": "My first deep-learning project: a web app that grades diabetic retinopathy from retina images.",
+  "mission": "Diabetic retinopathy can be spotted early in retina photographs. RetinaSight lets a user upload an image, get a predicted severity level and ask an AI assistant to explain the result. It is an educational project, not a medical device.",
+  "features": [
+   "Upload a retina image and get a predicted diabetic-retinopathy level.",
+   "An AI assistant that explains the result in plain language.",
+   "Patient records and secure user accounts."
+  ],
+  "contribution": [
+   "Built the whole project myself, my first deep-learning project.",
+   "Trained the CNN model that grades retina images.",
+   "Designed the image preprocessing.",
+   "Built the web app and integrated the AI assistant."
+  ],
+  "learned": [
+   "Image preprocessing techniques with OpenCV.",
+   "Training and evaluating a convolutional neural network.",
+   "Integrating an AI assistant to help users understand a result."
+  ],
+  "stack": [
+   "Python",
+   "TensorFlow",
+   "CNN (EfficientNet)",
+   "OpenCV",
+   "Flask",
+   "Firebase",
+   "OpenAI API"
+  ],
+  "repo": "",
+  "mediaDir": "media/retina/"
+ }
+],
+  "writing": {
+    "intro": {"low": ["I'm Minh Khang THAI. I have always been passionate about mathematics and physics. I now apply that interest to AI engineering, as an engineering student at EFREI in Big Data & Machine Learning.", "Minh Khang THAI. Long-standing interests: mathematics and physics. Current path: AI engineering, as an engineering student at EFREI, Big Data & Machine Learning."], "medium": ["I'm Minh Khang THAI. Maths and physics have always fascinated me, especially the way complex systems emerge from simple rules. That curiosity led me to AI engineering, which I now study at EFREI in Big Data & Machine Learning.", "I'm Minh Khang THAI, and I've always loved complexity: the equations behind physics, the structure behind mathematics. Today I'm turning that passion into AI engineering, in EFREI's Big Data & Machine Learning programme."], "high": ["I'm Minh Khang THAI, forever enchanted by mathematics and physics, by the elegant chaos of complex systems! That fascination has launched me on a grand journey into AI engineering, now unfolding at EFREI in Big Data & Machine Learning!", "Equations, particles, patterns hidden in chaos: I've been hooked on maths and physics for as long as I can remember! I'm Minh Khang THAI, and my love of complexity now fuels an adventure in AI engineering at EFREI, Big Data & Machine Learning!"]},
+     "projects": {
+      "low": [
+       "Four selected projects. Focus: mission, features and lessons learned. Open a project for the details.",
+       "Selected work: LifeIsGood, AI-Assisted MRI Annotation, MesSous and RetinaSight. Each project has a dedicated view."
+      ],
+      "medium": [
+       "Four projects, four different problems. Here is what I built, why, and what I learned along the way.",
+       "I learn by building. Open a project to see its mission, its features and what it taught me."
+      ],
+      "high": [
+       "Four ideas escaped the notebook! Step into the projects, meet the features, and discover the gloriously unfinished edges.",
+       "Welcome to my little constellation of experiments! Four projects, plenty of curiosity, and the stories behind each one."
+      ]
+     },
+     "contact": {
+      "low": [
+       "Contact channels below: GitHub, LinkedIn, email and CV. Questions about the projects are welcome.",
+       "Minh Khang THAI. Reachable via GitHub, LinkedIn, email or CV."
+      ],
+      "medium": [
+       "Want to talk about one of these projects, or about AI in general? Reach out, I'd be happy to hear from you.",
+       "If something here caught your interest, let's talk. Email is the quickest way to reach me."
+      ],
+      "high": [
+       "A difficult problem? A wonderfully ambitious idea? I'm listening! Send a message and let's give all that curiosity somewhere useful to go!",
+       "Calling the curious teams and the delightfully ambitious builders! Drop me a line and let's start a great conversation!"
+      ]
+     },
+    "messous": {"low": ["MesSous: AI-assisted budgeting web app. Functions: guided onboarding, automatic budget categories, CSV transaction review, chat assistant. Built by me.", "Personal budgeting assistant converting goals and constraints into editable categories and allocations. Includes an AI review with a deterministic fallback."], "medium": ["MesSous turns your goals and daily constraints into a budget you can actually edit: guided onboarding, smart categories, CSV review and an assistant to talk it through.", "A budgeting app that starts from your life rather than a blank spreadsheet, then suggests categories and allocations you can adjust at any time."], "high": ["Goodbye, blank spreadsheet! MesSous listens to your goals, builds your budget categories, digs through your transactions and keeps an AI coach on hand. Budgeting, finally friendly!", "Your money, finally organised! MesSous transforms goals and habits into a living budget plan, with an AI assistant cheering every smart decision along the way!"]},
+    "lifeisgood": {
+        "low": [
+          "LifeIsGood: housing search assistant. Functions: listing filtering, location analysis, rent estimation. Built almost entirely by me, excluding the Python graphs.",
+          "Housing search assistant combining rental listings, OpenStreetMap location data and machine-learning price estimates. Implementation: almost entirely mine, except the Python graphs."
+        ],
+        "medium": [
+          "LifeIsGood helps renters make better decisions: it filters listings, shows what is around each address and estimates whether the rent is fair. I built almost all of it, apart from the Python graphs.",
+          "A housing search assistant that pairs each listing with its neighbourhood and a price estimate. Almost everything here is my work, except the Python graphs."
+        ],
+        "high": [
+          "Apartment hunting, supercharged! LifeIsGood sifts through listings, maps every metro stop, shop and school nearby, and flags suspicious rents. I built nearly the whole thing, everything but the Python graphs!",
+          "What if your flat search came with a data scientist built in? LifeIsGood filters listings, scans the neighbourhood and predicts fair prices. Almost all of it came from my keyboard, Python graphs aside!"
+        ]
+      },
+      "tumor": {
+        "low": [
+          "Web platform for MRI tumour annotation. Functions: scan upload, 2D slice and 3D preview, slice-by-slice annotation, 3D volume reconstruction. Developed end to end by me.",
+          "AI-assisted MRI annotation platform. Scope: NIfTI ingestion, 3D visualisation, tumour annotation, preparation for automatic segmentation. Sole developer of this part."
+        ],
+        "medium": [
+          "A browser-based platform for annotating tumours in MRI scans: view a scan in 2D and 3D, draw the tumour slice by slice, and get a clean 3D volume ready for AI. I built it from A to Z.",
+          "This platform turns slow, slice-by-slice MRI annotation into a smooth web workflow, from upload to a 3D tumour volume. Everything shown here is my work."
+        ],
+        "high": [
+          "Spin a brain scan in 3D, right in your browser! Trace tumours slice by slice and watch them assemble into a full 3D volume, ready for AI. Built entirely by me, from the first line to the last!",
+          "MRI scans, meet the web! Upload, explore in 3D, annotate tumours with a few strokes and rebuild them in three dimensions. Every piece shown here, I built myself!"
+        ]
+      },
+      "retina": {
+        "low": [
+          "RetinaSight: web application for diabetic-retinopathy grading from retina images. Components: CNN classifier, image preprocessing, AI assistant for result explanation. First deep-learning project, built by me.",
+          "Retina-image classifier delivered as a web app. Output: predicted retinopathy level with an assistant explanation. My first deep-learning project, built solo."
+        ],
+        "medium": [
+          "RetinaSight is the first deep-learning project I built: upload a retina image, get a predicted diabetic-retinopathy level, and let an AI assistant explain what it means.",
+          "My first step into deep learning: a CNN that grades diabetic retinopathy from retina photos, wrapped in a web app with an assistant that explains the result."
+        ],
+        "high": [
+          "Where it all began! RetinaSight reads retina images with a CNN, predicts the stage of diabetic retinopathy and lets an AI assistant explain the verdict. My very first deep-learning build, and still a favourite!",
+          "Retina photos in, insights out! My first-ever deep-learning project: a CNN that grades diabetic retinopathy, plus an AI assistant ready to talk through the result."
+        ]
+      }
+  }
+};
+/* French versions (same facts as the English ones). */
+const WRITING_FR={"messous":{"low": ["MesSous : application web de budget assistée par IA. Fonctions : onboarding guidé, catégories générées automatiquement, analyse des transactions CSV, assistant conversationnel. Réalisée par moi.", "Assistant de budget personnel qui convertit objectifs et contraintes en catégories et allocations modifiables. Inclut une revue par IA avec une solution de repli déterministe."], "medium": ["MesSous transforme vos objectifs et contraintes du quotidien en un budget réellement modifiable : onboarding guidé, catégories intelligentes, analyse CSV et un assistant pour en discuter.", "Une application de budget qui part de votre vie plutôt que d'un tableur vide, puis propose des catégories et des allocations ajustables à tout moment."], "high": ["Adieu le tableur vide ! MesSous écoute vos objectifs, construit vos catégories, fouille vos transactions et garde un coach IA sous la main. Le budget, enfin sympathique !", "Votre argent, enfin organisé ! MesSous transforme objectifs et habitudes en un plan budgétaire vivant, avec un assistant IA qui encourage chaque bonne décision !"]},
+ "intro": {"low": ["Je suis Minh Khang THAI. J'ai toujours été passionné par les mathématiques et la physique. J'applique aujourd'hui cet intérêt à l'ingénierie de l'IA, en tant qu'étudiant ingénieur à l'EFREI en Big Data & Machine Learning.", "Minh Khang THAI. Intérêts de longue date : mathématiques et physique. Parcours actuel : ingénierie de l'IA, étudiant ingénieur à l'EFREI, Big Data & Machine Learning."], "medium": ["Je suis Minh Khang THAI. Les mathématiques et la physique m'ont toujours fasciné, surtout la façon dont des systèmes complexes naissent de règles simples. Cette curiosité m'a mené à l'ingénierie de l'IA, que j'étudie aujourd'hui à l'EFREI en Big Data & Machine Learning.", "Je suis Minh Khang THAI, et j'ai toujours aimé la complexité : les équations derrière la physique, la structure derrière les mathématiques. Aujourd'hui, je transforme cette passion en ingénierie de l'IA, dans le cycle Big Data & Machine Learning de l'EFREI."], "high": ["Je suis Minh Khang THAI, éternellement émerveillé par les mathématiques et la physique, par le chaos élégant des systèmes complexes ! Cette fascination m'a lancé dans un grand voyage vers l'ingénierie de l'IA, qui se poursuit à l'EFREI en Big Data & Machine Learning !", "Équations, particules, motifs cachés dans le chaos : les maths et la physique me passionnent depuis toujours ! Je suis Minh Khang THAI, et mon amour de la complexité alimente désormais une aventure en ingénierie de l'IA à l'EFREI, Big Data & Machine Learning !"]},
+ "projects": {
+  "low": [
+   "Quatre projets sélectionnés. Points clés : mission, fonctionnalités et apprentissages. Ouvrez un projet pour le détail.",
+   "Sélection : LifeIsGood, Annotation IRM assistée par IA, MesSous et RetinaSight. Chaque projet dispose d'une vue dédiée."
+  ],
+  "medium": [
+   "Quatre projets, quatre problèmes différents. Voici ce que j'ai construit, pourquoi, et ce que j'en ai appris.",
+   "J'apprends en construisant. Ouvrez un projet pour découvrir sa mission, ses fonctionnalités et ce qu'il m'a appris."
+  ],
+  "high": [
+   "Quatre idées se sont échappées du notebook ! Entrez dans les projets, découvrez leurs fonctionnalités et leurs bords glorieusement inachevés.",
+   "Bienvenue dans ma petite constellation d'expériences ! Quatre projets, beaucoup de curiosité, et l'histoire derrière chacun."
+  ]
+ },
+ "contact": {
+  "low": [
+   "Canaux de contact ci-dessous : GitHub, LinkedIn, e-mail et CV. Les questions sur les projets sont les bienvenues.",
+   "Minh Khang THAI. Joignable via GitHub, LinkedIn, e-mail ou CV."
+  ],
+  "medium": [
+   "Envie d'échanger sur l'un de ces projets, ou sur l'IA en général ? Écrivez-moi, je serai ravi d'en discuter.",
+   "Si quelque chose ici a retenu votre attention, parlons-en. L'e-mail est le moyen le plus rapide de me joindre."
+  ],
+  "high": [
+   "Un problème difficile ? Une idée merveilleusement ambitieuse ? Je suis tout ouïe ! Envoyez un message et donnons à toute cette curiosité un terrain de jeu utile !",
+   "Appel aux équipes curieuses et aux bâtisseurs délicieusement ambitieux ! Écrivez-moi et lançons une belle conversation !"
+  ]
+ },
+ "lifeisgood": {
+  "low": [
+   "LifeIsGood : assistant de recherche de logement. Fonctions : filtrage des annonces, analyse du quartier, estimation du loyer. Réalisé presque entièrement par moi, hors graphiques Python.",
+   "Assistant de recherche de logement combinant annonces, données de localisation OpenStreetMap et estimations de prix par machine learning. Réalisation : presque entièrement la mienne, sauf les graphiques Python."
+  ],
+  "medium": [
+   "LifeIsGood aide les locataires à mieux décider : il filtre les annonces, montre ce qui se trouve autour de chaque adresse et estime si le loyer est juste. J'en ai construit presque tout, sauf les graphiques Python.",
+   "Un assistant de recherche de logement qui associe chaque annonce à son quartier et à une estimation de prix. Presque tout ici est mon travail, à l'exception des graphiques Python."
+  ],
+  "high": [
+   "La recherche d'appartement, boostée ! LifeIsGood passe les annonces au crible, cartographie chaque métro, commerce et école à proximité, et repère les loyers suspects. J'ai construit presque tout, sauf les graphiques Python !",
+   "Et si votre recherche de logement avait un data scientist intégré ? LifeIsGood filtre les annonces, analyse le quartier et prédit des prix justes. Presque tout est sorti de mon clavier, graphiques Python mis à part !"
+  ]
+ },
+ "tumor": {
+  "low": [
+   "Plateforme web d'annotation de tumeurs sur IRM. Fonctions : import de scans, aperçu 2D et 3D, annotation coupe par coupe, reconstruction de volume 3D. Développée de bout en bout par moi.",
+   "Plateforme d'annotation IRM assistée par IA. Périmètre : import NIfTI, visualisation 3D, annotation de tumeurs, préparation à la segmentation automatique. Seul développeur de cette partie."
+  ],
+  "medium": [
+   "Une plateforme web pour annoter des tumeurs sur des IRM : visualiser un scan en 2D et en 3D, tracer la tumeur coupe par coupe et obtenir un volume 3D propre, prêt pour l'IA. Je l'ai construite de A à Z.",
+   "Cette plateforme transforme l'annotation IRM, lente et coupe par coupe, en un parcours web fluide, de l'import jusqu'au volume 3D de la tumeur. Tout ce qui est présenté ici est mon travail."
+  ],
+  "high": [
+   "Faites tourner une IRM en 3D, directement dans le navigateur ! Tracez les tumeurs coupe par coupe et regardez-les s'assembler en un volume 3D complet, prêt pour l'IA. Entièrement construit par moi, de la première à la dernière ligne !",
+   "Les IRM rencontrent le web ! Importez, explorez en 3D, annotez des tumeurs en quelques traits et reconstruisez-les en trois dimensions. Chaque élément présenté ici, je l'ai construit moi-même !"
+  ]
+ },
+ "retina": {
+  "low": [
+   "RetinaSight : application web d'évaluation de la rétinopathie diabétique à partir d'images de rétine. Composants : classifieur CNN, prétraitement d'images, assistant IA pour expliquer le résultat. Premier projet de deep learning, réalisé par moi.",
+   "Classifieur d'images de rétine sous forme d'application web. Résultat : niveau de rétinopathie prédit, expliqué par un assistant. Mon premier projet de deep learning, réalisé seul."
+  ],
+  "medium": [
+   "RetinaSight est le premier projet de deep learning que j'ai construit : importez une image de rétine, obtenez un niveau prédit de rétinopathie diabétique, et laissez un assistant IA expliquer ce qu'il signifie.",
+   "Mon premier pas dans le deep learning : un CNN qui évalue la rétinopathie diabétique à partir de photos de rétine, intégré à une application web avec un assistant qui explique le résultat."
+  ],
+  "high": [
+   "Là où tout a commencé ! RetinaSight lit les images de rétine avec un CNN, prédit le stade de rétinopathie diabétique et laisse un assistant IA expliquer le verdict. Mon tout premier projet de deep learning, et toujours un favori !",
+   "Des photos de rétine en entrée, des réponses en sortie ! Mon tout premier projet de deep learning : un CNN qui évalue la rétinopathie diabétique, et un assistant IA prêt à commenter le résultat."
+  ]
+ }
+};
+const PROJECTS_FR={"messous":{"category": "Application de budget assistée par IA", "short": "Transforme vos objectifs et contraintes du quotidien en un budget modifiable, avec un assistant IA à vos côtés.", "mission": "MesSous rend la gestion du budget personnel plus structurée, transparente et accessible. Plutôt que de partir d'un tableur vide, l'application part des objectifs financiers et des contraintes quotidiennes de l'utilisateur, puis propose des catégories et des recommandations qu'il peut revoir et ajuster.", "features": ["Un onboarding guidé qui recueille les objectifs, le profil de revenus, la situation de logement et les priorités.", "Des catégories de budget générées automatiquement, avec une solution de repli quand les services d'IA sont indisponibles.", "Des priorités et allocations modifiables, avec une revue des réponses assistée par IA.", "Un import CSV pour analyser et résumer les dépenses.", "Un assistant conversationnel qui garde le fil de la discussion."], "learned": ["Concevoir un parcours produit guidé, d'un objectif flou à un plan concret.", "Intégrer des fonctionnalités d'IA avec des solutions de repli pour que l'application fonctionne toujours.", "Construire une application web Flask sécurisée : sessions, stockage des données et traitement CSV."]},
+ "lifeisgood": {
+  "category": "Assistant d'intelligence immobilière",
+  "short": "Trouve des annonces de location, montre ce qui entoure chaque adresse et estime si le loyer est juste.",
+  "mission": "LifeIsGood vise à offrir à ses utilisateurs la meilleure vision possible d'un bien et de son environnement : transports, bars, restaurants, supermarchés et autres points d'intérêt à proximité. Chaque point d'intérêt est catégorisé puis transformé en données pour notre modèle de prédiction de prix, qui estime ensuite un prix juste pour l'utilisateur.",
+  "features": [
+   "Collecte les annonces de location et les filtre par budget, surface et quartier.",
+   "Trouve les points d'intérêt autour de n'importe quelle adresse : transports, commerces, écoles, santé.",
+   "Estime un loyer juste pour chaque annonce grâce à des modèles de machine learning.",
+   "Un assistant IA qui répond aux questions sur les annonces en langage naturel."
+  ],
+  "learned": [
+   "Travailler avec OpenStreetMap et les données géospatiales.",
+   "Prédire des prix par machine learning (clustering K-Means, CatBoost).",
+   "Utiliser des modèles open source et en faire des fonctionnalités produit.",
+   "Rendre des traitements de données lourds assez rapides pour une application interactive."
+  ]
+ },
+ "tumor": {
+  "name": "Annotation IRM assistée par IA",
+  "category": "Plateforme d'imagerie médicale",
+  "short": "Explorez des IRM en 2D et 3D dans le navigateur, annotez des tumeurs et reconstruisez-les en volumes 3D.",
+  "mission": "Conçue pour aider les étudiants à apprendre l'annotation de tumeurs avec l'assistance de l'IA. L'annotation d'un étudiant est évaluée par rapport à l'une de deux références : une segmentation par IA, ou l'annotation d'un spécialiste (l'enseignant). L'IA offre une première passe rapide et peut relever des détails que la plupart des gens manqueraient.",
+  "features": [
+   "Importer des IRM (NIfTI) et les organiser en cas avec des notes.",
+   "Parcourir les coupes 2D et prévisualiser le scan entier en modèle 3D.",
+   "Annoter la tumeur coupe par coupe, avec annuler et rétablir.",
+   "Reconstruire les annotations 2D en un volume 3D de la tumeur, affiché à côté du scan."
+  ],
+  "learned": [
+   "Manipuler les formats et volumes d'imagerie médicale (NIfTI).",
+   "Afficher des données médicales 3D dans le navigateur.",
+   "Construire une plateforme web complète : API, base de données, stockage de fichiers et Docker."
+  ],
+  "next": [
+   "Un modèle de segmentation de tumeurs pour pré-annoter les scans automatiquement (en cours).",
+   "Une visionneuse médicale dédiée (Cornerstone3D) pour une inspection 3D plus riche."
+  ]
+ },
+ "retina": {
+  "category": "Dépistage de la rétinopathie diabétique",
+  "short": "Mon premier projet de deep learning : une application web qui évalue la rétinopathie diabétique à partir d'images de rétine.",
+  "mission": "La rétinopathie diabétique peut être repérée tôt sur des photographies de la rétine. RetinaSight permet d'importer une image, d'obtenir un niveau de sévérité prédit et de demander à un assistant IA d'expliquer le résultat. C'est un projet pédagogique, pas un dispositif médical.",
+  "features": [
+   "Importer une image de rétine et obtenir un niveau prédit de rétinopathie diabétique.",
+   "Un assistant IA qui explique le résultat en langage clair.",
+   "Dossiers patients et comptes utilisateurs sécurisés."
+  ],
+  "learned": [
+   "Techniques de prétraitement d'images avec OpenCV.",
+   "Entraîner et évaluer un réseau de neurones convolutif.",
+   "Intégrer un assistant IA pour aider les utilisateurs à comprendre un résultat."
+  ]
+ }
+};
+const UI={
+ "en": {
+  "nav0": "Introduction",
+  "nav1": "Projects",
+  "nav2": "Contact",
+  "absorbed": "Absorbed",
+  "upNext": "Up next",
+  "nowShowing": "Now",
+  "mediaQueue": "Media queue",
+  "brandAria": "Minh Khang THAI — return to introduction",
+  "tempLabel": "Temperature",
+  "low": "Low",
+  "medium": "Medium",
+  "high": "High",
+  "ttTitle": "Sampling temperature <span>· live on every passage</span>",
+  "ttBody": "Temperature controls how freely the model picks each next token: low values stick to the most likely words, high values give rarer ones a chance.",
+  "ttLow": "<b>0.2 · Low</b><span>Focused and predictable. Safe, precise wording; little change between runs.</span>",
+  "ttMed": "<b>0.7 · Medium</b><span>Balanced. Natural phrasing with some variety.</span>",
+  "ttHigh": "<b>1.3 · High</b><span>Loose and inventive. Unusual word choices, more surprise from run to run.</span>",
+  "ttNote": "Click the active level again to resample.",
+  "modelReady": "model ready",
+  "sampling": "sampling",
+  "complete": "complete",
+  "tokens": "tokens",
+  "eyebrow": "Drawn to complexity",
+  "pfProgramme": "Programme",
+  "pfProgSub": "Engineering programme",
+  "pfLanguages": "Languages",
+  "langEn": "English · C1",
+  "langFr": "French · B2–C1",
+  "langVi": "Vietnamese · native",
+  "pfInterests": "Interests",
+  "interests": "Gym 6+ yrs · Boxing 3+ · Skiing 3+ · Chess",
+  "interestsSub": "Lately: climbing, hiking, surfing, piano",
+  "projectsTitle": "Selected <em>projects.</em>",
+  "contactTitle": "<em>Contact.</em>",
+  "back": "Back to projects",
+  "nextPage": "next page",
+  "nextAria": "Next page: ",
+  "pausedAria": "Section navigation paused in project view",
+  "sections": [
+   "Introduction",
+   "Projects",
+   "Contact"
+  ],
+  "open": "Open project",
+  "openAria": "Open ",
+  "mission": "Mission",
+  "features": "Key features",
+  "learned": "What I learned",
+  "next": "What's next",
+  "repo": "View on GitHub",
+  "private": "Private repository",
+  "gifTbd": "GIF demo to be added.",
+  "mediaNA": "Media unavailable.",
+  "playVideo": "Play video walkthrough",
+  "projMedia": "Project media",
+  "email": "Email",
+  "toastEnd": "You have reached the contact page. Use the navigation to go back to the start.",
+  "comingSoon": "Coming soon.", "prevMedia": "Previous image", "nextMedia": "Next image",
+  "toLight": "Switch to light theme",
+  "toDark": "Switch to dark theme",
+  "langGroup": "Language"
+ },
+ "fr": {
+  "nav0": "Introduction",
+  "nav1": "Projets",
+  "nav2": "Contact",
+  "absorbed": "Absorbées",
+  "upNext": "Suivant",
+  "nowShowing": "En cours",
+  "mediaQueue": "File des médias",
+  "brandAria": "Minh Khang THAI — retour à l'introduction",
+  "tempLabel": "Température",
+  "low": "Faible",
+  "medium": "Moyenne",
+  "high": "Élevée",
+  "ttTitle": "Température d'échantillonnage <span>· en direct sur chaque passage</span>",
+  "ttBody": "La température contrôle la liberté avec laquelle le modèle choisit chaque token suivant : les valeurs basses s'en tiennent aux mots les plus probables, les valeurs hautes laissent leur chance aux plus rares.",
+  "ttLow": "<b>0.2 · Faible</b><span>Concentrée et prévisible. Formulation sûre et précise ; peu de variation d'un tirage à l'autre.</span>",
+  "ttMed": "<b>0.7 · Moyenne</b><span>Équilibrée. Formulation naturelle avec un peu de variété.</span>",
+  "ttHigh": "<b>1.3 · Élevée</b><span>Libre et inventive. Choix de mots inhabituels, plus de surprises d'un tirage à l'autre.</span>",
+  "ttNote": "Cliquez à nouveau sur le niveau actif pour rééchantillonner.",
+  "modelReady": "modèle prêt",
+  "sampling": "échantillonnage",
+  "complete": "terminé",
+  "tokens": "tokens",
+  "eyebrow": "Passionné de complexité",
+  "pfProgramme": "Formation",
+  "pfProgSub": "Cycle ingénieur",
+  "pfLanguages": "Langues",
+  "langEn": "Anglais · C1",
+  "langFr": "Français · B2–C1",
+  "langVi": "Vietnamien · langue maternelle",
+  "pfInterests": "Centres d'intérêt",
+  "interests": "Musculation 6+ ans · Boxe 3+ · Ski 3+ · Échecs",
+  "interestsSub": "Récemment : escalade, randonnée, surf, piano",
+  "projectsTitle": "Projets <em>sélectionnés.</em>",
+  "contactTitle": "<em>Contact.</em>",
+  "back": "Retour aux projets",
+  "nextPage": "page suivante",
+  "nextAria": "Page suivante : ",
+  "pausedAria": "Navigation entre sections en pause dans la vue projet",
+  "sections": [
+   "Introduction",
+   "Projets",
+   "Contact"
+  ],
+  "open": "Voir le projet",
+  "openAria": "Ouvrir ",
+  "mission": "Mission",
+  "features": "Fonctionnalités clés",
+  "learned": "Ce que j'ai appris",
+  "next": "Et ensuite",
+  "repo": "Voir sur GitHub",
+  "private": "Dépôt privé",
+  "gifTbd": "Démo GIF à venir.",
+  "mediaNA": "Média indisponible.",
+  "playVideo": "Lire la vidéo",
+  "projMedia": "Média du projet",
+  "email": "E-mail",
+  "toastEnd": "Vous êtes sur la page contact. Utilisez la navigation pour revenir au début.",
+  "comingSoon": "Bientôt disponible.", "prevMedia": "Image précédente", "nextMedia": "Image suivante",
+  "toLight": "Passer au thème clair",
+  "toDark": "Passer au thème sombre",
+  "langGroup": "Langue"
+ }
+};
+/* ─────────────── Interface and presentation state ─────────────── */
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const state={lang:(()=>{try{return localStorage.getItem('mika-portfolio-lang')==='fr'?'fr':'en';}catch(e){return 'en';}})(),section:0,progress:10,temp:'medium',variant:0,project:null,transitioning:false,ambient:!matchMedia('(prefers-reduced-motion: reduce)').matches,distortion:true};
+const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
+const slides=[$('#slide-intro'),$('#slide-projects'),$('#slide-contact')];
+const t=k=>UI[state.lang][k];
+const pt=(p,f)=>state.lang==='fr'&&PROJECTS_FR[p.id]&&PROJECTS_FR[p.id][f]!=null?PROJECTS_FR[p.id][f]:p[f];
+const sectionKeys=['intro','projects','contact'];
+let typingTimer=0,generationToken=0,toastTimer=0,transitionToken=0,previousFocus=null,particles=[];
+function icon(id){return '<svg class="icon" aria-hidden="true"><use href="#i-'+id+'"/></svg>';}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function toast(message){clearTimeout(toastTimer);$('#toast').textContent=message;$('#toast').hidden=false;toastTimer=setTimeout(()=>$('#toast').hidden=true,3400);}
+function updateProgress(){
+ $('#progress-text').textContent=Math.round(state.progress)+'%';
+ $('#ring-value').style.strokeDashoffset=163.36*(1-state.progress/100);
+ const projectOpen=!!state.project;
+ $('#next-section').disabled=projectOpen;
+ $('#next-section').style.opacity=projectOpen?'.35':'1';
+ $('#next-label').textContent=t('nextPage');
+ $('#next-section').setAttribute('aria-label',projectOpen?t('pausedAria'):t('nextAria')+t('sections')[(state.section+1)%3]);
+}
+function cancelGeneration(){clearTimeout(typingTimer);generationToken++;}
+const TEMPERATURE_VALUES={low:'0.2',medium:'0.7',high:'1.3'};
+// One base colour per setting; the random spread around it grows with the temperature.
+const TEMPERATURE_COLORS={
+ low:{hue:182,hueSpread:2,saturation:64,saturationSpread:4,lightSpread:4,glow:.55},
+ medium:{hue:37,hueSpread:7,saturation:76,saturationSpread:14,lightSpread:11,glow:.72},
+ high:{hue:8,hueSpread:14,saturation:80,saturationSpread:20,lightSpread:18,glow:.9}
+};
+function randomWordShade(level,lightTheme){
+ const c=TEMPERATURE_COLORS[level];
+ const vary=range=>(Math.random()*2-1)*range;
+ const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
+ const h=c.hue+vary(c.hueSpread);
+ const sat=clamp(c.saturation+vary(c.saturationSpread),40,100);
+ const lum=clamp((lightTheme?38:69)+vary(c.lightSpread),lightTheme?18:44,lightTheme?58:89);
+ return {
+  flash:'hsl('+h.toFixed(2)+' '+sat.toFixed(2)+'% '+lum.toFixed(2)+'%)',
+  // On the light theme the flash starts deep and saturated (a pale spark would wash out on cream).
+  glow:lightTheme?'hsl('+h.toFixed(2)+' '+sat.toFixed(2)+'% 50% / '+(c.glow*.55).toFixed(2)+')':'hsl('+h.toFixed(2)+' '+sat.toFixed(2)+'% '+lum.toFixed(2)+'% / '+c.glow+')',
+  spark:lightTheme?'hsl('+h.toFixed(2)+' 95% 24%)':'hsl('+h.toFixed(2)+' 90% 94%)'
+ };
+}
+function generate(){
+ cancelGeneration();const token=generationToken;
+ const key=state.project?state.project.id:sectionKeys[state.section];
+ const target=key==='intro'?$('#intro-generated'):state.project?$('#detail-generated'):$('#'+sectionKeys[state.section]+'-generated');
+ if(!target)return;
+ // Every generated passage follows the global sampling temperature.
+ const pool=(state.lang==='fr'?WRITING_FR:PORTFOLIO.writing)[key];
+ const options=pool[state.temp]||pool.medium;
+ const text=options[state.variant%options.length];
+ target.replaceChildren();target.setAttribute('aria-label',text);target.setAttribute('aria-busy','true');
+ // Invisible copies of every possible version reserve the final height, so nothing shifts while words stream in.
+ const ghosts=document.createElement('span');ghosts.className='gen-ghosts';ghosts.setAttribute('aria-hidden','true');
+ for(const version of Object.values(pool).flat()){const g=document.createElement('span');g.textContent=version;ghosts.append(g);}
+ const visual=document.createElement('span');visual.className='gen-live';visual.setAttribute('aria-hidden','true');
+ const caret=document.createElement('span');caret.className='text-caret';visual.append(caret);
+ target.append(ghosts,visual);
+ const words=text.match(/\S+\s*/g)||[];let index=0;
+ // Live sampling readout in the temperature panel; every generation gets a fresh seed.
+ const status=$('#temperature-status'),seed=Math.floor(Math.random()*0x10000).toString(16).padStart(4,'0');
+ const report=done=>{status.textContent=done?t('complete')+' · '+words.length+' '+t('tokens')+' · T '+TEMPERATURE_VALUES[state.temp]+' · seed '+seed:t('sampling')+' · '+index+' / '+words.length+' '+t('tokens')+' · seed '+seed;status.parentElement.classList.toggle('live',!done);};
+ report(false);
+ // The word-by-word reveal always plays; reduced motion only removes the blur and slide (see CSS).
+ function tick(){
+  if(token!==generationToken)return;
+  if(index<words.length){
+   const word=document.createElement('span');word.textContent=words[index++];
+   const shade=randomWordShade(state.temp,document.documentElement.dataset.theme==='light');
+   word.className='word temperature-word';
+   word.style.setProperty('--word-flash',shade.flash);word.style.setProperty('--word-glow',shade.glow);word.style.setProperty('--word-spark',shade.spark);
+   // Once the flash has faded, drop the animation so the word follows the normal text colour (and theme).
+   word.addEventListener('animationend',()=>{word.className='word-done';word.removeAttribute('style');},{once:true});
+   caret.before(word);report(false);typingTimer=setTimeout(tick,55);
+  }else{caret.remove();report(true);target.setAttribute('aria-busy','false');$('#generation-announcement').textContent=text;}
+ }
+ tick();
+}
+function diffuse(){
+ if(reducedMotion.matches)return;
+ const total=130;
+ for(let i=0;i<total;i++){const a=Math.random()*Math.PI*2;particles.push({x:Math.random()*W,y:Math.random()*H,vx:Math.cos(a)*(20+Math.random()*100),vy:Math.sin(a)*(20+Math.random()*100),life:1,size:.6+Math.random()*1.7});}
+}
+function transition(change,focusTarget){
+ if(state.transitioning)return;
+ state.transitioning=true;const token=++transitionToken;
+ const surface=state.project?$('#project-detail'):$('#stage');
+ surface.classList.add('dissolving');diffuse();
+ setTimeout(()=>{
+  if(token!==transitionToken)return;
+  change();$('#stage').classList.remove('dissolving');$('#project-detail').classList.remove('dissolving');
+  generate();updateProgress();
+  if(focusTarget){const node=typeof focusTarget==='function'?focusTarget():focusTarget;node?.focus({preventScroll:true});}
+  setTimeout(()=>{state.transitioning=false;},reducedMotion.matches?0:350);
+ },reducedMotion.matches?0:250);
+}
+function setSection(index){
+ if(index<0||index>2||state.transitioning)return;
+ if(!state.project&&index===state.section){state.progress=10;updateProgress();return;}
+ morphGrid(index);
+ transition(()=>{
+  state.project=null;$('#project-detail').hidden=true;$('#stage').inert=false;$('#stage').removeAttribute('aria-hidden');
+  state.section=index;state.progress=10;
+  slides.forEach((s,i)=>{s.hidden=i!==index;s.scrollTop=0;});
+  $$('.nav-btn').forEach(b=>{if(Number(b.dataset.section)===index)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
+  $('#stage').setAttribute('aria-label',t('sections')[index]);
+ },$('#stage'));
+}
+function advance(amount){
+ if(state.project||state.transitioning)return;
+ state.progress=Math.max(0,Math.min(100,state.progress+amount));updateProgress();
+ if(state.progress>=100){if(state.section<2)setSection(state.section+1);else toast(t('toastEnd'));}
+ else if(state.progress<=0){if(state.section>0)setSection(state.section-1);}
+}
+let bookIndex=0,bookTurning=false;
+function bookCover(p){
+ const demo=(p.media||[]).find(m=>(m.type==='gif'||m.type==='photo')&&safeURL(m.src,{image:true}));
+ return demo?'<img src="'+escapeHTML(demo.src)+'" alt="'+escapeHTML(demo.alt||pt(p,'name'))+'">':'<span class="page-cover-empty">'+escapeHTML(pt(p,'name'))+'</span>';
+}
+function bookLeft(i){
+ const p=PORTFOLIO.projects[i],n=PORTFOLIO.projects.length;
+ return '<div class="page-inner"><div class="page-kicker"><span>'+escapeHTML(pt(p,'category')||'')+'</span><span>'+String(i+1).padStart(2,'0')+'</span></div><div class="page-cover">'+bookCover(p)+'</div></div>';
+}
+function bookRight(i){
+ const p=PORTFOLIO.projects[i],n=PORTFOLIO.projects.length;
+ const chips=(p.stack||[]).slice(0,6).map(x=>'<span class="stack-chip">'+escapeHTML(x)+'</span>').join('');
+ return '<div class="page-inner"><div class="page-kicker"><span></span><span>'+String(i+1).padStart(2,'0')+' / '+String(n).padStart(2,'0')+'</span></div><h3 class="page-title">'+escapeHTML(pt(p,'name'))+'</h3><p class="page-text">'+escapeHTML(pt(p,'short'))+'</p><div class="page-chips">'+chips+'</div><button type="button" class="page-open" data-project="'+escapeHTML(p.id)+'" aria-label="'+escapeHTML(t('openAria')+pt(p,'name'))+'"><span>'+t('open')+'</span>'+icon('diag')+'</button></div>';
+}
+function renderCards(){
+ const list=PORTFOLIO.projects,n=list.length;bookIndex=Math.max(0,Math.min(n-1,bookIndex));
+ const tabs=list.map((p,i)=>'<button type="button" class="book-tab" data-book="'+i+'" aria-current="'+(i===bookIndex)+'">'+escapeHTML(pt(p,'name'))+'</button>').join('');
+ $('#project-grid').innerHTML='<div class="book-tabs" role="tablist">'+tabs+'</div><div class="book-body"><button type="button" class="book-turn" data-turn="-1" aria-label="'+t('prevMedia')+'"'+(bookIndex===0?' disabled':'')+'>'+icon('back')+'</button><div class="book-spread"><div class="book-page left" style="box-shadow:'+pageStack(bookIndex,-1)+'">'+bookLeft(bookIndex)+'</div><div class="book-page right" style="box-shadow:'+pageStack(n-1-bookIndex,1)+'">'+bookRight(bookIndex)+'</div></div><button type="button" class="book-turn" data-turn="1" aria-label="'+t('nextMedia')+'"'+(bookIndex===n-1?' disabled':'')+'>'+icon('arrow')+'</button></div>';
+}
+function pageStack(count,dir){
+ const light=document.documentElement.dataset.theme==='light',edge=light?'rgba(0,0,0,.16)':'rgba(255,255,255,.16)',gap=light?'#e9e9e9':'#151515',out=[];
+ for(let k=1;k<=2+count*2;k++)out.push((dir*k*1.2).toFixed(1)+'px '+(k*.9).toFixed(1)+'px 0 0 '+(k%2?edge:gap));
+ return out.join(',')+',inset 0 1px 0 var(--glass-hi)';
+}
+// Turn to a spread: one flat leaf hinged on the spine rotates over with an eased motion,
+// showing the next page on its back; a shade falls on the page it uncovers.
+function turnBook(target){
+ const n=PORTFOLIO.projects.length;target=Math.max(0,Math.min(n-1,target));
+ if(target===bookIndex||bookTurning)return;
+ const spread=$('#project-grid .book-spread'),from=bookIndex,fwd=target>from;
+ if(!spread||matchMedia('(max-width:760px)').matches){bookIndex=target;renderCards();return;}
+ bookTurning=true;
+ const left=spread.querySelector('.book-page.left'),right=spread.querySelector('.book-page.right');
+ const front=fwd?bookRight(from):bookLeft(from),back=fwd?bookLeft(target):bookRight(target);
+ const leaf=document.createElement('div');leaf.className='book-leaf '+(fwd?'fwd':'back');
+ leaf.innerHTML='<div class="leaf-face front"><div class="book-page '+(fwd?'right':'left')+'">'+front+'</div><div class="leaf-light"></div></div><div class="leaf-face back"><div class="book-page '+(fwd?'left':'right')+'">'+back+'</div><div class="leaf-light"></div></div>';
+ if(fwd)right.innerHTML=bookRight(target);else left.innerHTML=bookLeft(target);
+ const shade=document.createElement('div');shade.className='turn-shade';shade.style.left=fwd?'50%':'0';shade.style.setProperty('--shade-dir',fwd?'90deg':'270deg');
+ spread.append(shade,leaf);
+ const lights=[...leaf.querySelectorAll('.leaf-light')],sign=fwd?-1:1,D=750,t0=performance.now();
+ bookIndex=target;
+ $$('#project-grid .book-tab').forEach(tb=>tb.setAttribute('aria-current',String(Number(tb.dataset.book)===target)));
+ (function step(now){
+  const p=Math.min(1,(now-t0)/D),e=p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2,deg=e*180;
+  leaf.style.transform='rotateY('+(sign*deg)+'deg)';
+  const s=Math.sin(e*Math.PI);shade.style.opacity=(s*.5).toFixed(3);
+  lights.forEach(l=>l.style.background='rgba(0,0,0,'+(s*.25).toFixed(3)+')');
+  if(p>=1){bookTurning=false;renderCards();return;}
+  requestAnimationFrame(step);
+ })(t0);
+}
+$('#project-grid').addEventListener('click',e=>{
+ const open=e.target.closest('.page-open');if(open){openProject(open.dataset.project);return;}
+ const turn=e.target.closest('.book-turn');if(turn){if(!bookTurning)turnBook(bookIndex+Number(turn.dataset.turn));return;}
+ const tab=e.target.closest('.book-tab');if(tab)turnBook(Number(tab.dataset.book));
+});
+function safeURL(url,{image=false}={}){
+ if(!url)return '';
+ try{const u=new URL(url,location.href);if(['http:','https:'].includes(u.protocol)||(image&&u.protocol==='data:'&&/^data:image\//i.test(url))||(u.protocol==='file:'&&!/^[a-z]+:/i.test(url)))return url;}catch(e){}return '';
+}
+const MEDIA_VIDEO=/\.(mp4|webm|mov)$/i,MEDIA_IMAGE=/\.(png|jpe?g|webp|gif|avif)$/i;
+// Reads media/<id>/media.json for every project, sorted by the number at the start of each file name.
+async function loadMedia(){
+ await Promise.all(PORTFOLIO.projects.map(async p=>{
+  p.media=[];if(!p.mediaDir)return;
+  try{
+   const r=await fetch(p.mediaDir+'media.json',{cache:'no-cache'});if(!r.ok)return;
+   const items=((await r.json()).items||[]).map(m=>{
+    if(m.type==='youtube')return {...m,order:Number(m.order)||999};
+    const file=String(m.file||''),src=p.mediaDir+file;
+    return {...m,src,order:parseInt(file,10)||999,type:MEDIA_VIDEO.test(file)?'video':MEDIA_IMAGE.test(file)?'photo':'other'};
+   });
+   p.media=items.sort((a,b)=>a.order-b.order);
+  }catch(e){}
+ }));
+ renderCards();
+}
+function mediaCaption(m){return (state.lang==='fr'&&m.captionFr)||m.caption||t('projMedia');}
+function queueThumb(m){
+ if(m.type==='youtube')return '<img src="https://i.ytimg.com/vi/'+escapeHTML(m.id)+'/hqdefault.jpg" alt="" loading="lazy">';
+ const src=escapeHTML(safeURL(m.src)||'');
+ if(m.type==='video')return '<video src="'+src+'#t=0.5" muted playsinline preload="metadata" tabindex="-1"></video>';
+ if(m.type==='photo')return '<img src="'+src+'" alt="" loading="lazy">';
+ return '';
+}
+function renderMedia(project){
+ const media=project.media||[];
+ if(!media.length)return '<div class="detail-media"><p class="media-empty">'+t('gifTbd')+'</p></div>';
+ const slides=media.map((m,i)=>{
+  const cap='<figcaption>'+escapeHTML(mediaCaption(m))+'</figcaption>';
+  const open='<figure class="media-item gallery-slide"'+(i?' hidden':'')+'><div class="gallery-frame">';
+  if(m.type==='youtube'&&/^[\w-]{11}$/.test(m.id))return open+'<div class="youtube-wrap"><button class="youtube-load" data-video="'+escapeHTML(m.id)+'" data-start="'+(Number(m.start)||0)+'" aria-label="'+t('playVideo')+'">'+icon('media')+'<span>'+t('playVideo')+'</span></button></div></div>'+cap+'</figure>';
+  const src=safeURL(m.src,{image:true});
+  if(src&&m.type==='video')return open+'<video src="'+escapeHTML(src)+'" muted loop playsinline controls preload="'+(i?'none':'auto')+'"'+(i?'':' autoplay')+'></video></div>'+cap+'</figure>';
+  if(src&&(m.type==='gif'||m.type==='photo'))return open+'<img src="'+escapeHTML(src)+'" alt="'+escapeHTML(m.alt||mediaCaption(m))+'" loading="lazy"></div>'+cap+'</figure>';
+  return open+'<p class="media-empty">'+t('mediaNA')+'</p></div>'+cap+'</figure>';
+ }).join('');
+ if(media.length<2)return '<div class="gallery" data-index="0">'+slides+'</div>';
+ const nav='<div class="gallery-nav"><button type="button" class="gallery-btn" data-step="-1" aria-label="'+t('prevMedia')+'">'+icon('back')+'</button><span class="gallery-count" aria-live="polite">1 / '+media.length+'</span><button type="button" class="gallery-btn" data-step="1" aria-label="'+t('nextMedia')+'">'+icon('arrow')+'</button></div>';
+ const queue='<div class="gallery-queue" aria-label="'+t('mediaQueue')+'">'+media.map((m,i)=>'<button type="button" class="queue-item'+(i===0?' active':i===1?' next':'')+'" data-go="'+i+'" aria-label="'+escapeHTML((i+1)+'. '+mediaCaption(m))+'"><span class="queue-thumb">'+queueThumb(m)+'</span><span class="q-num">'+String(i+1).padStart(2,'0')+'</span>'+(m.type==='video'||m.type==='youtube'?'<span class="q-type">▶</span>':'')+'<span class="q-tag">'+(i===0?t('nowShowing'):t('upNext'))+'</span></button>').join('')+'</div>';
+ return '<div class="gallery" data-index="0">'+slides+nav+queue+'</div>';
+}
+function setupGallery(project){
+ const g=$('#detail-content .gallery');if(!g)return;
+ const slides=[...g.querySelectorAll('.gallery-slide')];
+ const show=i=>{
+  const n=slides.length,next=(i+n)%n,cur=Number(g.dataset.index);
+  const frame=slides[cur].querySelector('iframe');
+  if(frame&&cur!==next)frame.parentNode.replaceChildren(Object.assign(document.createElement('button'),{className:'youtube-load',innerHTML:icon('media')+'<span>'+t('playVideo')+'</span>'}));
+  const btn=slides[cur].querySelector('.youtube-load');if(btn&&frame){btn.dataset.video=frame.dataset.video;btn.dataset.start=frame.dataset.start;btn.setAttribute('aria-label',t('playVideo'));}
+  slides.forEach((s,k)=>{s.hidden=k!==next;const v=s.querySelector('video');if(!v)return;if(k===next){v.preload='auto';v.play().catch(()=>{});}else v.pause();});
+  g.dataset.index=next;
+  const c=g.querySelector('.gallery-count');if(c)c.textContent=(next+1)+' / '+n;
+  const items=[...g.querySelectorAll('.queue-item')];
+  items.forEach((q,k)=>{q.classList.toggle('active',k===next);q.classList.toggle('next',k===(next+1)%n);const tag=q.querySelector('.q-tag');if(tag)tag.textContent=k===next?t('nowShowing'):t('upNext');});
+  const q=g.querySelector('.gallery-queue'),cur2=items[next];
+  if(q&&cur2)q.scrollLeft=Math.max(0,cur2.offsetLeft-q.offsetLeft-q.clientWidth/2+cur2.offsetWidth/2);
+ };
+ g.addEventListener('click',e=>{
+  const step=e.target.closest('.gallery-btn');if(step){show(Number(g.dataset.index)+Number(step.dataset.step));return;}
+  const go=e.target.closest('.queue-item');if(go){show(Number(go.dataset.go));return;}
+  const b=e.target.closest('.youtube-load');if(!b)return;
+  const frame=document.createElement('iframe');frame.src='https://www.youtube-nocookie.com/embed/'+b.dataset.video+'?autoplay=1'+(Number(b.dataset.start)?'&start='+b.dataset.start:'');
+  frame.dataset.video=b.dataset.video;frame.dataset.start=b.dataset.start;frame.title=pt(project,'name')+' video';
+  frame.allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';b.parentNode.replaceChildren(frame);
+ });
+ // Hovering a video preview plays it, so the queue shows what is coming.
+ g.querySelectorAll('.queue-item').forEach(q=>{const v=q.querySelector('video');if(!v)return;
+  q.addEventListener('pointerenter',()=>{if(!reducedMotion.matches)v.play().catch(()=>{});});
+  q.addEventListener('pointerleave',()=>{v.pause();});});
+ g.gallery={show,step:d=>show(Number(g.dataset.index)+d)};
+}
+function renderDetail(project){
+ const block=v=>Array.isArray(v)?'<ul class="detail-list">'+v.map(x=>'<li>'+escapeHTML(x)+'</li>').join('')+'</ul>':'<p>'+escapeHTML(v||'')+'</p>';
+ const sections=[['01',t('mission'),pt(project,'mission')],['02',t('features'),pt(project,'features')],['03',t('learned'),pt(project,'learned')]];
+ if(pt(project,'next'))sections.push(['04',t('next'),pt(project,'next')]);
+ const stack=(project.stack||[]).map(x=>'<span class="stack-chip">'+escapeHTML(x)+'</span>').join('');
+ const repo=safeURL(project.repo)?'<a class="repo-link" href="'+escapeHTML(project.repo)+'" target="_blank" rel="noopener noreferrer">'+t('repo')+icon('diag')+'</a>':'<span class="draft-badge">'+t('private')+'</span>';
+ $('#detail-content').innerHTML='<div class="detail-header"><div><p class="detail-category">'+escapeHTML(pt(project,'category')||'')+'</p><h2 class="detail-title" id="detail-title">'+escapeHTML(pt(project,'name'))+'</h2><div class="generated" id="detail-generated"></div><div class="detail-meta"><div class="stack-chips">'+stack+'</div>'+repo+'</div></div></div>'+renderMedia(project)+'<div class="detail-sections">'+sections.map(x=>'<section class="detail-section"><h3>'+x[1]+'</h3>'+block(x[2])+'</section>').join('')+'</div>';
+  setupGallery(project);
+  $$('.media-item img').forEach(img=>img.addEventListener('error',()=>{const note=document.createElement('p');note.className='media-empty';note.textContent=t('mediaNA');img.replaceWith(note);}));
+}
+function pauseGallery(){$$('#detail-content video').forEach(v=>v.pause());}
+function openProject(id){
+ const project=PORTFOLIO.projects.find(p=>p.id===id);if(!project||state.transitioning)return;
+ previousFocus=document.activeElement;
+ transition(()=>{
+  state.project=project;state.section=1;
+  renderDetail(project);
+  $('#project-detail').hidden=false;$('#detail-body').scrollTop=0;$('#stage').inert=true;$('#stage').setAttribute('aria-hidden','true');
+ },$('#back-projects'));
+}
+function closeProject(){
+ if(!state.project||state.transitioning)return;
+ transition(()=>{state.project=null;$('#project-detail').hidden=true;$('#stage').inert=false;$('#stage').removeAttribute('aria-hidden');},()=>previousFocus?.isConnected?previousFocus:$('#stage'));
+}
+function renderContact(){
+ const items=[['github','GitHub','diag'],['linkedin','LinkedIn','diag'],['email',t('email'),'diag'],['cv','CV','diag']];
+ $('#contact-links').innerHTML=items.map(([key,label,ico])=>{
+  let url=PORTFOLIO.contact[key];
+  if(key==='email')url=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(url)?'mailto:'+url:'';else url=safeURL(url);
+  const contents='<span class="row-label">'+label+'</span>'+icon(ico);
+  return url?'<a class="contact-row" href="'+escapeHTML(url)+'" '+(key==='email'?'':'target="_blank" rel="noopener noreferrer"')+'>'+contents+'</a>':'<button class="contact-row" data-pending="'+key+'">'+contents+'</button>';
+ }).join('');
+ $$('.contact-row[data-pending]').forEach(b=>b.addEventListener('click',()=>toast(t('comingSoon'))));
+}
+/* ─────────── Section coordinate systems + a cursor gravity well ─────────── */
+const canvas=$('#field'),ctx=canvas.getContext('2d',{alpha:true});
+let W=innerWidth,H=innerHeight,dpr=1,frame=0,lastTime=performance.now(),time=0,lastDraw=0;
+let pointer={x:W*.73,y:H*.45,targetX:W*.73,targetY:H*.45,strength:0,targetStrength:0};
+let gridColor='',accentColor='',bgColor='';
+let gridPaths=[],gridBlend=[1,0,0],gridMorph=null;
+const GRID_SYSTEMS=['cartesian','polar','oblique'];
+const GRID_MORPH_DURATION=1500;
+// All systems share the same paths and vertices, so each line changes shape.
+function coordinatePoint(system,u,v){
+ if(system===0)return [-100+u*(W+200),-100+v*(H+200)];
+ if(system===1){
+  const angle=u*Math.PI*2-Math.PI/2,radius=v*(Math.hypot(W,H)/2+100);
+  return [W/2+Math.cos(angle)*radius,H/2+Math.sin(angle)*radius];
+ }
+ const span=(W/Math.sqrt(3)+H)*1.08+200,a=(u-.5)*span,b=(v-.5)*span;
+ return [W/2+(a-b)*Math.sqrt(3)/2,H/2+(a+b)/2];
+}
+function buildGridMesh(){
+ gridPaths=[];
+ const columns=Math.ceil((W+200)/49),rows=Math.ceil((H+200)/49);
+ for(const horizontal of [false,true]){
+  const count=horizontal?rows:columns;
+  const segments=Math.min(160,Math.max(64,Math.ceil(((horizontal?W:H)+200)/16)));
+  for(let line=0;line<=count;line++){
+   const systems=[new Float32Array((segments+1)*2),new Float32Array((segments+1)*2),new Float32Array((segments+1)*2)];
+   for(let point=0;point<=segments;point++){
+    const u=horizontal?point/segments:line/count,v=horizontal?line/count:point/segments;
+    for(let system=0;system<3;system++)systems[system].set(coordinatePoint(system,u,v),point*2);
+   }
+   gridPaths.push({systems,seam:!horizontal&&line===count});
+  }
+ }
+}
+function updateGridMorph(timestamp){
+ if(!gridMorph)return;
+ const p=Math.max(0,Math.min(1,(timestamp-gridMorph.start)/GRID_MORPH_DURATION));
+ const ease=p*p*p*(p*(p*6-15)+10);
+ gridBlend=gridMorph.from.map((value,index)=>value+(gridMorph.to[index]-value)*ease);
+ if(p===1){gridBlend=gridMorph.to;gridMorph=null;}
+}
+function morphGrid(index){
+ const now=performance.now();updateGridMorph(now);
+ const target=GRID_SYSTEMS.map((_,i)=>i===index?1:0);
+ canvas.dataset.coordinates=GRID_SYSTEMS[index];
+ gridMorph={from:gridBlend.slice(),to:target,start:now};
+}
+function palette(){const css=getComputedStyle(document.documentElement);gridColor=css.getPropertyValue('--canvas').trim();accentColor=css.getPropertyValue('--accent').trim();bgColor=css.getPropertyValue('--bg').trim();}
+function resize(){W=innerWidth;H=innerHeight;dpr=Math.min(devicePixelRatio||1,1.6);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);pointer.targetX=Math.max(0,Math.min(W,pointer.targetX));pointer.targetY=Math.max(0,Math.min(H,pointer.targetY));buildGridMesh();}
+function distort(x,y){
+ let px=x,py=y;
+ if(state.ambient){px+=Math.sin(y*.007+time*.3)*4;py+=Math.sin(x*.006+time*.24)*4;}
+ if(state.distortion&&pointer.strength>.001){
+  const pdx=px-pointer.x,pdy=py-pointer.y,dist2=pdx*pdx+pdy*pdy;
+  const reach=Math.min(W,H)*.32;
+  const f=Math.exp(-dist2/(reach*reach))*.75*pointer.strength;
+  const a=.32*f;const ddx=pdx*(1-f),ddy=pdy*(1-f);
+  px=pointer.x+ddx*Math.cos(a)-ddy*Math.sin(a);py=pointer.y+ddx*Math.sin(a)+ddy*Math.cos(a);
+ }
+ return [px,py];
+}
+const glowCanvas=document.createElement('canvas'),glowCtx=glowCanvas.getContext('2d');
+function drawGridMesh(){
+ ctx.strokeStyle=gridColor;ctx.lineWidth=.65;
+ const glowPath=new Path2D();
+ for(const path of gridPaths){
+  ctx.globalAlpha=.29*(path.seam?1-gridBlend[1]:1);
+  const line=new Path2D();const [cartesian,polar,oblique]=path.systems;
+  for(let i=0;i<cartesian.length;i+=2){
+   const x=cartesian[i]*gridBlend[0]+polar[i]*gridBlend[1]+oblique[i]*gridBlend[2];
+   const y=cartesian[i+1]*gridBlend[0]+polar[i+1]*gridBlend[1]+oblique[i+1]*gridBlend[2];
+   const point=distort(x,y);if(i===0)line.moveTo(...point);else line.lineTo(...point);
+  }
+  ctx.stroke(line);glowPath.addPath(line);
+ }
+ drawGridGlow(glowPath);
+}
+// Accretion-disk light: the warped lines near the pointer glow (white on dark, black on light), with a dark core.
+const shadeCanvas=document.createElement('canvas'),shadeCtx=shadeCanvas.getContext('2d');
+// Film-grain tile, punched out of the soft light so its shade looks grainy.
+const grainCanvas=document.createElement('canvas');grainCanvas.width=grainCanvas.height=192;
+(()=>{const g=grainCanvas.getContext('2d'),img=g.createImageData(192,192);for(let i=0;i<img.data.length;i+=4){img.data[i+3]=Math.random()*Math.random()*230;}g.putImageData(img,0,0);})();
+let grainPattern=null;
+function lightInk(){return document.documentElement.dataset.theme==='light'?'0,0,0':'255,255,255';}
+function fitCanvas(c){if(c.width!==canvas.width||c.height!==canvas.height){c.width=canvas.width;c.height=canvas.height;}}
+function drawGridGlow(glowPath){
+ const s=pointer.strength*.22*(1+absorbFlash*1.8);if(!state.distortion||s<.01)return;
+ fitCanvas(glowCanvas);fitCanvas(shadeCanvas);
+ const g=glowCtx,cx=pointer.x,cy=pointer.y,R=Math.min(W,H)*.32,ink=lightInk();
+ g.setTransform(1,0,0,1,0,0);g.globalCompositeOperation='source-over';g.globalAlpha=1;g.clearRect(0,0,glowCanvas.width,glowCanvas.height);
+ g.setTransform(dpr,0,0,dpr,0,0);
+ g.strokeStyle='#fff';g.lineWidth=.9;g.stroke(glowPath);
+ // Fade the lines by distance from the centre.
+ g.globalCompositeOperation='source-in';
+ const heat=g.createRadialGradient(cx,cy,0,cx,cy,R);
+ heat.addColorStop(0,'rgba('+ink+',0)');heat.addColorStop(.05,'rgba('+ink+',.15)');
+ heat.addColorStop(.1,'rgba('+ink+',1)');heat.addColorStop(.2,'rgba('+ink+',.9)');
+ heat.addColorStop(.38,'rgba('+ink+',.55)');heat.addColorStop(.62,'rgba('+ink+',.2)');heat.addColorStop(1,'rgba('+ink+',0)');
+ g.fillStyle=heat;g.fillRect(0,0,W,H);
+ // Doppler beaming: one side of the swirling disk is brighter, slowly rotating.
+ g.globalCompositeOperation='destination-in';
+ const beam=g.createConicGradient(time*.6+performance.now()*.0004,cx,cy);
+ beam.addColorStop(0,'rgba(0,0,0,1)');beam.addColorStop(.5,'rgba(0,0,0,.45)');beam.addColorStop(1,'rgba(0,0,0,1)');
+ g.fillStyle=beam;g.fillRect(0,0,W,H);
+ const light=ink==='0,0,0',sh=shadeCtx;
+ // Soft halo goes to the shade layer (grain is added there); the crisp lines go straight on screen.
+ sh.setTransform(1,0,0,1,0,0);sh.globalCompositeOperation='source-over';
+ sh.globalAlpha=Math.min(1,s*(light?.6:1));sh.filter='blur(16px)';sh.drawImage(glowCanvas,0,0);
+ sh.globalAlpha=Math.min(1,s*(light?.7:1));sh.filter='blur(6px)';sh.drawImage(glowCanvas,0,0);
+ sh.globalAlpha=Math.min(1,s*(light?.5:.9));sh.filter='blur(2px)';sh.drawImage(glowCanvas,0,0);sh.filter='none';
+ ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.globalCompositeOperation=light?'source-over':'lighter';
+ ctx.globalAlpha=Math.min(1,s);ctx.drawImage(glowCanvas,0,0);
+ ctx.restore();
+}
+// Star dust: drifts slowly, falls toward the pointer with inverse-square pull and swirls with the warp.
+let dust=[],absorbFlash=0;
+function spawnDust(p,edge){
+ const a=Math.random()*Math.PI*2,speed=reducedMotion.matches?0:4+Math.random()*10;
+ if(edge){const side=Math.floor(Math.random()*4);p.x=side===0?-5:side===1?W+5:Math.random()*W;p.y=side===2?-5:side===3?H+5:Math.random()*H;}
+ else{p.x=Math.random()*W;p.y=Math.random()*H;}
+ p.dvx=Math.cos(a)*speed;p.dvy=Math.sin(a)*speed;p.vx=p.dvx;p.vy=p.dvy;
+ p.size=.6+Math.random()*.9;p.alpha=.25+Math.random()*.35;p.age=0;
+ return p;
+}
+// Absorption counter: bumps and floats a "+1" each time a speck is swallowed.
+let absorbCount=0,lastPop=0;
+const absorbValue=$('#absorb-value'),absorbNum=$('#absorb-num');
+function countAbsorb(){
+ absorbCount++;absorbNum.textContent=absorbCount;
+ absorbValue.classList.remove('bump');void absorbValue.offsetWidth;absorbValue.classList.add('bump');
+ const now=performance.now();if(now-lastPop<90)return;lastPop=now;
+ const pop=document.createElement('span');pop.className='ac-pop';pop.textContent='+1';
+ absorbValue.appendChild(pop);pop.addEventListener('animationend',()=>pop.remove());
+}
+function drawDust(dt){
+ const target=Math.round(Math.min(220,W*H/8000));
+ while(dust.length<target)dust.push(spawnDust({},false));
+ if(dust.length>target)dust.length=target;
+ const moving=true,s=state.distortion?pointer.strength:0;
+ const G=2.2e6*s,horizon=12;
+ ctx.fillStyle=accentColor;ctx.strokeStyle=accentColor;
+ for(const p of dust){
+  if(moving){
+   const dx=pointer.x-p.x,dy=pointer.y-p.y,r2=dx*dx+dy*dy,r=Math.sqrt(r2)||1;
+   if(s>.02){
+    const acc=G/Math.max(r2,900);
+    // Radial pull plus a tangential swirl, matching the grid's rotation.
+    p.vx+=(dx/r*acc-dy/r*acc*.55)*dt;p.vy+=(dy/r*acc+dx/r*acc*.55)*dt;
+   }
+   // Far from the pull, ease back to the calm drift.
+   const calm=Math.min(1,dt*.6*(1-Math.min(1,s*30000/Math.max(r2,1))));
+   p.vx+=(p.dvx-p.vx)*calm;p.vy+=(p.dvy-p.vy)*calm;
+   const v=Math.hypot(p.vx,p.vy);if(v>700){p.vx*=700/v;p.vy*=700/v;}
+   p.x+=p.vx*dt;p.y+=p.vy*dt;p.age+=dt;
+   if(s>.02&&r<horizon){absorbFlash=Math.min(1,absorbFlash+.35*p.alpha+.1);countAbsorb();spawnDust(p,true);continue;}
+   if(p.x<-20||p.x>W+20||p.y<-20||p.y>H+20){spawnDust(p,true);continue;}
+  }
+  const fade=moving?Math.min(1,p.age*2):1,v=Math.hypot(p.vx,p.vy);
+  ctx.globalAlpha=p.alpha*fade*Math.min(1,.7+v/400);
+  if(v>40){
+   // Streak length grows with speed, so acceleration is visible.
+   const k=Math.min(.06,.02+v/12000);
+   ctx.lineWidth=p.size;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x-p.vx*k,p.y-p.vy*k);ctx.stroke();
+  }else ctx.fillRect(p.x,p.y,p.size,p.size);
+ }
+ ctx.globalAlpha=1;
+}
+// Each absorbed speck makes the mass flare with the disk's colours, then fade out.
+function drawAbsorbFlash(dt){
+ absorbFlash*=Math.exp(-dt*2.2);
+ const s=state.distortion?pointer.strength:0,f=absorbFlash*s,ink=lightInk(),light=ink==='0,0,0',calm=reducedMotion.matches;
+ fitCanvas(shadeCanvas);const sh=shadeCtx;
+ if(f>=.01){
+  // Vibration: the flare jitters and flickers, harder when the flash is strong.
+  const shake=calm?0:f*f*4,cx=pointer.x+(Math.random()-.5)*shake,cy=pointer.y+(Math.random()-.5)*shake;
+  const flicker=calm?1:1-f*.25*Math.random(),R=(28+f*40)*flicker;
+  const glow=sh.createRadialGradient(cx,cy,0,cx,cy,R);
+  glow.addColorStop(0,'rgba('+ink+',1)');glow.addColorStop(.25,'rgba('+ink+',.9)');
+  glow.addColorStop(.5,'rgba('+ink+',.45)');glow.addColorStop(.78,'rgba('+ink+',.12)');glow.addColorStop(1,'rgba('+ink+',0)');
+  sh.setTransform(dpr,0,0,dpr,0,0);sh.globalCompositeOperation='source-over';
+  sh.globalAlpha=Math.min(1,f*(light?.6:.85)*flicker);sh.fillStyle=glow;sh.beginPath();sh.arc(cx,cy,R,0,Math.PI*2);sh.fill();
+  // Hot core.
+  sh.globalAlpha=Math.min(1,f*(light?.7:1));sh.fillStyle='rgb('+ink+')';sh.filter='blur(2px)';
+  sh.beginPath();sh.arc(cx,cy,2+f*4*flicker,0,Math.PI*2);sh.fill();sh.filter='none';
+ }
+ // Grain the whole soft-light layer, then put it on screen and clear it for the next frame.
+ sh.setTransform(1,0,0,1,0,0);sh.globalAlpha=1;sh.globalCompositeOperation='destination-out';
+ if(!grainPattern)grainPattern=sh.createPattern(grainCanvas,'repeat');
+ const ox=calm?0:Math.floor(Math.random()*192),oy=calm?0:Math.floor(Math.random()*192);
+ sh.translate(-ox,-oy);sh.fillStyle=grainPattern;sh.fillRect(ox,oy,shadeCanvas.width,shadeCanvas.height);sh.setTransform(1,0,0,1,0,0);
+ sh.globalCompositeOperation='source-over';
+ ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.globalCompositeOperation=light?'source-over':'lighter';ctx.drawImage(shadeCanvas,0,0);ctx.restore();
+ sh.clearRect(0,0,shadeCanvas.width,shadeCanvas.height);
+}
+function drawField(timestamp){
+ frame=requestAnimationFrame(drawField);if(document.hidden)return;
+ if(timestamp-lastDraw<22)return;
+ const dt=Math.min((timestamp-lastTime)/1000,.05);lastTime=timestamp;lastDraw=timestamp;
+ updateGridMorph(timestamp);
+ if(state.ambient&&!reducedMotion.matches)time+=dt;
+ pointer.x+=(pointer.targetX-pointer.x)*.14;pointer.y+=(pointer.targetY-pointer.y)*.14;pointer.strength+=(pointer.targetStrength-pointer.strength)*.1;
+ ctx.clearRect(0,0,W,H);
+ drawGridMesh();
+ drawDust(dt);
+ drawAbsorbFlash(dt);
+ if(pointer.strength>.03&&state.distortion){ctx.globalAlpha=pointer.strength*.18;ctx.strokeStyle=accentColor;ctx.lineWidth=.6;ctx.beginPath();ctx.arc(pointer.x,pointer.y,13+Math.sin(time)*2,0,Math.PI*2);ctx.stroke();}
+ for(const p of particles){p.life-=dt*1.15;p.x+=p.vx*dt;p.y+=p.vy*dt;ctx.globalAlpha=Math.max(0,p.life)*.6;ctx.fillStyle=accentColor;ctx.fillRect(p.x,p.y,p.size,p.size);}particles=particles.filter(p=>p.life>0);
+ ctx.globalAlpha=1;
+}
+canvas.dataset.coordinates=GRID_SYSTEMS[0];palette();resize();frame=requestAnimationFrame(drawField);
+addEventListener('resize',resize);
+addEventListener('pointermove',e=>{if(e.pointerType!=='touch'){pointer.targetX=e.clientX;pointer.targetY=e.clientY;pointer.targetStrength=1;}},{passive:true});
+document.addEventListener('pointerleave',()=>pointer.targetStrength=0);
+addEventListener('blur',()=>pointer.targetStrength=0);
+/* ───────────────── Event routing ───────────────── */
+$$('[data-section]').forEach(b=>b.addEventListener('click',()=>setSection(Number(b.dataset.section))));
+$('#next-section').addEventListener('click',()=>setSection((state.section+1)%3));
+$('#back-projects').addEventListener('click',()=>{pauseGallery();closeProject();});
+$$('[data-temp]').forEach(b=>b.addEventListener('click',()=>{
+ const repeat=state.temp===b.dataset.temp;state.temp=b.dataset.temp;state.variant=repeat?state.variant+1:0;
+ $('#temperature-control').dataset.temperature=state.temp;document.documentElement.dataset.temp=state.temp;$('#temperature-value').textContent=TEMPERATURE_VALUES[state.temp];
+ $$('[data-temp]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));generate();
+}));
+// The control lives in the header; on phones there is no room, so it moves to the bottom bar.
+const compactBar=matchMedia('(max-width:760px)');
+function placeTemperature(){const c=$('#temperature-control');(compactBar.matches?$('#footer-temp-slot'):$('#header-temp-slot')).append(c);c.classList.toggle('in-footer',compactBar.matches);}
+compactBar.addEventListener('change',placeTemperature);placeTemperature();document.documentElement.dataset.temp=state.temp;
+$('#temperature-label').addEventListener('click',()=>{if(matchMedia('(hover: none)').matches)$('#temperature-control').classList.toggle('show-info');});
+document.addEventListener('pointerdown',e=>{if(!(e.target instanceof Element&&e.target.closest('#temperature-control')))$('#temperature-control').classList.remove('show-info');});
+$('#theme-toggle').addEventListener('click',()=>{
+ const theme=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=theme;
+ $('#theme-toggle').innerHTML=icon(theme==='dark'?'sun':'moon');$('#theme-toggle').setAttribute('aria-label',theme==='dark'?t('toLight'):t('toDark'));
+ $('meta[name="theme-color"]').content=theme==='dark'?'#111111':'#f2f2f2';palette();
+ try{localStorage.setItem('mika-portfolio-theme',theme);}catch(e){}
+});
+document.addEventListener('wheel',e=>{
+ // Detail scroll is native and isolated; it never reaches section navigation.
+ if(state.project){if(!e.target.closest('#detail-body'))e.preventDefault();return;}
+ if(e.ctrlKey)return;
+ const slide=slides[state.section];
+ // A slide whose content overflows scrolls natively first; once its edge is reached, the wheel drives the page progress.
+ if(slide.scrollHeight>slide.clientHeight+2&&getComputedStyle(slide).overflowY!=='visible'){
+  const atTop=slide.scrollTop<=0,atBottom=slide.scrollTop+slide.clientHeight>=slide.scrollHeight-1;
+  if((e.deltaY>0&&!atBottom)||(e.deltaY<0&&!atTop))return;
+ }
+ e.preventDefault();
+ if(Math.abs(e.deltaY)<1||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
+ const delta=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?innerHeight:1);
+ advance(Math.sign(delta)*Math.min(16,Math.max(2,Math.abs(delta)*.08)));
+},{passive:false});
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){if(state.project){e.preventDefault();closeProject();}return;}
+ if(state.project){
+  const gal=$('#detail-content .gallery');
+  if(gal&&gal.gallery&&(e.key==='ArrowLeft'||e.key==='ArrowRight')&&!e.target.matches('input,textarea')){e.preventDefault();gal.gallery.step(e.key==='ArrowLeft'?-1:1);return;}
+  if(e.key==='Tab'){
+   // Trap keyboard focus in the detail view and its relevant live controls.
+   const focusable=[...$$('#project-detail button, #project-detail a, #project-detail [tabindex="0"]'),...$$('.site-footer button:not(:disabled)'),...$$('.header-tools button')].filter(el=>el.getClientRects().length);
+   const first=focusable[0],last=focusable[focusable.length-1];
+   if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  }return;
+ }
+ if(e.target.matches('input,textarea,select')||e.altKey||e.ctrlKey||e.metaKey)return;
+ if(['ArrowDown','PageDown'].includes(e.key)){e.preventDefault();advance(10);}
+ if(['ArrowUp','PageUp'].includes(e.key)){e.preventDefault();advance(-10);}
+ if(e.key==='ArrowRight'){e.preventDefault();setSection(Math.min(2,state.section+1));}
+ if(e.key==='ArrowLeft'){e.preventDefault();setSection(Math.max(0,state.section-1));}
+ if(e.key==='Home'){e.preventDefault();setSection(0);}
+ if(e.key==='End'){e.preventDefault();setSection(2);}
+});
+try{const theme=localStorage.getItem('mika-portfolio-theme');if(theme==='light'){$('#theme-toggle').click();}}catch(e){}
+// Language: every visible string, generated passage and project text follows state.lang.
+function applyLanguage(regenerate){
+ document.documentElement.lang=state.lang;
+ $$('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});
+ $$('[data-i18n-html]').forEach(el=>{el.innerHTML=t(el.dataset.i18nHtml);});
+ $$('[data-i18n-aria]').forEach(el=>el.setAttribute('aria-label',t(el.dataset.i18nAria)));
+ $$('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===state.lang)));
+ $('#theme-toggle').setAttribute('aria-label',document.documentElement.dataset.theme==='dark'?t('toLight'):t('toDark'));
+ $$('.nav-btn').forEach((b,i)=>b.textContent=t('sections')[i]);
+ renderCards();renderContact();updateProgress();loadMedia();
+ if(state.project){renderDetail(state.project);}
+ if(regenerate)generate();
+}
+$$('[data-lang]').forEach(b=>b.addEventListener('click',()=>{
+ if(state.lang===b.dataset.lang)return;
+ state.lang=b.dataset.lang;try{localStorage.setItem('mika-portfolio-lang',state.lang);}catch(e){}
+ applyLanguage(true);
+}));
+$('#temperature-status').textContent=t('modelReady');
+applyLanguage(false);generate();
+// Optional console inspection for maintenance; no external services involved.
+window.portfolio={state,config:PORTFOLIO,refreshContent(){renderCards();renderContact();generate();}};
+</script>
+</body>
+</html>

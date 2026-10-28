@@ -150,9 +150,9 @@ export class Browser {
     await p.send('Page.enable');
     await p.send('Runtime.enable');
     await p.setViewport({ width, height, dsf, mobile });
-    if (reducedMotion) {
-      await p.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
-    }
+    // Local patch: always set the preference, so an OS with animations turned off
+    // (Windows "Animation effects") does not make every run a reduced-motion run.
+    await p.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: reducedMotion ? 'reduce' : 'no-preference' }] });
     return p;
   }
 
