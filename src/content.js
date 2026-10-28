@@ -18,9 +18,9 @@ export const CONTACT = {
 export const PROJECTS = [
   {
     id: 'tumor',
-    repo: '',
+    repo: 'https://github.com/Mika1011-blip/mid-projects/tree/main/2025-2026/ML-tumorDetectorApp',
     cover: { src: 'media/tumor/07-annotation.png', w: 3840, h: 2160 },
-    stack: ['FastAPI', 'React', 'TypeScript', 'Three.js', 'PostgreSQL', 'MinIO', 'Docker', 'NIfTI'],
+    stack: ['FastAPI', 'React', 'TypeScript', 'Three.js', 'PostgreSQL', 'MinIO', 'Docker', 'NIfTI', 'NiBabel'],
     figures: [
       {
         src: 'media/tumor/07-annotation.png', w: 3840, h: 2160, side: 'left',
@@ -30,8 +30,8 @@ export const PROJECTS = [
         },
         head: { en: 'The workspace', fr: 'L’espace de travail' },
         body: {
-          en: ['[2–3 sentences: what a student sees when they open a case, and why 2D and 3D sit side by side.]', '[One technical detail you are proud of, e.g. how a NIfTI volume reaches the browser.]'],
-          fr: ['[2–3 phrases : ce qu’un étudiant voit en ouvrant un cas, et pourquoi la 2D et la 3D sont côte à côte.]', '[Un détail technique dont tu es fier, par ex. comment un volume NIfTI arrive dans le navigateur.]'],
+          en: ['When students open a case, they can inspect the MRI modalities, browse the 2D slices, and draw or edit annotations alongside a 3D view. The 2D view is for precise drawing; the 3D view shows the tumour’s shape and how it continues from slice to slice.', 'Under the hood, the back end loads NIfTI files from MinIO with NiBabel, keeps the voxel spacing, and builds meshes with marching cubes; Three.js renders them in the browser.'],
+          fr: ['En ouvrant un cas, l’étudiant peut examiner les modalités IRM, parcourir les coupes 2D et tracer ou modifier ses annotations à côté d’une vue 3D. La 2D sert à annoter avec précision ; la 3D montre la forme de la tumeur et sa continuité d’une coupe à l’autre.', 'Côté technique, le back-end charge les fichiers NIfTI depuis MinIO avec NiBabel, conserve l’espacement des voxels et génère les maillages par marching cubes ; Three.js les affiche dans le navigateur.'],
         },
         notes: [
           { text: { en: 'the 3D volume, built from the slices', fr: 'le volume 3D, construit à partir des coupes' }, at: [5, 0], w: 31, from: [18, 7], to: [25.6, 47], ring: [8.3, 13.4] },
@@ -48,8 +48,8 @@ export const PROJECTS = [
         },
         head: { en: 'From strokes to a mesh', fr: 'Des traits au maillage' },
         body: {
-          en: ['[2–3 sentences: how the painted slices become the student’s 3D mesh, and how it is scored against the AI or specialist segmentation.]'],
-          fr: ['[2–3 phrases : comment les coupes peintes deviennent le maillage 3D de l’étudiant, et comment il est noté face à la segmentation IA ou du spécialiste.]'],
+          en: [],
+          fr: [],
         },
         notes: [
           { text: { en: 'my annotation, now a 3D mesh', fr: 'mon annotation, devenue un maillage 3D' }, at: [2.5, 0], w: 36, from: [14.3, 7], to: [24.4, 49.7], ring: [7.9, 11.5] },
@@ -62,25 +62,25 @@ export const PROJECTS = [
     en: {
       name: 'MRI Annotation',
       category: 'Medical imaging platform',
-      body: 'A browser platform for annotating tumours in MRI scans: view a scan in 2D and 3D, draw the tumour slice by slice, and get a clean 3D volume ready for AI. Students are scored against an AI segmentation or a specialist’s reference. I built it from A to Z.',
+      body: 'A browser platform for annotating tumours in MRI scans: view a scan in 2D and 3D, draw the tumour slice by slice, and turn it into a clean 3D volume. AI segmentation is still in progress. A team project, where I developed the platform from A to Z.',
       circle: 'from A to Z.',
       learned: ['Medical imaging formats and volumes (NIfTI)', 'Rendering 3D medical data in the browser', 'A complete platform: API, database, storage, Docker'],
       alt: 'The annotation workspace: 3D tumour mesh on the left, an MRI slice with the painted mask on the right, slice strip and brush controls below.',
       caption: 'The annotation workspace: 3D mesh, slice view and brush.',
-      role: 'Everything: design, front end, back end, infrastructure',
-      year: '[YEAR]',
+      role: 'End-to-end development of the platform: architecture, front end, back end and infrastructure',
+      year: '2026',
       videoCaption: 'Annotation features, start to finish. Muted, no autoplay.',
     },
     fr: {
       name: 'Annotation IRM',
       category: 'Plateforme d’imagerie médicale',
-      body: 'Une plateforme web pour annoter des tumeurs sur des IRM : visualiser un scan en 2D et en 3D, tracer la tumeur coupe par coupe et obtenir un volume 3D propre, prêt pour l’IA. Les étudiants sont évalués face à une segmentation IA ou à la référence d’un spécialiste. Construite de A à Z.',
+      body: 'Une plateforme web pour annoter des tumeurs sur des IRM : visualiser un scan en 2D et en 3D, tracer la tumeur coupe par coupe et en tirer un volume 3D propre. La segmentation par IA est encore en cours. Un projet d’équipe, dont j’ai développé la plateforme de A à Z.',
       circle: 'de A à Z.',
       learned: ['Formats et volumes d’imagerie médicale (NIfTI)', 'Afficher des données médicales 3D dans le navigateur', 'Une plateforme complète : API, base de données, stockage, Docker'],
       alt: 'L’espace d’annotation : maillage 3D de la tumeur à gauche, une coupe IRM avec le masque peint à droite, bande de coupes et pinceau en dessous.',
       caption: 'L’espace d’annotation : maillage 3D, vue en coupe et pinceau.',
-      role: 'Tout : design, front-end, back-end, infrastructure',
-      year: '[ANNÉE]',
+      role: 'Développement de bout en bout de la plateforme : architecture, front-end, back-end et infrastructure',
+      year: '2026',
       videoCaption: 'Les fonctionnalités d’annotation, du début à la fin. Sans son, sans lecture automatique.',
     },
   },
@@ -98,8 +98,8 @@ export const PROJECTS = [
         },
         head: { en: 'The neighbourhood as data', fr: 'Le quartier en données' },
         body: {
-          en: ['[2–3 sentences: which places you pull from OpenStreetMap, and how they become features for the model.]', '[Screenshot to come: the map or the listings view.]'],
-          fr: ['[2–3 phrases : quels lieux tu récupères d’OpenStreetMap, et comment ils deviennent des variables pour le modèle.]', '[Capture à venir : la carte ou la vue des annonces.]'],
+          en: ['The project extracts nearby amenities from OpenStreetMap: transport, restaurants and shops. Their counts and distances become neighbourhood features that sit alongside the property data to estimate the rent.'],
+          fr: ['Le projet extrait d’OpenStreetMap les équipements à proximité : transports, restaurants et commerces. Leur nombre et leur distance deviennent des variables de quartier, qui s’ajoutent aux données du logement pour estimer le loyer.'],
         },
         notes: [
           { text: { en: 'each place pulls on the rent', fr: 'chaque lieu tire sur le loyer' }, at: [2, 0], w: 30, from: [12, 7.5], to: [18, 27] },
@@ -111,22 +111,22 @@ export const PROJECTS = [
     en: {
       name: 'LifeIsGood',
       category: 'Housing intelligence assistant',
-      body: 'LifeIsGood helps renters decide: it filters listings, maps the transport, shops and schools around each address, and turns that neighbourhood into features for a model that estimates a fair rent. I built almost all of it, apart from the Python graphs.',
+      body: 'LifeIsGood helps renters decide: it filters listings, maps the transport, restaurants and shops around each address, and turns that neighbourhood into features for a model that estimates a fair rent. A team project: my teammates handled the data visualisation and user-data collection, and I built the rest.',
       learned: ['OpenStreetMap and geospatial data', 'Price prediction with K-Means and CatBoost', 'Making heavy pipelines fast enough to feel interactive'],
       alt: 'Drawing: an address at the centre of nearby points of interest, each pulling on the rent estimate.',
       caption: 'Every place around an address pulls on the rent. (Drawing, not a screenshot.)',
-      role: 'Almost everything, apart from the Python graphs',
-      year: '[YEAR]',
+      role: 'Data extraction, OpenStreetMap collection, preprocessing, model development and training, and the AI assistant (I integrated an external model API and configured an open-source model)',
+      year: '2025',
     },
     fr: {
       name: 'LifeIsGood',
       category: 'Assistant d’intelligence immobilière',
-      body: 'LifeIsGood aide les locataires à décider : il filtre les annonces, cartographie transports, commerces et écoles autour de chaque adresse, puis transforme ce quartier en variables pour un modèle qui estime un loyer juste. J’en ai construit presque tout, sauf les graphiques Python.',
+      body: 'LifeIsGood aide les locataires à décider : il filtre les annonces, repère transports, restaurants et commerces autour de chaque adresse, puis transforme ce quartier en variables pour un modèle qui estime un loyer juste. Un projet d’équipe : mes coéquipiers ont géré la visualisation des données et la collecte des données utilisateurs, j’ai construit le reste.',
       learned: ['OpenStreetMap et données géospatiales', 'Prédiction de prix avec K-Means et CatBoost', 'Rendre des traitements lourds assez rapides pour être interactifs'],
       alt: 'Dessin : une adresse au centre de points d’intérêt, chacun tirant sur l’estimation du loyer.',
       caption: 'Chaque lieu autour d’une adresse tire sur le loyer. (Un dessin, pas une capture.)',
-      role: 'Presque tout, sauf les graphiques Python',
-      year: '[ANNÉE]',
+      role: 'Extraction des données, collecte OpenStreetMap, prétraitement, développement et entraînement du modèle, et l’assistant IA (intégration d’une API de modèle externe et configuration d’un modèle open source)',
+      year: '2025',
     },
   },
   {
@@ -143,8 +143,8 @@ export const PROJECTS = [
         },
         head: { en: 'Starting from a goal', fr: 'Partir d’un objectif' },
         body: {
-          en: ['[2–3 sentences: how the guided onboarding turns a vague goal into budget categories and priorities.]'],
-          fr: ['[2–3 phrases : comment l’onboarding guidé transforme un objectif flou en catégories et en priorités.]'],
+          en: [],
+          fr: [],
         },
         notes: [
           { text: { en: 'start from one goal, not a blank sheet', fr: 'partir d’un objectif, pas d’une page blanche' }, at: [2, 0], w: 32, from: [14, 8.5], to: [30, 33] },
@@ -160,8 +160,8 @@ export const PROJECTS = [
         },
         head: { en: 'An AI that asks back', fr: 'Une IA qui pose des questions' },
         body: {
-          en: ['[2–3 sentences: what the priority review does, and what happens when the AI is unavailable (the fallback).]'],
-          fr: ['[2–3 phrases : ce que fait la revue des priorités, et ce qui se passe quand l’IA est indisponible (la solution de repli).]'],
+          en: [],
+          fr: [],
         },
         notes: [
           { text: { en: '“idk” is an answer too', fr: '« idk » est aussi une réponse' }, at: [2, 0], w: 30, from: [12, 8], to: [13.6, 32] },
@@ -177,8 +177,8 @@ export const PROJECTS = [
       learned: ['Designing a guided flow from a vague goal to a plan', 'AI features with graceful fallbacks', 'A secure Flask app: sessions, storage, CSV'],
       alt: 'MesSous: generated budget categories with priorities and allocations.',
       caption: 'Generated budget categories, with priorities you can edit.',
-      role: '[ROLE]',
-      year: '[YEAR]',
+      role: 'End-to-end development of the app: onboarding, budget logic, CSV import, the AI assistant and its fallback, the Flask back end and SQLite storage',
+      year: '2026',
     },
     fr: {
       name: 'MesSous',
@@ -187,15 +187,15 @@ export const PROJECTS = [
       learned: ['Concevoir un parcours guidé, d’un objectif flou à un plan', 'Des fonctionnalités IA avec solution de repli', 'Une application Flask sécurisée : sessions, stockage, CSV'],
       alt: 'MesSous : catégories de budget générées, avec priorités et allocations.',
       caption: 'Catégories de budget générées, avec des priorités modifiables.',
-      role: '[RÔLE]',
-      year: '[ANNÉE]',
+      role: 'Développement de bout en bout de l’application : onboarding, logique budgétaire, import CSV, assistant IA et solution de repli, back-end Flask et stockage SQLite',
+      year: '2026',
     },
   },
   {
     id: 'retina',
-    repo: '',
+    repo: 'https://github.com/Mika1011-blip/mid-projects/tree/main/2025-2026/ML-RetinaAnalysisWebApp',
     cover: { src: 'media/retina/01-upload-preprocessing-and-predicted-classification.webp', w: 1400, h: 758 },
-    stack: ['Python', 'TensorFlow', 'EfficientNet', 'OpenCV', 'Flask', 'Firebase', 'OpenAI API'],
+    stack: ['Python', 'TensorFlow', 'ResNet', 'OpenCV', 'Flask', 'Firebase', 'OpenAI API'],
     figures: [
       {
         src: 'media/retina/01-upload-preprocessing-and-predicted-classification.webp', w: 1400, h: 758, side: 'left',
@@ -205,8 +205,8 @@ export const PROJECTS = [
         },
         head: { en: 'From photo to grade', fr: 'De la photo au stade' },
         body: {
-          en: ['[2–3 sentences: the preprocessing steps, the CNN (EfficientNet) and how you evaluated it.]', '[One sentence: how the assistant explains the grade, and its limits.]'],
-          fr: ['[2–3 phrases : les étapes de prétraitement, le CNN (EfficientNet) et comment tu l’as évalué.]', '[Une phrase : comment l’assistant explique le stade, et ses limites.]'],
+          en: ['The pipeline isolates and crops the retina, resizes the image and enhances its contrast, then a ResNet model classifies it. In this academic project it reached about 98% training accuracy and 92% validation accuracy, on a small dataset.', 'The assistant explains the predicted severity grade in plain language and answers follow-up questions. It does not check the prediction itself, and it is not a clinical diagnosis.'],
+          fr: ['Le pipeline isole et recadre la rétine, redimensionne l’image et en renforce le contraste, puis un modèle ResNet la classe. Dans ce projet académique, il atteignait environ 98 % d’exactitude à l’entraînement et 92 % en validation, sur un petit jeu de données.', 'L’assistant explique le stade de sévérité prédit en langage simple et répond aux questions de suivi. Il ne vérifie pas lui-même la prédiction et ne remplace pas un diagnostic clinique.'],
         },
         notes: [
           { text: { en: 'the raw fundus photo', fr: 'la photo du fond d’œil, brute' }, at: [2, 0], w: 28, from: [14, 8], to: [20.9, 40] },
@@ -223,8 +223,8 @@ export const PROJECTS = [
       learned: ['Image preprocessing with OpenCV', 'Training and evaluating a CNN', 'Explaining a model’s output to non-experts'],
       alt: 'RetinaSight: an uploaded retina image, its preprocessing and the predicted grade, with the assistant’s explanation.',
       caption: 'Upload, preprocessing, predicted grade and the assistant’s explanation.',
-      role: '[ROLE]',
-      year: '[YEAR]',
+      role: 'Main implementation contributor in a team: preprocessing, model training, integration and the web application',
+      year: '2025',
       videoCaption: 'A video walkthrough, on YouTube.',
     },
     fr: {
@@ -234,8 +234,8 @@ export const PROJECTS = [
       learned: ['Prétraitement d’images avec OpenCV', 'Entraîner et évaluer un CNN', 'Expliquer la sortie d’un modèle à des non-experts'],
       alt: 'RetinaSight : une image de rétine importée, son prétraitement et le stade prédit, avec l’explication de l’assistant.',
       caption: 'Import, prétraitement, stade prédit et l’explication de l’assistant.',
-      role: '[RÔLE]',
-      year: '[ANNÉE]',
+      role: 'Principal contributeur à l’implémentation, en équipe : prétraitement, entraînement du modèle, intégration et application web',
+      year: '2025',
       videoCaption: 'Une présentation vidéo, sur YouTube.',
     },
   },

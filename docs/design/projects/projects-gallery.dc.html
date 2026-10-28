@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Projects — notebook spread</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#062b8a}a:hover{color:#b3291f}
+.grid-paper{background-image:linear-gradient(rgba(6,43,138,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(6,43,138,.09) 1px,transparent 1px);background-size:24px 24px}
+.learned li::marker{color:#b3291f}
+.ribbon{transition:translate .25s cubic-bezier(.2,.7,.2,1)}
+.ribbon[aria-pressed="false"]:hover{translate:0 6px !important}
+.headband{background:repeating-linear-gradient(90deg,#b3291f 0 3px,#e6dbc7 3px 5px)}
+.nav-btn:hover:not(:disabled){transform:translate(-2px,-2px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+button:focus-visible,a:focus-visible{outline:3px solid #062b8a;outline-offset:3px}
+.nav-btn:focus-visible,.ribbon:focus-visible{outline-color:#f2c84b}
+.open-btn{transition:transform .2s cubic-bezier(.2,.7,.2,1)}
+.open-btn:hover{color:#f2c84b;transform:translate(-2px,-2px)}
+.nav-btn{transition:transform .2s cubic-bezier(.2,.7,.2,1)}
+</style>
+</helmet>
+<section aria-labelledby="work-a" style="width: 1440px; height: 1180px; box-sizing: border-box; padding: 88px 80px; background: #062b8a; color: #062b8a; font-family: 'Kalam', 'Comic Sans MS', cursive; position: relative; overflow: hidden">
+  <div aria-hidden="true" style="position: absolute; inset: 0; overflow: hidden; pointer-events: none; font-family: Kalam, cursive">
+    <p style="position: absolute; left: 20px; top: 22px; margin: 0; font-size: 20px; white-space: nowrap; color: #e6dbc7; opacity: 0.4; rotate: -4deg">∂L/∂w = (ŷ − y)·x</p>
+    <p style="position: absolute; left: 360px; top: 20px; margin: 0; font-size: 20px; white-space: nowrap; color: #e6dbc7; opacity: 0.35; rotate: 2deg">P(A|B) = P(B|A) P(A) / P(B)</p>
+    <p style="position: absolute; left: 690px; top: 30px; margin: 0; font-size: 20px; white-space: nowrap; color: #e6dbc7; opacity: 0.35; rotate: -2deg">∇×B = μ<sub>0</sub>J + μ<sub>0</sub>ε<sub>0</sub> ∂E/∂t</p>
+    <p style="position: absolute; left: 1010px; top: 20px; margin: 0; font-size: 42px; white-space: nowrap; color: #e6dbc7; opacity: 0.5; rotate: -6deg">E = mc<sup>2</sup></p>
+    <p style="position: absolute; left: 1200px; top: 92px; margin: 0; font-size: 24px; white-space: nowrap; color: #e6dbc7; opacity: 0.4; rotate: 4deg">iℏ ∂ψ/∂t = Ĥψ</p>
+    <p style="position: absolute; left: 970px; top: 146px; margin: 0; font-size: 22px; white-space: nowrap; color: #e6dbc7; opacity: 0.45; rotate: -2deg">softmax(z<sub>i</sub>) = e<sup>z<sub>i</sub>/T</sup> / Σ<sub>j</sub> e<sup>z<sub>j</sub>/T</sup></p>
+    <p style="position: absolute; left: 1240px; top: 190px; margin: 0; font-size: 18px; white-space: nowrap; color: #f2c84b; opacity: 0.75; rotate: 3deg">T ↑ → more chaos</p>
+    <p style="position: absolute; left: 18px; top: 290px; margin: 0; font-size: 22px; white-space: nowrap; color: #e6dbc7; opacity: 0.4; rotate: -6deg">∇·E = ρ/ε<sub>0</sub></p>
+    <p style="position: absolute; left: 40px; top: 370px; margin: 0; font-size: 30px; white-space: nowrap; color: #e6dbc7; opacity: 0.45; rotate: 4deg">F = ma</p>
+    <p style="position: absolute; left: 14px; top: 580px; margin: 0; font-size: 20px; white-space: nowrap; color: #e6dbc7; opacity: 0.4; rotate: -3deg">Δx·Δp ≥ ℏ/2</p>
+    <p style="position: absolute; left: 56px; top: 630px; margin: 0; font-size: 72px; white-space: nowrap; color: #e6dbc7; opacity: 0.25; rotate: 0deg">∑</p>
+    <p style="position: absolute; left: 30px; top: 760px; margin: 0; font-size: 26px; white-space: nowrap; color: #e6dbc7; opacity: 0.45; rotate: 6deg">λ = h/p</p>
+    <p style="position: absolute; left: 40px; top: 980px; margin: 0; font-size: 26px; white-space: nowrap; color: #e6dbc7; opacity: 0.45; rotate: -5deg">dS ≥ 0</p>
+    <p style="position: absolute; left: 1336px; top: 226px; margin: 0; font-size: 84px; white-space: nowrap; color: #e6dbc7; opacity: 0.25; rotate: 8deg">π</p>
+    <p style="position: absolute; left: 1300px; top: 350px; margin: 0; font-size: 20px; white-space: nowrap; color: #e6dbc7; opacity: 0.4; rotate: -4deg">a<sup>2</sup> + b<sup>2</sup> = c<sup>2</sup></p>
+    <p style="position: absolute; left: 1300px; top: 520px; margin: 0; font-size: 20px; white-space: nowrap; color: #e6dbc7; opacity: 0.4; rotate: 3deg">ζ(s) = Σ 1/n<sup>s</sup></p>
+    <p style="position: absolute; left: 1294px; top: 760px; margin: 0; font-size: 18px; white-space: nowrap; color: #e6dbc7; opacity: 0.4; rotate: -2deg">σ(x) = 1/(1+e<sup>−x</sup>)</p>
+    <p style="position: absolute; left: 1340px; top: 816px; margin: 0; font-size: 64px; white-space: nowrap; color: #e6dbc7; opacity: 0.28; rotate: 0deg">∞</p>
+    <p style="position: absolute; left: 1296px; top: 920px; margin: 0; font-size: 20px; white-space: nowrap; color: #e6dbc7; opacity: 0.4; rotate: 5deg">∮ B·dl = μ<sub>0</sub>I</p>
+    <p style="position: absolute; left: 1300px; top: 1000px; margin: 0; font-size: 20px; white-space: nowrap; color: #e6dbc7; opacity: 0.4; rotate: -3deg">ẋ = σ(y − x)</p>
+    <p style="position: absolute; left: 60px; top: 1106px; margin: 0; font-size: 24px; white-space: nowrap; color: #e6dbc7; opacity: 0.45; rotate: -3deg">x<sub>n+1</sub> = r x<sub>n</sub>(1 − x<sub>n</sub>)</p>
+    <p style="position: absolute; left: 420px; top: 1124px; margin: 0; font-size: 24px; white-space: nowrap; color: #e6dbc7; opacity: 0.45; rotate: 2deg">∫<sub>0</sub><sup>∞</sup> e<sup>−x²</sup> dx = √π / 2</p>
+    <p style="position: absolute; left: 820px; top: 1108px; margin: 0; font-size: 22px; white-space: nowrap; color: #e6dbc7; opacity: 0.4; rotate: -2deg">G<sub>μν</sub> + Λg<sub>μν</sub> = 8πG/c<sup>4</sup> T<sub>μν</sub></p>
+    <p style="position: absolute; left: 1150px; top: 1040px; margin: 0; font-size: 24px; white-space: nowrap; color: #e6dbc7; opacity: 0.45; rotate: -4deg">e<sup>iπ</sup> + 1 = 0</p>
+    <p style="position: absolute; left: 1190px; top: 1130px; margin: 0; font-size: 22px; white-space: nowrap; color: #e6dbc7; opacity: 0.4; rotate: 3deg">S = −k Σ p ln p</p>
+    <p style="position: absolute; left: 340px; top: 1080px; margin: 0; font-size: 18px; white-space: nowrap; color: #f2c84b; opacity: 0.75; rotate: -2deg">chaos ≠ random</p>
+    <svg viewBox="0 0 120 80" style="position: absolute; left: 20px; top: 450px; width: 120px; height: 80px; opacity: .45; overflow: visible"><g fill="none" stroke="#e6dbc7" stroke-width="1.6" stroke-linecap="round"><path d="M6 4 L6 76 M2 40 L118 40"></path><path d="M6 40 C 16 4, 26 4, 36 40 S 56 76, 66 40 S 86 4, 96 40 S 112 66, 118 52"></path></g></svg>
+    <svg viewBox="0 0 110 110" style="position: absolute; left: 22px; top: 830px; width: 110px; height: 110px; opacity: .45; overflow: visible"><g fill="none" stroke="#e6dbc7" stroke-width="1.6" stroke-linecap="round"><circle cx="55" cy="55" r="44"></circle><path d="M55 55 L95 36 M55 55 L99 55 M95 36 L95 55"></path><path d="M72 55 A17 17 0 0 0 70 47"></path></g><text x="76" y="52" font-family="Kalam, cursive" font-size="12" fill="#e6dbc7">θ</text></svg>
+    <svg viewBox="0 0 100 80" style="position: absolute; left: 1310px; top: 396px; width: 100px; height: 80px; opacity: .45; overflow: visible"><g fill="none" stroke="#e6dbc7" stroke-width="1.6" stroke-linejoin="round"><path d="M8 72 L92 72 L92 10 Z"></path><path d="M82 72 L82 62 L92 62"></path></g><g font-family="Kalam, cursive" font-size="13" fill="#e6dbc7"><text x="46" y="86">a</text><text x="96" y="44">b</text><text x="38" y="36">c</text></g></svg>
+    <svg viewBox="0 0 90 130" style="position: absolute; left: 1320px; top: 584px; width: 90px; height: 130px; opacity: .45; overflow: visible"><g fill="none" stroke="#e6dbc7" stroke-width="1.6" stroke-linecap="round"><path d="M10 6 L80 6"></path><path d="M45 6 L72 100" stroke-dasharray="0"></path><path d="M45 6 L45 110" stroke-dasharray="4 5"></path><path d="M45 34 A28 28 0 0 0 53 33"></path><path d="M14 104 C 30 118, 60 118, 80 96"></path></g><circle cx="72" cy="100" r="8" fill="#e6dbc7"></circle></svg>
+    <svg viewBox="0 0 170 90" style="position: absolute; left: 150px; top: 990px; width: 170px; height: 90px; opacity: .45; overflow: visible"><path d="M85 45 C 60 5, 10 10, 20 45 C 30 80, 75 70, 85 45 C 95 20, 150 10, 152 45 C 154 82, 100 76, 85 45 C 70 18, 30 22, 34 46 C 38 66, 70 62, 85 45 C 100 28, 138 26, 138 46 C 138 66, 104 64, 85 45" fill="none" stroke="#e6dbc7" stroke-width="1.4"></path></svg>
+    <svg viewBox="0 0 200 70" style="position: absolute; left: 990px; top: 6px; width: 200px; height: 70px; overflow: visible"><path d="M12 40 C 8 12, 150 2, 186 26 C 204 46, 120 70, 40 62 C 10 58, 4 40, 30 24" fill="none" stroke="#f2c84b" stroke-width="2" stroke-linecap="round" opacity=".7"></path></svg>
+    <svg viewBox="0 0 120 40" style="position: absolute; left: 230px; top: 300px; width: 120px; height: 40px; opacity: .35; overflow: visible"><path d="M4 20 L116 20 M100 8 L116 20 L100 32 M60 4 L60 36" fill="none" stroke="#e6dbc7" stroke-width="1.6" stroke-linecap="round"></path></svg>
+  </div>
+  <div style="position: relative; display: flex; align-items: baseline; gap: 32px; max-width: 1120px; margin: 0 auto; color: #e6dbc7">
+    <h2 id="work-a" style="margin: 0; font-size: 76px; font-weight: 700; line-height: 1">Selected work</h2>
+    <p style="margin: 0; font-size: 22px">Four projects, four different problems.</p>
+  </div>
+
+  <div style="position: relative; width: 1120px; margin: 40px auto 0">
+    <div style="position: relative; padding-top: 56px">
+    <div role="group" aria-label="Projects" style="position: absolute; z-index: 0; top: 0; left: 600px; right: 36px; height: 110px; display: flex; gap: 8px; align-items: flex-start">
+      <sc-for list="{{ribbons}}" as="r" hint-placeholder-count="4">
+        <button class="ribbon" type="button" aria-pressed="{{r.pressed}}" onClick="{{r.pick}}" style="{{r.style}}">{{r.name}}</button>
+      </sc-for>
+    </div>
+
+    <div style="position: relative; z-index: 1">
+      <svg aria-hidden="true" viewBox="0 0 1000 1000" preserveAspectRatio="none" style="position: absolute; z-index: 3; top: -5px; left: -5px; width: calc(100% + 10px); height: calc(100% + 10px); overflow: visible; pointer-events: none">
+        <defs><filter id="rough-book" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="7"></feTurbulence><feDisplacementMap in="SourceGraphic" scale="4"></feDisplacementMap></filter></defs>
+        <g fill="none" stroke="#1d1b19" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough-book)">
+          <path vector-effect="non-scaling-stroke" stroke-width="2.6" d="M6 9 C 180 4, 380 11, 500 6 C 650 2, 830 10, 994 5 C 998 200, 992 420, 996 610 C 999 790, 993 900, 995 993 C 820 998, 620 990, 500 995 C 320 999, 160 991, 5 996 C 2 800, 8 600, 4 400 C 1 240, 7 120, 6 9"></path>
+          <path vector-effect="non-scaling-stroke" stroke-width="1.3" opacity=".75" d="M14 3 C 260 10, 640 1, 988 11 M999 18 C 993 380, 1000 720, 991 986 M984 999 C 640 992, 300 1000, 12 990 M-1 980 C 6 640, -2 300, 9 16"></path>
+          <path vector-effect="non-scaling-stroke" stroke-width="2.2" d="M500 6 C 503 260, 496 520, 501 760 C 503 880, 499 950, 500 995"></path>
+          <path vector-effect="non-scaling-stroke" stroke-width="1.2" opacity=".6" d="M506 30 C 509 300, 503 640, 507 970"></path>
+        </g>
+      </svg>
+      <div aria-hidden="true" style="position: absolute; z-index: 0; left: 71%; top: calc(100% - 4px); width: 18px; height: 78px; background: #b3291f; clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%); rotate: 4deg"></div>
+      <div aria-hidden="true" style="position: absolute; z-index: 0; inset: 0; translate: 12px 14px; background: rgba(1, 10, 40, .45)"></div>
+      <div style="position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); height: 720px">
+        <article class="grid-paper" style="position: relative; isolation: isolate; overflow: hidden; background-color: #e6dbc7; border-radius: 4px 0 0 4px; padding: 36px 48px 40px 44px">
+          <svg aria-hidden="true" viewBox="0 0 24 24" style="position: absolute; z-index: -1; left: 12px; top: 92px; width: 22px; height: 22px; pointer-events: none"><path d="M12 2 L14.6 9 L22 9.4 L16.2 14 L18.4 21.6 L12 17.2 L5.6 21.6 L7.8 14 L2 9.4 L9.4 9 Z" fill="none" stroke="#b3291f" stroke-width="1.6" stroke-linejoin="round"></path></svg>
+          <p aria-hidden="true" style="position: absolute; z-index: -1; left: 50px; bottom: 26px; margin: 0; font-size: 20px; color: #062b8a; opacity: .5; rotate: -4deg; pointer-events: none">e<sup>iπ</sup> + 1 = 0</p>
+          <svg aria-hidden="true" viewBox="0 0 130 64" style="position: absolute; z-index: -1; right: 36px; bottom: 18px; width: 130px; height: 64px; overflow: visible; opacity: .5; pointer-events: none"><g fill="none" stroke="#062b8a" stroke-width="1.6" stroke-linecap="round"><path d="M6 4 L6 60 L126 60"></path><path d="M6 32 C 14 2, 22 2, 30 32 S 44 54, 52 32 S 62 18, 70 32 S 80 42, 86 32 S 94 26, 100 32 S 108 36, 112 32 S 118 30, 124 32"></path></g><text x="14" y="10" font-family="Kalam, cursive" font-size="13" fill="#062b8a">x(t)</text></svg>
+          <div aria-hidden="true" style="position: absolute; top: 0; right: 0; bottom: 0; width: 10px; background: #d9cbb0"></div>
+          <p style="margin: 0; font-size: 17px; font-weight: 700; color: #3a5aa8">{{p.category}}</p>
+          <h3 style="margin: 6px 0 0; font-size: 54px; font-weight: 700; line-height: 1.02">{{p.name}}</h3>
+          <svg aria-hidden="true" viewBox="0 0 240 14" style="display: block; width: 240px; height: 14px; margin-top: 2px; overflow: visible"><path d="M2 9 C 50 3, 110 13, 170 6 S 225 7, 238 4" fill="none" stroke="#b3291f" stroke-width="3" stroke-linecap="round"></path><path d="M30 12 C 90 8, 150 12, 200 9" fill="none" stroke="#b3291f" stroke-width="1.6" stroke-linecap="round" opacity=".7"></path></svg>
+          <figure style="position: relative; margin: 22px 0 0; padding: 12px 12px 14px; background: #f5f0e6; rotate: -1.2deg; border: 1px solid #d3c8b4; box-shadow: 1px 1px 0 #e2d9c8, 2px 2px 0 #c9bca4">
+            <div aria-hidden="true" style="position: absolute; z-index: 1; top: -10px; left: -18px; width: 84px; height: 24px; background: #f2c84b; opacity: .85; rotate: -32deg"></div>
+            <div aria-hidden="true" style="position: absolute; z-index: 1; bottom: 30px; right: -18px; width: 84px; height: 24px; background: #f2c84b; opacity: .85; rotate: -32deg"></div>
+            <sc-if value="{{p.hasImg}}" hint-placeholder-val="{{ true }}">
+              <img src="{{p.img}}" alt="{{p.alt}}" width="1400" height="875" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: left top; background: #ddd0b9">
+            </sc-if>
+            <sc-if value="{{p.isDrawing}}" hint-placeholder-val="{{ false }}">
+              <svg role="img" aria-label="{{p.alt}}" viewBox="0 0 480 300" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; background: #ddd0b9">
+                <g fill="none" stroke="#062b8a" stroke-width="1.6" stroke-dasharray="6 5">
+                  <path d="M240 150 L92 70"></path><path d="M240 150 L388 64"></path><path d="M240 150 L100 236"></path><path d="M240 150 L392 230"></path><path d="M240 150 L246 40"></path>
+                </g>
+                <g fill="#062b8a"><circle cx="92" cy="70" r="7"></circle><circle cx="388" cy="64" r="7"></circle><circle cx="100" cy="236" r="7"></circle><circle cx="392" cy="230" r="7"></circle><circle cx="246" cy="40" r="7"></circle></g>
+                <circle cx="240" cy="150" r="30" fill="#e6dbc7" stroke="#b3291f" stroke-width="3"></circle>
+                <g fill="#062b8a" font-family="Kalam, cursive" font-size="16">
+                  <text x="40" y="58">metro</text><text x="372" y="50">school</text><text x="46" y="262">shops</text><text x="376" y="258">park</text><text x="258" y="36">bakery</text>
+                  <text x="212" y="156" font-size="15" font-weight="700">home</text>
+                  <text x="196" y="210" font-size="22" font-weight="700" fill="#b3291f">fair rent?</text>
+                </g>
+              </svg>
+            </sc-if>
+            <figcaption style="margin-top: 10px; font-size: 16px; font-style: italic; color: #062b8a">{{p.caption}}</figcaption>
+          </figure>
+          <div style="margin-top: 26px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px">
+            <a class="open-btn" href="project-page.dc.html" aria-label="{{p.openLabel}}" style="display: inline-flex; align-items: center; min-height: 52px; padding: 0 24px; background: #062b8a; color: #e6dbc7; font-size: 20px; font-weight: 700; text-decoration: none">Open the project</a>
+            <sc-if value="{{p.hasRepo}}" hint-placeholder-val="{{ false }}">
+              <a href="{{p.repo}}" style="display: inline-flex; align-items: center; min-height: 44px; font-size: 18px; font-weight: 700; text-decoration-thickness: 2px; text-underline-offset: 5px">Source on GitHub</a>
+            </sc-if>
+            <sc-if value="{{p.noRepo}}" hint-placeholder-val="{{ true }}">
+              <span style="font-size: 16px; font-style: italic">Private repository</span>
+            </sc-if>
+          </div>
+        </article>
+
+        <article class="grid-paper" style="position: relative; isolation: isolate; overflow: hidden; background-color: #e6dbc7; border-radius: 0 4px 4px 0; padding: 36px 44px 40px 80px; display: flex; flex-direction: column">
+          <svg aria-hidden="true" viewBox="0 0 40 40" style="position: absolute; z-index: -1; right: 6px; top: 6px; width: 36px; height: 36px; opacity: .45; pointer-events: none"><path d="M20 20 m0 -2 a2 2 0 1 1 -2 3 a5 5 0 1 1 7 -6 a9 9 0 1 1 -14 10 a13 13 0 1 1 22 -12 a17 17 0 1 1 -28 12" fill="none" stroke="#062b8a" stroke-width="1.5" stroke-linecap="round"></path></svg>
+          <svg aria-hidden="true" viewBox="0 0 120 120" style="position: absolute; z-index: -1; right: 26px; top: 170px; width: 120px; height: 120px; opacity: .4; rotate: 20deg; pointer-events: none"><path d="M60 6 C 92 5, 115 30, 114 60 C 113 92, 88 114, 58 114 C 28 113, 6 90, 7 60 C 8 34, 26 10, 52 7" fill="none" stroke="#a88f62" stroke-width="5" stroke-linecap="round"></path><path d="M62 14 C 88 15, 106 36, 105 60" fill="none" stroke="#a88f62" stroke-width="2"></path></svg>
+          <svg aria-hidden="true" viewBox="0 0 34 18" style="position: absolute; z-index: -1; left: 14px; top: 250px; width: 30px; height: 16px; overflow: visible; pointer-events: none"><path d="M2 10 C 10 6, 20 12, 30 9 M24 3 L31 9 L24 15" fill="none" stroke="#b3291f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <p aria-hidden="true" style="position: absolute; z-index: -1; left: 16px; top: 400px; margin: 0; font-size: 22px; font-weight: 700; color: #b3291f; opacity: .7; rotate: -8deg; pointer-events: none">!!</p>
+          <svg aria-hidden="true" viewBox="0 0 100 34" style="position: absolute; z-index: -1; right: 44px; bottom: 96px; width: 100px; height: 34px; opacity: .45; pointer-events: none"><path d="M4 20 L14 8 L20 26 L30 6 L36 28 L46 8 L52 26 L62 6 L68 28 L78 8 L84 24 L96 12 M2 17 C 30 12, 70 22, 98 15" fill="none" stroke="#062b8a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <div aria-hidden="true" style="position: absolute; top: 0; bottom: 0; left: 0; width: 10px; background: #d9cbb0"></div>
+          <div aria-hidden="true" style="position: absolute; top: 0; bottom: 0; left: 52px; width: 2px; background: #b3291f; opacity: .55"></div>
+          <p style="margin: 0; font-size: 20px; line-height: 1.6">{{p.body}}</p>
+          <h4 style="margin: 28px 0 8px; font-size: 22px; font-weight: 700">What it taught me</h4>
+          <ul class="learned" style="margin: 0; padding-left: 1.1em; font-size: 19px; line-height: 1.5">
+            <sc-for list="{{p.learned}}" as="l" hint-placeholder-count="3"><li style="margin-bottom: 6px">{{l}}</li></sc-for>
+          </ul>
+          <p style="margin: 24px 0 0; font-size: 16px; line-height: 1.5"><span style="font-weight: 700">Built with </span>{{p.stack}}</p>
+          <div style="margin-top: auto; padding-top: 28px; display: flex; align-items: center">
+            <span style="margin-left: auto; font-size: 18px; font-weight: 700; color: #b3291f">{{p.page}}</span>
+          </div>
+        </article>
+      </div>
+    </div>
+    </div>
+
+    <div style="display: flex; align-items: center; justify-content: center; gap: 24px; margin-top: 40px">
+      <button class="nav-btn" type="button" aria-label="Previous project" disabled="{{atStart}}" onClick="{{prev}}" style="min-width: 64px; min-height: 48px; border: 0; background: #e6dbc7; color: #062b8a; font: 700 24px Kalam, cursive; cursor: pointer">←</button>
+      <p aria-live="polite" style="margin: 0; min-width: 22ch; color: #e6dbc7; text-align: center; font-size: 19px; font-weight: 700">{{status}}</p>
+      <button class="nav-btn" type="button" aria-label="Next project" disabled="{{atEnd}}" onClick="{{next}}" style="min-width: 64px; min-height: 48px; border: 0; background: #e6dbc7; color: #062b8a; font: 700 24px Kalam, cursive; cursor: pointer">→</button>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"start":{"editor":"enum","options":["0","1","2","3"],"default":"0"},"$preview":{"width":1440,"height":1180}}'>
+var PROJECTS = [
+  { name: "MRI Annotation", category: "Medical imaging platform", img: "/media/tumor/07-annotation.png",
+    alt: "The annotation workspace: 3D tumour mesh on the left, an MRI slice with the painted mask on the right, slice strip and brush controls below.",
+    caption: "The annotation workspace: 3D mesh, slice view and brush.",
+    body: "A browser platform for annotating tumours in MRI scans: view a scan in 2D and 3D, draw the tumour slice by slice, and get a clean 3D volume ready for AI. Students are scored against an AI segmentation or a specialist’s reference. I built it from A to Z.",
+    learned: ["Medical imaging formats and volumes (NIfTI)", "Rendering 3D medical data in the browser", "A complete platform: API, database, storage, Docker"],
+    stack: "FastAPI · React · TypeScript · Three.js · PostgreSQL · MinIO · Docker", repo: "" },
+  { name: "LifeIsGood", category: "Housing intelligence assistant", img: "",
+    alt: "Drawing: an address at the centre of nearby points of interest, each pulling on the rent estimate.",
+    caption: "Every place around an address pulls on the rent. (Drawing, not a screenshot.)",
+    body: "LifeIsGood helps renters decide: it filters listings, maps the transport, shops and schools around each address, and turns that neighbourhood into features for a model that estimates a fair rent. I built almost all of it, apart from the Python graphs.",
+    learned: ["OpenStreetMap and geospatial data", "Price prediction with K-Means and CatBoost", "Making heavy pipelines fast enough to feel interactive"],
+    stack: "Python · Streamlit · NLP · K-Means · CatBoost · PostGIS · OpenStreetMap", repo: "https://github.com/Mika1011-blip/LifeIsGood" },
+  { name: "MesSous", category: "AI-assisted budgeting app", img: "/media/messous/02-generated-budget-categories-with-priorities.webp",
+    alt: "MesSous: generated budget categories with priorities and allocations.",
+    caption: "Generated budget categories, with priorities you can edit.",
+    body: "MesSous starts from your life rather than a blank spreadsheet: a guided onboarding turns goals and daily constraints into budget categories and priorities you can edit, an AI reviews your answers, and a built-in fallback keeps everything working when the AI is down.",
+    learned: ["Designing a guided flow from a vague goal to a plan", "AI features with graceful fallbacks", "A secure Flask app: sessions, storage, CSV"],
+    stack: "Python · Flask · SQLite · CSV analysis · AI assistant", repo: "" },
+  { name: "RetinaSight", category: "Diabetic retinopathy screening", img: "/media/retina/01-upload-preprocessing-and-predicted-classification.webp",
+    alt: "RetinaSight: an uploaded retina image, its preprocessing and the predicted grade, with the assistant’s explanation.",
+    caption: "Upload, preprocessing, predicted grade and the assistant’s explanation.",
+    body: "Where it began: my first deep-learning project. Upload a retina photograph, a CNN I trained predicts the stage of diabetic retinopathy, and an assistant explains the result in plain language. An educational project, not a medical device.",
+    learned: ["Image preprocessing with OpenCV", "Training and evaluating a CNN", "Explaining a model’s output to non-experts"],
+    stack: "Python · TensorFlow · EfficientNet · OpenCV · Flask · Firebase", repo: "" }
+];
+var RIBBON = [["#f2c84b", "#062b8a"], ["#b3291f", "#e6dbc7"], ["#1a3f9e", "#e6dbc7"], ["#bba681", "#062b8a"]];
+class Component extends DCLogic {
+  renderVals() {
+    var start = parseInt(this.props.start ?? "0", 10) || 0;
+    var i = (this.state && this.state.i != null) ? this.state.i : start;
+    var self = this;
+    var go = function (k) { self.setState({ i: Math.max(0, Math.min(PROJECTS.length - 1, k)) }); };
+    var c = PROJECTS[i];
+    return {
+      ribbons: PROJECTS.map(function (p, k) {
+        var on = k === i;
+        return {
+          name: p.name, pressed: on ? "true" : "false", pick: function () { go(k); },
+          style: "flex: 1 1 0; min-width: 0; height: 110px; translate: 0 " + (on ? 0 : 10) + "px; padding: 12px 12px 0; border: 0; border-radius: 2px 2px 0 0; cursor: pointer; display: flex; align-items: flex-start; justify-content: center; background: " + RIBBON[k][0] + "; color: " + RIBBON[k][1] + "; font: 700 16px Kalam, cursive; white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
+        };
+      }),
+      p: {
+        name: c.name, category: c.category, img: c.img, alt: c.alt, caption: c.caption, body: c.body,
+        learned: c.learned, stack: c.stack, repo: c.repo,
+        hasImg: !!c.img, isDrawing: !c.img, hasRepo: !!c.repo, noRepo: !c.repo,
+        openLabel: "Open the project: " + c.name,
+        page: (i + 1) + " / " + PROJECTS.length
+      },
+      status: c.name + " · " + (i + 1) + " of " + PROJECTS.length,
+      atStart: i === 0, atEnd: i === PROJECTS.length - 1,
+      prev: function () { go(i - 1); }, next: function () { go(i + 1); }
+    };
+  }
+}
+</script>
+</body>
+</html>

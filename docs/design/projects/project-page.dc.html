@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MRI Annotation — project page</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#062b8a}a:hover{color:#b3291f}
+.grid-paper{background-image:linear-gradient(rgba(6,43,138,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(6,43,138,.09) 1px,transparent 1px);background-size:24px 24px}
+.note{position:absolute;margin:0;font-size:21px;font-weight:700;color:#b3291f;line-height:1.2}
+.next:hover{transform:translate(-4px,-6px)}
+.next{transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+a:focus-visible{outline:3px solid #062b8a;outline-offset:3px}
+</style>
+</helmet>
+<main class="grid-paper" style="width: 1440px; min-height: 2760px; box-sizing: border-box; padding: 0 80px 96px; background-color: #e6dbc7; color: #062b8a; font-family: 'Kalam', 'Comic Sans MS', cursive">
+  <nav aria-label="Project" style="display: flex; justify-content: space-between; align-items: center; height: 104px">
+    <a href="projects-gallery.dc.html" style="display: inline-flex; align-items: center; min-height: 44px; font-size: 20px; font-weight: 700; text-decoration-thickness: 2px; text-underline-offset: 5px">← All projects</a>
+    <a href="projects-gallery.dc.html" style="display: inline-flex; align-items: center; min-height: 44px; font-size: 20px; font-weight: 700; text-decoration-thickness: 2px; text-underline-offset: 5px">Next: LifeIsGood →</a>
+  </nav>
+
+  <header style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; padding-top: 40px">
+    <div style="grid-column: 1 / span 8">
+      <p style="margin: 0; font-size: 20px; font-weight: 700; color: #3a5aa8">Medical imaging platform</p>
+      <h1 style="margin: 6px 0 0; font-size: 128px; font-weight: 700; line-height: .95">MRI Annotation</h1>
+      <p style="margin: 28px 0 0; max-width: 40ch; font-size: 24px; line-height: 1.5">A browser platform for annotating tumours in MRI scans: view a scan in 2D and 3D, draw the tumour slice by slice, and get a clean 3D volume ready for AI. Students are scored against an AI segmentation or a specialist’s reference. I built it <span style="position: relative; white-space: nowrap; display: inline-block">from A to Z.<svg aria-hidden="true" viewBox="0 0 120 40" preserveAspectRatio="none" style="position: absolute; left: -12px; top: -8px; width: calc(100% + 24px); height: calc(100% + 16px); overflow: visible"><path d="M8 22 C 6 6, 100 2, 114 16 C 122 30, 40 40, 12 30 C 2 26, 6 14, 22 8" fill="none" stroke="#b3291f" stroke-width="2.4" stroke-linecap="round"></path></svg></span></p>
+    </div>
+    <dl style="grid-column: 10 / span 3; margin: 0; padding: 24px 24px 28px; align-self: end; background: #ddd0b9; rotate: 1deg; display: grid; gap: 16px">
+      <div><dt style="font-size: 16px; font-weight: 700; color: #3a5aa8">Role</dt><dd style="margin: 2px 0 0; font-size: 19px">Everything: design, front, back, infra</dd></div>
+      <div><dt style="font-size: 16px; font-weight: 700; color: #3a5aa8">Built with</dt><dd style="margin: 2px 0 0; font-size: 18px; line-height: 1.4">FastAPI · React · TypeScript · Three.js · PostgreSQL · MinIO · Docker · NIfTI</dd></div>
+      <div><dt style="font-size: 16px; font-weight: 700; color: #3a5aa8">When</dt><dd style="margin: 2px 0 0; font-size: 19px">[YEAR]</dd></div>
+      <div><dt style="font-size: 16px; font-weight: 700; color: #3a5aa8">Code</dt><dd style="margin: 2px 0 0; font-size: 19px; font-style: italic">Private repository</dd></div>
+    </dl>
+  </header>
+
+  <!-- figure 1: the annotation workspace -->
+  <section aria-labelledby="h-workspace" style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; margin-top: 96px; align-items: start">
+    <figure style="grid-column: 1 / span 8; margin: 0; position: relative; height: 640px">
+      <div style="position: absolute; left: 0; top: 70px; width: 840px; padding: 12px; box-sizing: border-box; background: #ddd0b9; rotate: -0.6deg">
+        <img src="/media/tumor/07-annotation.png" alt="The annotation workspace: a 3D tumour mesh on the left, an MRI slice with the painted tumour mask on the right, a strip of neighbouring slices and brush controls below." width="1400" height="788" style="display: block; width: 100%; height: auto">
+      </div>
+      <svg aria-hidden="true" viewBox="0 0 840 640" style="position: absolute; inset: 0; width: 840px; height: 640px; overflow: visible; pointer-events: none">
+        <defs><marker id="ah1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10" fill="none" stroke="#b3291f" stroke-width="2"></path></marker></defs>
+        <g fill="none" stroke="#b3291f" stroke-width="2.6" stroke-linecap="round" marker-end="url(#ah1)">
+          <path d="M150 40 C 170 120, 230 190, 215 300"></path>
+          <path d="M640 40 C 620 110, 650 180, 640 255"></path>
+          <path d="M310 588 C 360 560, 420 540, 470 515"></path>
+          <path d="M640 590 C 650 560, 640 520, 632 478"></path>
+        </g>
+        <ellipse cx="218" cy="308" rx="70" ry="86" fill="none" stroke="#b3291f" stroke-width="2.4"></ellipse>
+      </svg>
+      <p class="note" style="left: 40px; top: 0; width: 260px">the 3D volume, built from the slices</p>
+      <p class="note" style="left: 540px; top: 0; width: 280px">paint the tumour, one slice at a time</p>
+      <p class="note" style="left: 110px; top: 586px; width: 220px">brush size and opacity</p>
+      <p class="note" style="left: 600px; top: 596px; width: 240px">scrub the neighbouring slices</p>
+    </figure>
+    <div style="grid-column: 9 / span 4; padding-top: 70px">
+      <h2 id="h-workspace" style="margin: 0; font-size: 44px; font-weight: 700; line-height: 1.05">The workspace</h2>
+      <p style="margin: 16px 0 0; font-size: 20px; line-height: 1.6">[2–3 sentences: what a student sees when they open a case, and why 2D and 3D sit side by side.]</p>
+      <p style="margin: 16px 0 0; font-size: 20px; line-height: 1.6">[One technical detail you are proud of, e.g. how a NIfTI volume reaches the browser.]</p>
+    </div>
+  </section>
+
+  <!-- figure 2: from strokes to a mesh, mirrored -->
+  <section aria-labelledby="h-mesh" style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; margin-top: 88px; align-items: start">
+    <div style="grid-column: 1 / span 4; padding-top: 70px">
+      <h2 id="h-mesh" style="margin: 0; font-size: 44px; font-weight: 700; line-height: 1.05">From strokes to a mesh</h2>
+      <p style="margin: 16px 0 0; font-size: 20px; line-height: 1.6">[2–3 sentences: how the painted slices become the student’s 3D mesh, and how it is scored against the AI or specialist segmentation.]</p>
+    </div>
+    <figure style="grid-column: 5 / span 8; margin: 0; position: relative; height: 640px">
+      <div style="position: absolute; left: 0; top: 70px; width: 840px; padding: 12px; box-sizing: border-box; background: #ddd0b9; rotate: 0.6deg">
+        <img src="/media/tumor/08-annotation-user-mesh.png" alt="The student’s annotation rebuilt as an orange 3D mesh inside the brain volume, with the USER segmentation overlay selected and the Generate USER mesh button below the slice view." width="1400" height="788" style="display: block; width: 100%; height: auto">
+      </div>
+      <svg aria-hidden="true" viewBox="0 0 840 640" style="position: absolute; inset: 0; width: 840px; height: 640px; overflow: visible; pointer-events: none">
+        <defs><marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10" fill="none" stroke="#b3291f" stroke-width="2"></path></marker></defs>
+        <g fill="none" stroke="#b3291f" stroke-width="2.6" stroke-linecap="round" marker-end="url(#ah2)">
+          <path d="M120 44 C 140 140, 190 220, 205 310"></path>
+          <path d="M700 40 C 720 70, 716 100, 712 128"></path>
+          <path d="M560 596 C 600 570, 640 545, 660 522"></path>
+        </g>
+        <ellipse cx="212" cy="330" rx="66" ry="74" fill="none" stroke="#b3291f" stroke-width="2.4"></ellipse>
+      </svg>
+      <p class="note" style="left: 20px; top: 0; width: 300px">my annotation, now a 3D mesh</p>
+      <p class="note" style="left: 470px; top: 0; width: 220px">compare: AI or specialist overlay</p>
+      <p class="note" style="left: 300px; top: 596px; width: 260px">one click: Generate USER mesh</p>
+    </figure>
+  </section>
+
+  <!-- video + lessons -->
+  <section aria-labelledby="h-learned" style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; margin-top: 96px; align-items: start">
+    <figure style="grid-column: 1 / span 7; margin: 0">
+      <div style="position: relative; aspect-ratio: 16 / 9; background: #062b8a; color: #e6dbc7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px">
+        <svg aria-hidden="true" viewBox="0 0 80 80" style="width: 80px; height: 80px"><circle cx="40" cy="40" r="36" fill="none" stroke="#e6dbc7" stroke-width="3"></circle><path d="M32 26 L56 40 L32 54 Z" fill="#e6dbc7"></path></svg>
+        <p style="margin: 0; font-size: 20px">[Video: annotation features, start to finish]</p>
+      </div>
+      <figcaption style="margin-top: 12px; font-size: 16px; font-style: italic">The whole flow in one take. Muted, no autoplay.</figcaption>
+    </figure>
+    <div style="grid-column: 9 / span 4">
+      <h2 id="h-learned" style="margin: 0; font-size: 44px; font-weight: 700; line-height: 1.05">What it taught me</h2>
+      <div style="display: grid; gap: 16px; margin-top: 24px">
+        <p style="margin: 0; padding: 16px 20px; background: #ddd0b9; font-size: 20px; line-height: 1.4; rotate: -0.8deg">Medical imaging formats and volumes (NIfTI)</p>
+        <p style="margin: 0; padding: 16px 20px; background: #d9cbb0; font-size: 20px; line-height: 1.4; rotate: 0.6deg">Rendering 3D medical data in the browser</p>
+        <p style="margin: 0; padding: 16px 20px; background: #f2c84b; font-size: 20px; line-height: 1.4; rotate: -0.4deg">A complete platform: API, database, storage, Docker</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- next project -->
+  <a class="next" href="projects-gallery.dc.html" style="display: flex; justify-content: space-between; align-items: center; margin-top: 112px; padding: 40px 48px; background: #062b8a; color: #e6dbc7; text-decoration: none">
+    <span>
+      <span style="display: block; font-size: 20px">Next project</span>
+      <span style="display: block; margin-top: 4px; font-size: 64px; font-weight: 700; line-height: 1">LifeIsGood</span>
+      <span style="display: block; margin-top: 6px; font-size: 19px">Housing intelligence assistant</span>
+    </span>
+    <span aria-hidden="true" style="font-size: 72px; font-weight: 700">→</span>
+  </a>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2760}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
