@@ -101,22 +101,10 @@ function render() {
     ${workSection(P, u)}
 
     <section class="contact" id="contact" aria-labelledby="contact-h">
-      <form class="coupon" data-coupon>
-        <div class="coupon-left">
-          <h2 id="contact-h">${u.contactHead}</h2>
-          <p>${u.contactNote}</p>
-        </div>
-        <div class="coupon-right">
-          <label class="field"><span>${u.fName}</span><input name="name" autocomplete="name" required></label>
-          <label class="field"><span>${u.fTopic}</span><select name="topic">${u.topics.map((t) => `<option>${t}</option>`).join('')}</select></label>
-          <label class="field"><span>${u.fMessage}</span><textarea name="message" rows="3" required></textarea></label>
-          <button class="button is-light is-wide" type="submit">${u.send}</button>
-        </div>
-      </form>
       <div class="postcard">
         ${scallops(12, true)}
         <div class="postcard-left">
-          <h3>${u.footHead}</h3>
+          <h2 id="contact-h">${u.footHead}</h2>
           <p>${u.footNote}</p>
         </div>
         <div class="postcard-right">
@@ -129,6 +117,18 @@ function render() {
           </ul>
         </div>
       </div>
+      <form class="coupon" data-coupon>
+        <div class="coupon-left">
+          <h3>${u.contactHead}</h3>
+          <p>${u.contactNote}</p>
+        </div>
+        <div class="coupon-right">
+          <label class="field"><span>${u.fName}</span><input name="name" autocomplete="name" required></label>
+          <label class="field"><span>${u.fTopic}</span><select name="topic">${u.topics.map((t) => `<option>${t}</option>`).join('')}</select></label>
+          <label class="field"><span>${u.fMessage}</span><textarea name="message" rows="3" required></textarea></label>
+          <button class="button is-light is-wide" type="submit">${u.send}</button>
+        </div>
+      </form>
     </section>
   </main>
 

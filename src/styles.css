@@ -300,12 +300,12 @@ input[type='range']::-moz-range-thumb { width: 26px; height: 26px; border: 0; bo
 
 /* ---------- section 3: contact, paper on a cobalt desk ---------- */
 .contact { background: var(--ink); padding: var(--section) var(--gutter) 0; overflow-x: clip; }
-.coupon { position: relative; display: grid; grid-template-columns: 46% 54%; max-width: 1120px; margin: 0 auto; background: var(--bg); color: var(--ink); rotate: -0.6deg; }
+.coupon { position: relative; display: grid; grid-template-columns: 46% 54%; max-width: 1120px; margin: 120px auto 0; background: var(--bg); color: var(--ink); rotate: -0.6deg; }
 .coupon::before, .coupon::after { content: ''; position: absolute; left: 46%; width: 28px; height: 28px; margin-left: -14px; border-radius: 50%; background: var(--ink); z-index: 1; }
 .coupon::before { top: -14px; }
 .coupon::after { bottom: -14px; }
 .coupon-left { display: flex; flex-direction: column; justify-content: space-between; gap: 32px; padding: 48px; }
-.coupon-left h2 { font-size: var(--step-head); }
+.coupon-left h3 { font: 700 var(--step-head)/1 var(--display); letter-spacing: -0.01em; }
 .coupon-right { display: grid; gap: 10px; padding: 48px; border-left: 6px dotted var(--ink); }
 .field { display: grid; gap: 2px; padding: 10px 16px; background: var(--surface); }
 .field span { font-size: var(--step-small); font-weight: 600; }
@@ -315,11 +315,11 @@ input[type='range']::-moz-range-thumb { width: 26px; height: 26px; border: 0; bo
 .coupon .button { background: var(--marker); color: var(--ink); }
 
 .postcard {
-  position: relative; max-width: 1120px; margin: 120px auto 0; background: var(--bg); color: var(--ink); rotate: 0.8deg;
+  position: relative; max-width: 1120px; margin: 0 auto; background: var(--bg); color: var(--ink); rotate: 0.8deg;
   display: grid; grid-template-columns: 1fr 1fr; gap: 48px; padding: 64px 56px 48px;
 }
 .postcard > .scallops { position: absolute; left: 0; bottom: calc(100% - 1px); }
-.postcard-left h3 { font: 700 var(--step-sub)/1.05 var(--display); }
+.postcard-left h2 { font: 700 var(--step-sub)/1.05 var(--display); }
 .postcard-left p { margin-top: 20px; max-width: 40ch; }
 .postcard-right { position: relative; padding-top: 4px; }
 .address { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; font-size: var(--step-body); }
@@ -488,7 +488,8 @@ input[type='range']::-moz-range-thumb { width: 26px; height: 26px; border: 0; bo
   .coupon::before, .coupon::after { display: none; }
   .coupon-left, .coupon-right { padding: 28px 20px; }
   .coupon-right { border-left: 0; border-top: 6px dotted var(--ink); }
-  .postcard { grid-template-columns: 1fr; padding: 48px 20px 24px; gap: 32px; margin-top: 80px; }
+  .postcard { grid-template-columns: 1fr; padding: 48px 20px 24px; gap: 32px; }
+  .coupon { margin-top: 80px; }
   .stamp { width: 64px; top: -16px; }
   .foot-name { font-size: 13vw; }
   /* project pages: the notes move under the print, keyed to numbered pins */
