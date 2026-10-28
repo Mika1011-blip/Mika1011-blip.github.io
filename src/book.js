@@ -22,7 +22,7 @@ const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 // Pages that contain a video show its poster while they are in the air.
 const still = (html) => html.replace(/<video[^>]*poster="([^"]+)"[^>]*><\/video>/g, '<img src="$1" alt="">');
 
-export function mountBook(root, { pages, reducedMotion }) {
+export function mountBook(root, { pages, reducedMotion, at = 0 }) {
   const stage = root.querySelector('[data-stage]');
   const left = root.querySelector('[data-page="left"]');
   const right = root.querySelector('[data-page="right"]');
@@ -34,7 +34,7 @@ export function mountBook(root, { pages, reducedMotion }) {
   const status = root.querySelector('[data-status]');
   const flat = () => reducedMotion || matchMedia('(max-width: 760px)').matches;
 
-  let index = 0;
+  let index = at;
   let flip = null;      // the leaf in the air, if any
   let queue = [];       // further turns requested while one is in flight
   let raf = 0;
@@ -227,7 +227,7 @@ export function mountBook(root, { pages, reducedMotion }) {
     if (e.key === 'ArrowLeft') { turn(-1); e.preventDefault(); }
   });
 
-  paint('left', 0); paint('right', 0);
+  paint('left', index); paint('right', index);
   sync();
-  return { go };
+  return { go, current: () => (flip ? flip.to : index) };
 }

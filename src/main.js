@@ -3,34 +3,23 @@ import { CONTACT, PROJECTS, UI } from './content.js';
 import { mountSampler } from './sampler.js';
 import { mountSpacetime } from './spacetime.js';
 import { mountBook } from './book.js';
+import { esc, storedLang, saveLang, langToggle, INKED, inkOutline } from './shared.js';
+import { workSection, spreads } from './work.js';
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const app = document.getElementById('app');
-const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
-
-function storedLang() {
-  try { const l = localStorage.getItem('lang'); if (l === 'en' || l === 'fr') return l; } catch {}
-  return (navigator.language || 'en').toLowerCase().startsWith('fr') ? 'fr' : 'en';
-}
+const BASE = import.meta.env.BASE_URL;
 let lang = storedLang();
+// A project page links back with ?project=<id>, so the notebook opens on it.
+function startProject() {
+  const id = new URLSearchParams(location.search).get('project');
+  return Math.max(0, PROJECTS.findIndex((p) => p.id === id));
+}
 let stopSampler = () => {};
 let space = null; // the spacetime paper, once mounted
+let book = null;  // the notebook, so a language switch keeps its page
 
 // A row of semicircular scallops, drawn as one SVG path.
-// Black pen outlines, drawn twice and a little off, like a quick sketch around
-// each paper object. The SVG stretches to the element; the stroke keeps its width.
-const INKED = '.sheet, .plate, .coupon, .postcard, .page-plate, .button, .stamp, .dist, .field';
-function roughRect(j) {
-  const r = () => (Math.random() - 0.5) * j;
-  const o = () => -1.2 + Math.random() * 1.6; // corners overshoot like a hand-drawn box
-  return `M${o()} ${r()} L${100 + r()} ${o()} L${100 - o()} ${100 + r()} L${r()} ${100 - o()} Z`;
-}
-function inkOutline(el) {
-  if (el.querySelector(':scope > .ink')) return;
-  el.insertAdjacentHTML('beforeend', `<svg class="ink" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-    <path d="${roughRect(1.2)}"/><path class="ink-2" d="${roughRect(1.8)}"/></svg>`);
-}
-
 // Flat along the top, bumps hanging down; `flip` mirrors it for a top edge.
 function scallops(n, flip = false) {
   const wdt = 100 / n;
@@ -38,51 +27,6 @@ function scallops(n, flip = false) {
   for (let i = 0; i < n; i++) d += ` A${wdt / 2} 10 0 0 0 ${(i + 1) * wdt} 0`;
   d += ' Z';
   return `<svg class="scallops${flip ? ' is-flipped' : ''}" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="${d}"/></svg>`;
-}
-
-// LifeIsGood has no screenshots yet: draw the idea instead (an address and the
-// points of interest that pull on its rent estimate).
-function neighbourhoodDrawing(alt) {
-  const pois = [
-    [120, 90, 'Metro'], [470, 70, 'School'], [540, 230, 'Market'],
-    [430, 330, 'Clinic'], [110, 300, 'Park'], [60, 190, 'Bakery'], [300, 40, 'Bus'],
-  ];
-  const lines = pois.map(([x, y]) => `<path d="M300 190 Q ${(300 + x) / 2 + 12} ${(190 + y) / 2 - 10} ${x} ${y}"/>`).join('');
-  const dots = pois.map(([x, y, l]) => `<circle cx="${x}" cy="${y}" r="9"/><text x="${x + 16}" y="${y + 5}">${l}</text>`).join('');
-  return `<svg class="drawing" viewBox="0 0 640 400" role="img" aria-label="${esc(alt)}">
-    <g class="rough">
-      <g class="drawing-lines">${lines}</g>
-      <g class="drawing-dots">${dots}</g>
-      <rect x="276" y="160" width="48" height="44"/><path d="M268 164 L300 136 L332 164"/>
-      <text class="drawing-big" x="300" y="246" text-anchor="middle">fair rent?</text>
-    </g></svg>`;
-}
-
-function projectMedia(p, t) {
-  const m = p.media;
-  if (m.kind === 'video') {
-    return `<figure class="page-media"><video src="${m.src}" poster="${m.poster}" muted loop playsinline preload="metadata"
-      ${reducedMotion ? 'controls' : 'autoplay'} aria-label="${esc(t.alt)}" width="1600" height="1000"></video></figure>`;
-  }
-  if (m.kind === 'image') {
-    return `<figure class="page-media"><img src="${m.src}" alt="${esc(t.alt)}" loading="lazy" width="1600" height="1000"></figure>`;
-  }
-  return `<figure class="page-media is-drawn">${neighbourhoodDrawing(t.alt)}</figure>`;
-}
-
-// One spread per project: the picture page and the write-up page.
-function leftPage(p, u) {
-  return `<h3 class="page-title">${esc(p.t.name)}</h3>
-    ${projectMedia(p, p.t)}
-    <p class="page-cat">${esc(p.t.category)}</p>
-    <p class="page-stack">${p.stack.map(esc).join(' · ')}</p>`;
-}
-function rightPage(p, u) {
-  return `<p class="page-lede">${esc(p.t.body)}</p>
-    <h4>${u.learnedHead}</h4>
-    <ul class="learned">${p.t.learned.map((l) => `<li>${esc(l)}</li>`).join('')}</ul>
-    ${p.media.plate ? `<figure class="page-plate"><img src="${p.media.plate}" alt="${esc(p.t.plateAlt)}" loading="lazy" width="1600" height="1000"></figure>` : ''}
-    ${p.repo ? `<a class="text-link" href="${p.repo}" target="_blank" rel="noopener">${u.repo}</a>` : `<p class="muted">${u.privateRepo}</p>`}`;
 }
 
 function render() {
@@ -99,10 +43,7 @@ function render() {
       <a href="#intro">${u.nav[0]}</a><a href="#work">${u.nav[1]}</a><a href="#contact">${u.nav[2]}</a>
     </nav>
     <div class="bar-end">
-      <div class="lang" role="group" aria-label="Language">
-        <button type="button" data-lang="en" aria-pressed="${lang === 'en'}">EN</button>
-        <button type="button" data-lang="fr" aria-pressed="${lang === 'fr'}">FR</button>
-      </div>
+      ${langToggle(lang)}
       <a class="bar-link" href="${CONTACT.cv}" target="_blank" rel="noopener">${u.cv}</a>
     </div>
   </header>
@@ -156,34 +97,7 @@ function render() {
       </div>
     </section>
 
-    <section class="work" id="work" aria-labelledby="work-h">
-      <div class="work-head">
-        <h2 id="work-h" class="reveal">${u.workHead}</h2>
-        <p class="reveal" style="--d:1">${u.workNote}</p>
-      </div>
-      <div class="book" data-book tabindex="-1" aria-roledescription="notebook">
-        <div class="ribbons" role="group" aria-label="${u.workHead}">
-          ${P.map((p, i) => `<button type="button" class="ribbon" data-tab style="--i:${i}">${esc(p.t.name)}</button>`).join('')}
-        </div>
-        <div class="book-3d">
-          <div class="book-cover" aria-hidden="true"><i class="headband is-top"></i><i class="headband is-bottom"></i><i class="marker-ribbon"></i></div>
-          <div class="edges is-left" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-          <div class="edges is-right" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-          <div class="book-stage" data-stage>
-            <div class="page page-left" data-page="left"></div>
-            <div class="page page-right" data-page="right"></div>
-            <i class="cast is-left" data-shade="left" aria-hidden="true"></i>
-            <i class="cast is-right" data-shade="right" aria-hidden="true"></i>
-          </div>
-        </div>
-        <div class="book-nav">
-          <button type="button" class="button" data-prev aria-label="${u.prevPage}">←</button>
-          <p data-status aria-live="polite"></p>
-          <button type="button" class="button" data-next aria-label="${u.nextPage}">→</button>
-        </div>
-        <p class="book-hint">${u.bookHint}</p>
-      </div>
-    </section>
+    ${workSection(P, u)}
 
     <section class="contact" id="contact" aria-labelledby="contact-h">
       <form class="coupon" data-coupon>
@@ -225,7 +139,7 @@ function render() {
 
   app.querySelectorAll('[data-lang]').forEach((b) => b.addEventListener('click', () => {
     lang = b.dataset.lang;
-    try { localStorage.setItem('lang', lang); } catch {}
+    saveLang(lang);
     render();
     app.querySelector(`[data-lang="${lang}"]`).focus();
   }));
@@ -237,10 +151,7 @@ function render() {
     location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(f.get('message'))}`;
   });
 
-  mountBook(app.querySelector('[data-book]'), {
-    pages: P.map((p) => ({ left: leftPage(p, u), right: rightPage(p, u), label: `${p.t.name} · ${p.t.category}` })),
-    reducedMotion,
-  });
+  book = mountBook(app.querySelector('[data-book]'), { pages: spreads(P, u, BASE), reducedMotion, at: book ? book.current() : startProject() });
 
   const count = app.querySelector('[data-ball-count]');
   const showCount = (n) => { count.textContent = u.ballCount(n); };

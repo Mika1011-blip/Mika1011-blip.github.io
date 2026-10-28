@@ -1,5 +1,5 @@
 // All page copy, in English and French. Facts are taken from the previous site
-// (legacy-index.html); project media lives in public/media/<id>/.
+// (legacy-index.html); project media lives in public/media/<id>/ (see its media.json).
 
 export const CONTACT = {
   email: 'mr.thaiminhkhang@gmail.com',
@@ -8,45 +8,115 @@ export const CONTACT = {
   cv: 'https://drive.google.com/file/d/135Q7szxnbsOcCX3VeLkeyFmMrtNc9cVc/view?usp=sharing',
 };
 
+// Each project is one spread in the notebook (cover, caption, write-up) and one
+// project page (role, year, annotated figures, optional video). Text that changes
+// with the language sits under `en` / `fr`; figure text is given as { en, fr }.
+// A figure's notes are placed in percent of the whole figure (the image plus a
+// band above and below it, see FIG in project-page.js): `at` is the top-left of
+// the note, the arrow runs `from` → `to`, and `ring` circles the target.
+// Copy in [BRACKETS] is still to be written.
 export const PROJECTS = [
   {
     id: 'tumor',
     repo: '',
-    media: {
-      kind: 'video',
-      src: 'media/tumor/12-tumour-reveal-3d.mp4',
-      poster: 'media/tumor/08-annotation-user-mesh.png',
-      plate: 'media/tumor/07-annotation.png',
-    },
+    cover: { src: 'media/tumor/07-annotation.png', w: 3840, h: 2160 },
     stack: ['FastAPI', 'React', 'TypeScript', 'Three.js', 'PostgreSQL', 'MinIO', 'Docker', 'NIfTI'],
+    figures: [
+      {
+        src: 'media/tumor/07-annotation.png', w: 3840, h: 2160, side: 'left',
+        alt: {
+          en: 'The annotation workspace: a 3D tumour mesh on the left, an MRI slice with the painted tumour mask on the right, a strip of neighbouring slices and brush controls below.',
+          fr: 'L’espace d’annotation : un maillage 3D de la tumeur à gauche, une coupe IRM avec le masque peint à droite, une bande de coupes voisines et le pinceau en dessous.',
+        },
+        head: { en: 'The workspace', fr: 'L’espace de travail' },
+        body: {
+          en: ['[2–3 sentences: what a student sees when they open a case, and why 2D and 3D sit side by side.]', '[One technical detail you are proud of, e.g. how a NIfTI volume reaches the browser.]'],
+          fr: ['[2–3 phrases : ce qu’un étudiant voit en ouvrant un cas, et pourquoi la 2D et la 3D sont côte à côte.]', '[Un détail technique dont tu es fier, par ex. comment un volume NIfTI arrive dans le navigateur.]'],
+        },
+        notes: [
+          { text: { en: 'the 3D volume, built from the slices', fr: 'le volume 3D, construit à partir des coupes' }, at: [5, 0], w: 31, from: [18, 7], to: [25.6, 47], ring: [8.3, 13.4] },
+          { text: { en: 'paint the tumour, one slice at a time', fr: 'peindre la tumeur, coupe par coupe' }, at: [64, 0], w: 33, from: [76, 7], to: [76, 40] },
+          { text: { en: 'brush size and opacity', fr: 'taille et opacité du pinceau' }, at: [13, 91.5], w: 26, from: [37, 91.5], to: [56, 81] },
+          { text: { en: 'scrub the neighbouring slices', fr: 'faire défiler les coupes voisines' }, at: [71, 92.5], w: 28, from: [76, 92], to: [75, 76] },
+        ],
+      },
+      {
+        src: 'media/tumor/08-annotation-user-mesh.png', w: 3840, h: 2160, side: 'right',
+        alt: {
+          en: 'The student’s annotation rebuilt as an orange 3D mesh inside the brain volume, with the USER segmentation overlay selected and the Generate USER mesh button below the slice view.',
+          fr: 'L’annotation de l’étudiant reconstruite en maillage 3D orange dans le volume du cerveau, avec la superposition USER sélectionnée et le bouton Generate USER mesh sous la vue en coupe.',
+        },
+        head: { en: 'From strokes to a mesh', fr: 'Des traits au maillage' },
+        body: {
+          en: ['[2–3 sentences: how the painted slices become the student’s 3D mesh, and how it is scored against the AI or specialist segmentation.]'],
+          fr: ['[2–3 phrases : comment les coupes peintes deviennent le maillage 3D de l’étudiant, et comment il est noté face à la segmentation IA ou du spécialiste.]'],
+        },
+        notes: [
+          { text: { en: 'my annotation, now a 3D mesh', fr: 'mon annotation, devenue un maillage 3D' }, at: [2.5, 0], w: 36, from: [14.3, 7], to: [24.4, 49.7], ring: [7.9, 11.5] },
+          { text: { en: 'compare: AI or specialist overlay', fr: 'comparer : IA ou spécialiste' }, at: [56, 0], w: 27, from: [83, 7], to: [84.8, 21.4] },
+          { text: { en: 'one click: Generate USER mesh', fr: 'un clic : Generate USER mesh' }, at: [35, 92.5], w: 31, from: [66.7, 92.5], to: [78.6, 82.7] },
+        ],
+      },
+    ],
+    video: { src: 'media/tumor/02-annotation-features-complete.mp4', poster: 'media/tumor/09-annotation-seg-mesh.png' },
     en: {
       name: 'MRI Annotation',
       category: 'Medical imaging platform',
       body: 'A browser platform for annotating tumours in MRI scans: view a scan in 2D and 3D, draw the tumour slice by slice, and get a clean 3D volume ready for AI. Students are scored against an AI segmentation or a specialist’s reference. I built it from A to Z.',
+      circle: 'from A to Z.',
       learned: ['Medical imaging formats and volumes (NIfTI)', 'Rendering 3D medical data in the browser', 'A complete platform: API, database, storage, Docker'],
-      alt: 'A tumour rebuilt as a 3D mesh from slice-by-slice annotations.',
-      plateAlt: 'The annotation workspace: 3D mesh, slice view and brush controls.',
+      alt: 'The annotation workspace: 3D tumour mesh on the left, an MRI slice with the painted mask on the right, slice strip and brush controls below.',
+      caption: 'The annotation workspace: 3D mesh, slice view and brush.',
+      role: 'Everything: design, front end, back end, infrastructure',
+      year: '[YEAR]',
+      videoCaption: 'Annotation features, start to finish. Muted, no autoplay.',
     },
     fr: {
       name: 'Annotation IRM',
       category: 'Plateforme d’imagerie médicale',
       body: 'Une plateforme web pour annoter des tumeurs sur des IRM : visualiser un scan en 2D et en 3D, tracer la tumeur coupe par coupe et obtenir un volume 3D propre, prêt pour l’IA. Les étudiants sont évalués face à une segmentation IA ou à la référence d’un spécialiste. Construite de A à Z.',
+      circle: 'de A à Z.',
       learned: ['Formats et volumes d’imagerie médicale (NIfTI)', 'Afficher des données médicales 3D dans le navigateur', 'Une plateforme complète : API, base de données, stockage, Docker'],
-      alt: 'Une tumeur reconstruite en maillage 3D à partir des annotations coupe par coupe.',
-      plateAlt: 'L’espace d’annotation : maillage 3D, vue en coupe et pinceau.',
+      alt: 'L’espace d’annotation : maillage 3D de la tumeur à gauche, une coupe IRM avec le masque peint à droite, bande de coupes et pinceau en dessous.',
+      caption: 'L’espace d’annotation : maillage 3D, vue en coupe et pinceau.',
+      role: 'Tout : design, front-end, back-end, infrastructure',
+      year: '[ANNÉE]',
+      videoCaption: 'Les fonctionnalités d’annotation, du début à la fin. Sans son, sans lecture automatique.',
     },
   },
   {
     id: 'lifeisgood',
     repo: 'https://github.com/Mika1011-blip/LifeIsGood',
-    media: { kind: 'drawing' },
+    cover: null, // no screenshots yet: the neighbourhood drawing stands in
     stack: ['Python', 'Streamlit', 'Web scraping', 'NLP', 'K-Means', 'CatBoost', 'PostGIS', 'OpenStreetMap'],
+    figures: [
+      {
+        drawing: true, w: 640, h: 400, side: 'left',
+        alt: {
+          en: 'Drawing: an address at the centre of nearby points of interest, each pulling on the rent estimate.',
+          fr: 'Dessin : une adresse au centre de points d’intérêt, chacun tirant sur l’estimation du loyer.',
+        },
+        head: { en: 'The neighbourhood as data', fr: 'Le quartier en données' },
+        body: {
+          en: ['[2–3 sentences: which places you pull from OpenStreetMap, and how they become features for the model.]', '[Screenshot to come: the map or the listings view.]'],
+          fr: ['[2–3 phrases : quels lieux tu récupères d’OpenStreetMap, et comment ils deviennent des variables pour le modèle.]', '[Capture à venir : la carte ou la vue des annonces.]'],
+        },
+        notes: [
+          { text: { en: 'each place pulls on the rent', fr: 'chaque lieu tire sur le loyer' }, at: [2, 0], w: 30, from: [12, 7.5], to: [18, 27] },
+          { text: { en: 'one address, many features', fr: 'une adresse, beaucoup de variables' }, at: [62, 0], w: 32, from: [70, 7.5], to: [51, 45], ring: [7, 9] },
+          { text: { en: 'a model turns it into a fair rent', fr: 'un modèle en tire un loyer juste' }, at: [58, 90], w: 36, from: [60, 91], to: [53, 63] },
+        ],
+      },
+    ],
     en: {
       name: 'LifeIsGood',
       category: 'Housing intelligence assistant',
       body: 'LifeIsGood helps renters decide: it filters listings, maps the transport, shops and schools around each address, and turns that neighbourhood into features for a model that estimates a fair rent. I built almost all of it, apart from the Python graphs.',
       learned: ['OpenStreetMap and geospatial data', 'Price prediction with K-Means and CatBoost', 'Making heavy pipelines fast enough to feel interactive'],
       alt: 'Drawing: an address at the centre of nearby points of interest, each pulling on the rent estimate.',
+      caption: 'Every place around an address pulls on the rent. (Drawing, not a screenshot.)',
+      role: 'Almost everything, apart from the Python graphs',
+      year: '[YEAR]',
     },
     fr: {
       name: 'LifeIsGood',
@@ -54,20 +124,61 @@ export const PROJECTS = [
       body: 'LifeIsGood aide les locataires à décider : il filtre les annonces, cartographie transports, commerces et écoles autour de chaque adresse, puis transforme ce quartier en variables pour un modèle qui estime un loyer juste. J’en ai construit presque tout, sauf les graphiques Python.',
       learned: ['OpenStreetMap et données géospatiales', 'Prédiction de prix avec K-Means et CatBoost', 'Rendre des traitements lourds assez rapides pour être interactifs'],
       alt: 'Dessin : une adresse au centre de points d’intérêt, chacun tirant sur l’estimation du loyer.',
+      caption: 'Chaque lieu autour d’une adresse tire sur le loyer. (Un dessin, pas une capture.)',
+      role: 'Presque tout, sauf les graphiques Python',
+      year: '[ANNÉE]',
     },
   },
   {
     id: 'messous',
     repo: '',
-    media: { kind: 'image', src: 'media/messous/02-generated-budget-categories-with-priorities.webp', plate: 'media/messous/03-ai-priority-review-follow-up.webp' },
+    cover: { src: 'media/messous/02-generated-budget-categories-with-priorities.webp', w: 1353, h: 721 },
     stack: ['Python', 'Flask', 'SQLite', 'CSV analysis', 'AI assistant'],
+    figures: [
+      {
+        src: 'media/messous/01-guided-onboarding-choosing-a-goal.webp', w: 1353, h: 705, side: 'left',
+        alt: {
+          en: 'MesSous onboarding, step 1 of 5: seven goal cards such as Track monthly spending and Save more, one selected, and a text box for anything specific to focus on.',
+          fr: 'Onboarding de MesSous, étape 1 sur 5 : sept cartes d’objectifs comme Suivre ses dépenses ou Épargner plus, une sélectionnée, et un champ pour préciser ce qui compte.',
+        },
+        head: { en: 'Starting from a goal', fr: 'Partir d’un objectif' },
+        body: {
+          en: ['[2–3 sentences: how the guided onboarding turns a vague goal into budget categories and priorities.]'],
+          fr: ['[2–3 phrases : comment l’onboarding guidé transforme un objectif flou en catégories et en priorités.]'],
+        },
+        notes: [
+          { text: { en: 'start from one goal, not a blank sheet', fr: 'partir d’un objectif, pas d’une page blanche' }, at: [2, 0], w: 32, from: [14, 8.5], to: [30, 33] },
+          { text: { en: 'five short steps', fr: 'cinq étapes courtes' }, at: [70, 0], w: 26, from: [76, 6.5], to: [70.5, 21] },
+          { text: { en: 'your own words, read by the AI', fr: 'vos propres mots, lus par l’IA' }, at: [8, 90], w: 30, from: [36, 91], to: [44, 70] },
+        ],
+      },
+      {
+        src: 'media/messous/03-ai-priority-review-follow-up.webp', w: 1353, h: 741, side: 'right',
+        alt: {
+          en: 'The AI priority review: the saved questionnaire answers on the left, mostly “idk”, and a follow-up chat on the right where the assistant explains the first question.',
+          fr: 'La revue des priorités par l’IA : les réponses enregistrées à gauche, surtout « idk », et à droite un échange où l’assistant explique la première question.',
+        },
+        head: { en: 'An AI that asks back', fr: 'Une IA qui pose des questions' },
+        body: {
+          en: ['[2–3 sentences: what the priority review does, and what happens when the AI is unavailable (the fallback).]'],
+          fr: ['[2–3 phrases : ce que fait la revue des priorités, et ce qui se passe quand l’IA est indisponible (la solution de repli).]'],
+        },
+        notes: [
+          { text: { en: '“idk” is an answer too', fr: '« idk » est aussi une réponse' }, at: [2, 0], w: 30, from: [12, 8], to: [13.6, 32] },
+          { text: { en: 'the AI asks follow-up questions', fr: 'l’IA pose des questions de suivi' }, at: [62, 0], w: 34, from: [74, 8], to: [68, 40] },
+          { text: { en: 'or skip: a fallback keeps it working', fr: 'ou passer : le repli prend le relais' }, at: [30, 91], w: 34, from: [58, 92.5], to: [69, 81] },
+        ],
+      },
+    ],
     en: {
       name: 'MesSous',
       category: 'AI-assisted budgeting app',
       body: 'MesSous starts from your life rather than a blank spreadsheet: a guided onboarding turns goals and daily constraints into budget categories and priorities you can edit, an AI reviews your answers, and a built-in fallback keeps everything working when the AI is down.',
       learned: ['Designing a guided flow from a vague goal to a plan', 'AI features with graceful fallbacks', 'A secure Flask app: sessions, storage, CSV'],
       alt: 'MesSous: generated budget categories with priorities and allocations.',
-      plateAlt: 'The AI priority review asking follow-up questions.',
+      caption: 'Generated budget categories, with priorities you can edit.',
+      role: '[ROLE]',
+      year: '[YEAR]',
     },
     fr: {
       name: 'MesSous',
@@ -75,27 +186,57 @@ export const PROJECTS = [
       body: 'MesSous part de votre vie plutôt que d’un tableur vide : un onboarding guidé transforme objectifs et contraintes en catégories et priorités modifiables, une IA relit vos réponses, et une solution de repli garde tout fonctionnel quand l’IA est indisponible.',
       learned: ['Concevoir un parcours guidé, d’un objectif flou à un plan', 'Des fonctionnalités IA avec solution de repli', 'Une application Flask sécurisée : sessions, stockage, CSV'],
       alt: 'MesSous : catégories de budget générées, avec priorités et allocations.',
-      plateAlt: 'La revue des priorités par l’IA pose des questions de suivi.',
+      caption: 'Catégories de budget générées, avec des priorités modifiables.',
+      role: '[RÔLE]',
+      year: '[ANNÉE]',
     },
   },
   {
     id: 'retina',
     repo: '',
-    media: { kind: 'image', src: 'media/retina/01-upload-preprocessing-and-predicted-classification.webp' },
+    cover: { src: 'media/retina/01-upload-preprocessing-and-predicted-classification.webp', w: 1400, h: 758 },
     stack: ['Python', 'TensorFlow', 'EfficientNet', 'OpenCV', 'Flask', 'Firebase', 'OpenAI API'],
+    figures: [
+      {
+        src: 'media/retina/01-upload-preprocessing-and-predicted-classification.webp', w: 1400, h: 758, side: 'left',
+        alt: {
+          en: 'RetinaSight: an uploaded retina photograph, the same image after preprocessing, the predicted classification “1 – Mild”, and the assistant’s explanation in a chat on the right.',
+          fr: 'RetinaSight : une photo de rétine importée, la même image après prétraitement, la classification prédite « 1 – Mild », et l’explication de l’assistant dans un chat à droite.',
+        },
+        head: { en: 'From photo to grade', fr: 'De la photo au stade' },
+        body: {
+          en: ['[2–3 sentences: the preprocessing steps, the CNN (EfficientNet) and how you evaluated it.]', '[One sentence: how the assistant explains the grade, and its limits.]'],
+          fr: ['[2–3 phrases : les étapes de prétraitement, le CNN (EfficientNet) et comment tu l’as évalué.]', '[Une phrase : comment l’assistant explique le stade, et ses limites.]'],
+        },
+        notes: [
+          { text: { en: 'the raw fundus photo', fr: 'la photo du fond d’œil, brute' }, at: [2, 0], w: 28, from: [14, 8], to: [20.9, 40] },
+          { text: { en: 'the assistant explains, in plain words', fr: 'l’assistant explique, simplement' }, at: [58, 0], w: 36, from: [74, 8], to: [73, 32] },
+          { text: { en: 'cleaned up with OpenCV, then graded by my CNN', fr: 'nettoyée avec OpenCV, puis notée par mon CNN' }, at: [26, 90], w: 40, from: [27, 91], to: [21, 72] },
+        ],
+      },
+    ],
+    video: { href: 'https://www.youtube.com/watch?v=vAXBjRanhzs&t=79s', poster: 'media/retina/01-upload-preprocessing-and-predicted-classification.webp' },
     en: {
       name: 'RetinaSight',
       category: 'Diabetic retinopathy screening',
       body: 'Where it began: my first deep-learning project. Upload a retina photograph, a CNN I trained predicts the stage of diabetic retinopathy, and an assistant explains the result in plain language. An educational project, not a medical device.',
       learned: ['Image preprocessing with OpenCV', 'Training and evaluating a CNN', 'Explaining a model’s output to non-experts'],
-      alt: 'RetinaSight: an uploaded retina image, its preprocessing and the predicted grade.',
+      alt: 'RetinaSight: an uploaded retina image, its preprocessing and the predicted grade, with the assistant’s explanation.',
+      caption: 'Upload, preprocessing, predicted grade and the assistant’s explanation.',
+      role: '[ROLE]',
+      year: '[YEAR]',
+      videoCaption: 'A video walkthrough, on YouTube.',
     },
     fr: {
       name: 'RetinaSight',
       category: 'Dépistage de la rétinopathie diabétique',
       body: 'Là où tout a commencé : mon premier projet de deep learning. Importez une photo de rétine, un CNN que j’ai entraîné prédit le stade de rétinopathie diabétique, et un assistant explique le résultat simplement. Un projet pédagogique, pas un dispositif médical.',
       learned: ['Prétraitement d’images avec OpenCV', 'Entraîner et évaluer un CNN', 'Expliquer la sortie d’un modèle à des non-experts'],
-      alt: 'RetinaSight : une image de rétine importée, son prétraitement et le stade prédit.',
+      alt: 'RetinaSight : une image de rétine importée, son prétraitement et le stade prédit, avec l’explication de l’assistant.',
+      caption: 'Import, prétraitement, stade prédit et l’explication de l’assistant.',
+      role: '[RÔLE]',
+      year: '[ANNÉE]',
+      videoCaption: 'Une présentation vidéo, sur YouTube.',
     },
   },
 ];
@@ -131,6 +272,19 @@ export const UI = {
     prevPage: 'Previous project',
     nextPage: 'Next project',
     privateRepo: 'Private repository',
+    of: (i, n) => `${i} of ${n}`,
+    openProject: 'Open the project',
+    openLabel: (name) => `Open the project: ${name}`,
+    allProjects: 'All projects',
+    nextShort: 'Next',
+    nextProject: 'Next project',
+    projectNav: 'Project',
+    roleLabel: 'Role',
+    builtWith: 'Built with',
+    when: 'When',
+    code: 'Code',
+    notesLabel: 'Notes on the screenshot',
+    watch: 'Watch the walkthrough',
     letterHead: 'A letter, sampled',
     letterNote: 'This letter is written token by token from a small hand-built model. Set the temperature and resample.',
     temperature: 'Temperature',
@@ -182,6 +336,19 @@ export const UI = {
     prevPage: 'Projet précédent',
     nextPage: 'Projet suivant',
     privateRepo: 'Dépôt privé',
+    of: (i, n) => `${i} sur ${n}`,
+    openProject: 'Ouvrir le projet',
+    openLabel: (name) => `Ouvrir le projet : ${name}`,
+    allProjects: 'Tous les projets',
+    nextShort: 'Suivant',
+    nextProject: 'Projet suivant',
+    projectNav: 'Projet',
+    roleLabel: 'Rôle',
+    builtWith: 'Réalisé avec',
+    when: 'Quand',
+    code: 'Code',
+    notesLabel: 'Notes sur la capture',
+    watch: 'Voir la présentation',
     letterHead: 'Une lettre, échantillonnée',
     letterNote: 'Cette lettre est écrite jeton par jeton par un petit modèle fait main. Réglez la température et rééchantillonnez.',
     temperature: 'Température',
