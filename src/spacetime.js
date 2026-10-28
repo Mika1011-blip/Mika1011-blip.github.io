@@ -4,11 +4,11 @@
 // (a nod to frame dragging). Masses attract each other with softened gravity;
 // the pointer is a heavy mass that does not move on its own.
 
-const G = 0.9;          // body–body attraction
+const G = 1.5;          // body–body attraction
 const WELL = 1500;      // depth of the grid deformation per unit mass
 const DRAG = 26;        // velocity drag on the grid per unit mass
 const SOFT = 70;        // softening length, px
-const MAX_SPEED = 1.6;  // px per frame
+const MAX_SPEED = 3;    // px per frame
 const MAX_BODIES = 12;
 // Muted, earthy inks: nothing neon.
 const PALETTE = ['#d08c60', '#7fa384', '#e3b75a', '#6b7fa8', '#a56b7f', '#8c6a4f', '#5f8f8a', '#c46a5a', '#9a8fbf', '#b8a05a', '#6f8f5a', '#c98b9a'];

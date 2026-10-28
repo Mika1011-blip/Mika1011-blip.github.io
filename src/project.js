@@ -8,7 +8,9 @@ import { storedLang, saveLang } from './shared.js';
 const app = document.getElementById('app');
 const base = import.meta.env.BASE_URL;
 const id = document.body.dataset.project;
-const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// The site animates everywhere, as Chrome shows it: Edge reports reduced motion
+// whenever Windows animation effects are off, and the owner wants the motion kept.
+const reducedMotion = false;
 let lang = storedLang();
 
 function render() {

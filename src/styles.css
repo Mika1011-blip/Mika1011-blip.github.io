@@ -490,13 +490,3 @@ input[type='range']::-moz-range-thumb { width: 26px; height: 26px; border: 0; bo
   .next-card { margin-top: 80px; padding: 28px 24px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-  .circled path { stroke-dashoffset: 0; }
-  /* no hover lifts */
-  .button:hover, .nav-btn:hover:not(:disabled), .next-card:hover { transform: none; }
-}
-@media (prefers-reduced-motion: reduce) and (min-width: 761px) {
-  .ribbon[aria-pressed='false']:hover { translate: 0 10px; }
-}

@@ -6,7 +6,9 @@ import { mountBook } from './book.js';
 import { esc, storedLang, saveLang, langToggle, INKED, inkOutline } from './shared.js';
 import { workSection, spreads } from './work.js';
 
-const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// The site animates everywhere, as Chrome shows it: Edge reports reduced motion
+// whenever Windows animation effects are off, and the owner wants the motion kept.
+const reducedMotion = false;
 const app = document.getElementById('app');
 const BASE = import.meta.env.BASE_URL;
 let lang = storedLang();
