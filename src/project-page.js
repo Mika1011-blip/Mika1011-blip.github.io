@@ -79,8 +79,9 @@ function video(p, t, base, u) {
   return `<figure class="pp-video">${media}<figcaption>${esc(t.videoCaption || '')}</figcaption></figure>`;
 }
 
-// Every screen and clip of the project, as a contact sheet of small prints at the
-// foot of the page; the annotated figures above keep only the key screens.
+// Every screen and clip of the project, as a row of prints at the foot of the
+// page that scrolls sideways (swipe, trackpad, or the arrow buttons, which
+// project.js wires up); the annotated figures above keep only the key screens.
 function gallery(p, lang, base, u) {
   if (!p.gallery) return '';
   const item = (g, k) => {
@@ -92,9 +93,18 @@ function gallery(p, lang, base, u) {
   };
   return `
     <section class="pp-gallery" aria-labelledby="gallery-h">
-      <h2 id="gallery-h">${u.galleryHead}</h2>
-      <p class="pp-gallery-note">${u.galleryNote}</p>
-      <div class="sheet-grid">${p.gallery.map(item).join('')}</div>
+      <div class="pp-gallery-top">
+        <div>
+          <h2 id="gallery-h">${u.galleryHead}</h2>
+          <p class="pp-gallery-note">${u.galleryNote}</p>
+        </div>
+        <div class="reel-nav">
+          <button type="button" class="nav-btn" data-reel="-1" aria-label="${u.reelPrev}">←</button>
+          <span class="reel-count" data-reel-count aria-live="polite">1 / ${p.gallery.length}</span>
+          <button type="button" class="nav-btn" data-reel="1" aria-label="${u.reelNext}">→</button>
+        </div>
+      </div>
+      <div class="reel" data-reel-track tabindex="0" role="region" aria-label="${u.galleryHead}">${p.gallery.map(item).join('')}</div>
     </section>`;
 }
 
