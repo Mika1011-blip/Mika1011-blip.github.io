@@ -1,0 +1,21 @@
+{
+  "name": "minh-khang-thai-portfolio",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Portfolio of Minh Khang THAI — static site on GitHub Pages",
+  "dependencies": {
+    "@lucasmarkes/hairline": "^0.5.1",
+    "@paper-design/shaders-react": "^0.0.82",
+    "@react-three/fiber": "^9.8.2",
+    "@shadergradient/react": "^2.4.20",
+    "camera-controls": "^3.1.2",
+    "liquid-glass-react": "^1.1.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "three": "^0.186.1",
+    "three-stdlib": "^2.36.1"
+  },
+  "devDependencies": {
+    "@types/three": "^0.186.0"
+  }
+}

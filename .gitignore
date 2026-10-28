@@ -1,0 +1,11 @@
+.taste-skill/
+.playwright-mcp/
+node_modules/
+.claude/worktrees/
+.worktrees/
+# Anatomy example renders (regenerable from build.mjs; kept locally, not committed)
+.claude/skills/anatomy/examples/**/*.pdf
+.claude/skills/anatomy/examples/**/*.png
+.claude/skills/anatomy/examples/**/*.jpg
+.claude/skills/anatomy/examples/**/*.webp
+.claude/skills/anatomy/examples/**/*.html
