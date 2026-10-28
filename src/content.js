@@ -48,12 +48,12 @@ export const PROJECTS = [
         },
         head: { en: 'From strokes to a mesh', fr: 'Des traits au maillage' },
         body: {
-          en: [],
-          fr: [],
+          en: ['Each MRI slice has its own painting layer: wherever the student paints, that slice’s pixels are set to 1.', 'When the student clicks merge, the layers are stacked into one volume and aligned with the brain’s coordinates, and the voxels marked 1 become the mesh.'],
+          fr: ['Chaque coupe IRM a son propre calque de peinture : là où l’étudiant peint, les pixels de la coupe passent à 1.', 'Quand l’étudiant clique sur fusionner, les calques sont empilés en un volume, aligné sur les coordonnées du cerveau, et les voxels marqués 1 deviennent le maillage.'],
         },
         notes: [
           { text: { en: 'my annotation, now a 3D mesh', fr: 'mon annotation, devenue un maillage 3D' }, at: [2.5, 0], w: 36, from: [14.3, 7], to: [24.4, 49.7], ring: [7.9, 11.5] },
-          { text: { en: 'compare: AI or specialist overlay', fr: 'comparer : IA ou spécialiste' }, at: [56, 0], w: 27, from: [83, 7], to: [84.8, 21.4] },
+          { text: { en: 'switch the segmentation overlays', fr: 'changer de calque de segmentation' }, at: [56, 0], w: 27, from: [83, 7], to: [84.8, 21.4] },
           { text: { en: 'one click: Generate USER mesh', fr: 'un clic : Generate USER mesh' }, at: [35, 92.5], w: 31, from: [66.7, 92.5], to: [78.6, 82.7] },
         ],
       },
@@ -143,8 +143,8 @@ export const PROJECTS = [
         },
         head: { en: 'Starting from a goal', fr: 'Partir d’un objectif' },
         body: {
-          en: [],
-          fr: [],
+          en: ['The onboarding asks about your goal, your hobbies and your lifestyle, and each answer reveals a preference. An LLM turns those preferences into a list of budget categories.', 'It works within rules: someone who loves shopping still keeps room for food, and non-negotiable budgets, calculated from research on the region where the user lives, are always kept.'],
+          fr: ['L’onboarding pose des questions sur votre objectif, vos loisirs et votre mode de vie, et chaque réponse révèle une préférence. Un LLM transforme ces préférences en une liste de catégories de budget.', 'Il suit des règles : même quelqu’un qui adore le shopping garde de la place pour la nourriture, et des budgets non négociables, calculés à partir de recherches sur la région où vit l’utilisateur, sont toujours préservés.'],
         },
         notes: [
           { text: { en: 'start from one goal, not a blank sheet', fr: 'partir d’un objectif, pas d’une page blanche' }, at: [2, 0], w: 32, from: [14, 8.5], to: [30, 33] },
@@ -160,8 +160,8 @@ export const PROJECTS = [
         },
         head: { en: 'An AI that asks back', fr: 'Une IA qui pose des questions' },
         body: {
-          en: [],
-          fr: [],
+          en: ['Before it builds your priorities, the AI checks whether it has everything it needs. When an answer is missing or unclear, it asks follow-up questions until it has the full picture.'],
+          fr: ['Avant d’établir vos priorités, l’IA vérifie qu’elle a tout ce qu’il lui faut. Quand une réponse manque ou reste floue, elle pose des questions de suivi jusqu’à avoir une vue complète.'],
         },
         notes: [
           { text: { en: '“idk” is an answer too', fr: '« idk » est aussi une réponse' }, at: [2, 0], w: 30, from: [12, 8], to: [13.6, 32] },
