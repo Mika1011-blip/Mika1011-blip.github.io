@@ -16,7 +16,7 @@ export const langToggle = (lang) => `<div class="lang" role="group" aria-label="
 
 // Black pen outlines, drawn twice and a little off, like a quick sketch around
 // each paper object. The SVG stretches to the element; the stroke keeps its width.
-export const INKED = '.sheet, .plate, .coupon, .postcard, .button, .stamp, .dist, .field, .pp-card, .slip';
+export const INKED = '.sheet, .plate, .postcard, .button, .stamp, .dist, .pp-card, .slip';
 function roughRect(j) {
   const r = () => (Math.random() - 0.5) * j;
   const o = () => -1.2 + Math.random() * 1.6; // corners overshoot like a hand-drawn box

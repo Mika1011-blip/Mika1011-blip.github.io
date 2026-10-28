@@ -2,7 +2,7 @@
 
 /* ---------- black pen: scribbled outlines and sketch buttons ---------- */
 :root { --pen: #1d1b19; }
-:is(.sheet, .plate, .coupon, .postcard, .button, .stamp, .dist, .field, .pp-card, .slip) { position: relative; }
+:is(.sheet, .plate, .postcard, .button, .stamp, .dist, .pp-card, .slip) { position: relative; }
 .ink { position: absolute; inset: -3px; width: calc(100% + 6px); height: calc(100% + 6px); overflow: visible; pointer-events: none; z-index: 2; }
 .ink path { fill: none; stroke: var(--pen); stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 .ink .ink-2 { stroke-width: 1.2; opacity: 0.7; }
@@ -22,7 +22,7 @@
   --tone-2: #cfbe9f;
   --tone-3: #c5b28f;
   --tone-4: #bba681;
-  --ink-2: #1a3f9e; /* lighter cobalt, fields on the coupon */
+  --ink-2: #1a3f9e; /* lighter cobalt, one of the bookmark ribbons */
   /* the notebook's other two pens: a red correction pen and a yellow highlighter */
   --red: #b3291f;
   --marker: #f2c84b;
@@ -298,21 +298,8 @@ input[type='range']::-moz-range-thumb { width: 26px; height: 26px; border: 0; bo
 .scallops { display: block; width: 100%; height: 16px; fill: var(--bg); }
 .scallops.is-flipped { scale: 1 -1; }
 
-/* ---------- section 3: contact, paper on a cobalt desk ---------- */
-.contact { background: var(--ink); padding: var(--section) var(--gutter) 0; overflow-x: clip; }
-.coupon { position: relative; display: grid; grid-template-columns: 46% 54%; max-width: 1120px; margin: 120px auto 0; background: var(--bg); color: var(--ink); rotate: -0.6deg; }
-.coupon::before, .coupon::after { content: ''; position: absolute; left: 46%; width: 28px; height: 28px; margin-left: -14px; border-radius: 50%; background: var(--ink); z-index: 1; }
-.coupon::before { top: -14px; }
-.coupon::after { bottom: -14px; }
-.coupon-left { display: flex; flex-direction: column; justify-content: space-between; gap: 32px; padding: 48px; }
-.coupon-left h3 { font: 700 var(--step-head)/1 var(--display); letter-spacing: -0.01em; }
-.coupon-right { display: grid; gap: 10px; padding: 48px; border-left: 6px dotted var(--ink); }
-.field { display: grid; gap: 2px; padding: 10px 16px; background: var(--surface); }
-.field span { font-size: var(--step-small); font-weight: 600; }
-.field input, .field select, .field textarea { width: 100%; border: 0; background: transparent; padding: 4px 0; font-size: var(--step-body); resize: vertical; }
-.field input:focus, .field select:focus, .field textarea:focus { outline: none; }
-.field:focus-within { outline: 3px solid var(--ink); outline-offset: 2px; }
-.coupon .button { background: var(--marker); color: var(--ink); }
+/* ---------- section 3: contact, a postcard on the cobalt desk ---------- */
+.contact { background: var(--ink); padding: var(--section) var(--gutter) 24px; overflow-x: clip; }
 
 .postcard {
   position: relative; max-width: 1120px; margin: 0 auto; background: var(--bg); color: var(--ink); rotate: 0.8deg;
@@ -410,8 +397,8 @@ input[type='range']::-moz-range-thumb { width: 26px; height: 26px; border: 0; bo
 .pp-foot a { text-underline-offset: 4px; }
 
 /* ---------- entrances ---------- */
-.js :is(.reveal, .fact, .sheet, .coupon, .postcard) { transition: opacity 0.6s var(--ease), translate 0.6s var(--ease); transition-delay: calc(var(--d, 0) * 80ms); }
-.js :is(.reveal, .fact, .sheet, .coupon, .postcard):not(.in) { opacity: 0; translate: 0 28px; }
+.js :is(.reveal, .fact, .sheet, .postcard) { transition: opacity 0.6s var(--ease), translate 0.6s var(--ease); transition-delay: calc(var(--d, 0) * 80ms); }
+.js :is(.reveal, .fact, .sheet, .postcard):not(.in) { opacity: 0; translate: 0 28px; }
 
 /* a taped-in photograph under the facts */
 .plate { position: relative; margin-top: 64px; max-width: 360px; padding: 12px 12px 14px; background: var(--surface); rotate: -2deg; }
@@ -483,13 +470,7 @@ input[type='range']::-moz-range-thumb { width: 26px; height: 26px; border: 0; bo
   .tape { width: 56px; height: 18px; }
   .book-nav { margin-top: 36px; }
   .book-nav p { min-width: 0; flex: 1; }
-  .coupon, .postcard { rotate: none; }
-  .coupon { grid-template-columns: 1fr; }
-  .coupon::before, .coupon::after { display: none; }
-  .coupon-left, .coupon-right { padding: 28px 20px; }
-  .coupon-right { border-left: 0; border-top: 6px dotted var(--ink); }
-  .postcard { grid-template-columns: 1fr; padding: 48px 20px 24px; gap: 32px; }
-  .coupon { margin-top: 80px; }
+  .postcard { rotate: none; grid-template-columns: 1fr; padding: 48px 20px 24px; gap: 32px; }
   .stamp { width: 64px; top: -16px; }
   .foot-name { font-size: 13vw; }
   /* project pages: the notes move under the print, keyed to numbered pins */

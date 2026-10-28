@@ -37,9 +37,9 @@ DESIGN.md format in [VoltAgent/awesome-design-md](https://github.com/VoltAgent/a
 |---|---|---|
 | `--bg` | `#e6dbc7` | Sand paper: page ground, notebook pages, text on cobalt |
 | `--surface` | `#ddd0b9` | Raised paper: cards, frames, fields |
-| `--ink` | `#062b8a` | Cobalt: text, buttons, the desk under the notebook and the contact section |
+| `--ink` | `#062b8a` | Cobalt: text, buttons, the desk under the notebook and behind the contact postcard |
 | `--muted` | `#3a5aa8` | Categories and labels |
-| `--ink-2` | `#1a3f9e` | Lighter cobalt (a ribbon, coupon fields) |
+| `--ink-2` | `#1a3f9e` | Lighter cobalt (a bookmark ribbon) |
 | `--tone-1` … `--tone-4` | `#d9cbb0` → `#bba681` | Paper tones, back to front; `--tone-1` is the gutter strip at the spine |
 | `--red` | `#b3291f` | Correction pen: notes, arrows, underlines, page numbers, margin rule |
 | `--marker` | `#f2c84b` | Highlighter: tape, highlights, focus rings on cobalt |

@@ -117,18 +117,6 @@ function render() {
           </ul>
         </div>
       </div>
-      <form class="coupon" data-coupon>
-        <div class="coupon-left">
-          <h3>${u.contactHead}</h3>
-          <p>${u.contactNote}</p>
-        </div>
-        <div class="coupon-right">
-          <label class="field"><span>${u.fName}</span><input name="name" autocomplete="name" required></label>
-          <label class="field"><span>${u.fTopic}</span><select name="topic">${u.topics.map((t) => `<option>${t}</option>`).join('')}</select></label>
-          <label class="field"><span>${u.fMessage}</span><textarea name="message" rows="3" required></textarea></label>
-          <button class="button is-light is-wide" type="submit">${u.send}</button>
-        </div>
-      </form>
     </section>
   </main>
 
@@ -144,13 +132,6 @@ function render() {
     render();
     app.querySelector(`[data-lang="${lang}"]`).focus();
   }));
-
-  app.querySelector('[data-coupon]').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const f = new FormData(e.currentTarget);
-    const subject = `${f.get('topic')} · ${f.get('name')}`;
-    location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(f.get('message'))}`;
-  });
 
   book = mountBook(app.querySelector('[data-book]'), { pages: spreads(P, u, BASE), reducedMotion, at: book ? book.current() : startProject() });
 
@@ -169,7 +150,7 @@ function render() {
 }
 
 function observeReveals() {
-  const els = app.querySelectorAll('.reveal, .fact, .sheet, .book, .coupon, .postcard');
+  const els = app.querySelectorAll('.reveal, .fact, .sheet, .book, .postcard');
   if (reducedMotion || !('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('in')); return; }
   const io = new IntersectionObserver((entries) => entries.forEach((en) => {
     if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
