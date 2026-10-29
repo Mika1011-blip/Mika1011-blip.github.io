@@ -189,13 +189,13 @@ h2 { font-size: var(--step-head); }
 .page-title { margin-top: 6px; font: 700 clamp(2.25rem, 0.9rem + 3.2vw, 3.375rem)/1.02 var(--display); }
 .underline { width: 240px; max-width: 100%; height: 14px; margin-top: 2px; overflow: visible; fill: none; stroke: var(--red); stroke-width: 3; stroke-linecap: round; }
 .underline .thin { stroke-width: 1.6; opacity: 0.7; }
-/* the screenshot as a photo print: off-white border, a stepped edge for the
-   paper's thickness, no drop shadow — taste-skill-ignore: paper thickness, not elevation */
-.print {
-  position: relative; margin-top: 22px; padding: 12px 12px 14px; rotate: -1.2deg;
+/* Every picture and video on the site is a photo print: off-white border, a
+   stepped edge for the paper's thickness, no drop shadow — taste-skill-ignore: paper thickness, not elevation */
+.print, .sheet-print, .annot-frame, .pp-video {
   background: var(--print); border: 1px solid color-mix(in srgb, var(--print-edge) 55%, var(--print)); /* taste-skill-ignore: the print border */
   box-shadow: 1px 1px 0 color-mix(in srgb, var(--print-edge) 35%, var(--print)), 2px 2px 0 var(--print-edge); /* taste-skill-ignore: stepped paper edge */
 }
+.print { position: relative; margin-top: 22px; padding: 12px 12px 14px; rotate: -1.2deg; }
 .print > img, .print > .drawing { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: left top; background: var(--surface); }
 .print > .drawing { padding: 8px; }
 .print figcaption { margin-top: 10px; font-size: 16px; font-style: italic; line-height: 1.3; }
@@ -347,7 +347,7 @@ input[type='range']::-moz-range-thumb { width: 26px; height: 26px; border: 0; bo
 .pp-fig h2, .pp-lessons h2 { font-size: clamp(2rem, 1.4rem + 1.6vw, 2.75rem); line-height: 1.05; }
 .pp-fig-copy p { margin-top: 16px; font-size: clamp(1.0625rem, 0.9rem + 0.4vw, 1.25rem); line-height: 1.6; }
 /* the border is in percent of the figure's width, so the arrows stay on target at any size */
-.annot-frame { position: absolute; left: 0; right: 0; top: var(--top); padding: 1.4286%; background: var(--surface); rotate: -0.6deg; }
+.annot-frame { position: absolute; left: 0; right: 0; top: var(--top); padding: 1.4286%; rotate: -0.6deg; }
 .is-right .annot-frame { rotate: 0.6deg; }
 .annot-frame > img, .annot-frame > .drawing { width: 100%; height: auto; }
 .annot-ink { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
@@ -369,7 +369,7 @@ input[type='range']::-moz-range-thumb { width: 26px; height: 26px; border: 0; bo
 @keyframes pen-draw { to { stroke-dashoffset: 0; } }
 
 .pp-learn { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start; margin-top: 96px; }
-.pp-video { grid-column: 1 / span 7; }
+.pp-video { grid-column: 1 / span 7; margin: 0; padding: 12px 12px 14px; rotate: -0.6deg; }
 .pp-video video, .pp-watch img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: left top; background: var(--ink); }
 .pp-video figcaption { margin-top: 12px; font-size: 16px; font-style: italic; }
 .pp-watch { position: relative; display: block; color: var(--bg); text-decoration: none; }
@@ -397,11 +397,7 @@ input[type='range']::-moz-range-thumb { width: 26px; height: 26px; border: 0; bo
 .reel { display: flex; gap: 32px; margin-top: 28px; padding: 14px 4px 22px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 4px; overscroll-behavior-x: contain; scrollbar-color: var(--ink) transparent; }
 .reel:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
 .reel > .sheet-print { flex: 0 0 min(62%, 720px); scroll-snap-align: start; }
-.sheet-print {
-  margin: 0; padding: 10px 10px 12px; rotate: var(--r, 0deg); transition: rotate 0.3s var(--ease), translate 0.3s var(--ease);
-  background: var(--print); border: 1px solid color-mix(in srgb, var(--print-edge) 55%, var(--print)); /* taste-skill-ignore: the print border */
-  box-shadow: 1px 1px 0 color-mix(in srgb, var(--print-edge) 35%, var(--print)), 2px 2px 0 var(--print-edge); /* taste-skill-ignore: stepped paper edge */
-}
+.sheet-print { margin: 0; padding: 10px 10px 12px; rotate: var(--r, 0deg); transition: rotate 0.3s var(--ease), translate 0.3s var(--ease); }
 .sheet-print:hover { rotate: 0deg; translate: 0 -4px; }
 .sheet-print a { display: block; }
 .sheet-print img, .sheet-print video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: left top; background: var(--ink); }
