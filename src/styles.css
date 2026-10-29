@@ -333,7 +333,7 @@ input[type='range']::-moz-range-thumb { width: 26px; height: 26px; border: 0; bo
 .pp-lede { margin-top: 28px; max-width: 40ch; font-size: clamp(1.25rem, 1rem + 0.6vw, 1.5rem); line-height: 1.5; }
 .circled { position: relative; display: inline-block; white-space: nowrap; }
 .circled svg { position: absolute; left: -12px; top: -8px; width: calc(100% + 24px); height: calc(100% + 16px); overflow: visible; fill: none; stroke: var(--red); stroke-width: 2.4; stroke-linecap: round; filter: url(#rough); }
-.pp-card { grid-column: 10 / span 3; align-self: end; display: grid; gap: 16px; padding: 24px 24px 28px; background: var(--surface); rotate: 1deg; }
+.pp-card { grid-column: 9 / span 4; align-self: end; display: grid; gap: 16px; padding: 24px 24px 28px; background: var(--surface); rotate: 1deg; }
 .pp-card dt { font-size: 16px; font-weight: 700; color: var(--muted); }
 .pp-card dd { margin: 2px 0 0; font-size: 19px; line-height: 1.4; }
 
