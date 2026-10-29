@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The portfolio, explained</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #e6dbc7; }
+  canvas { display: block; width: 100vw; max-width: 1920px; height: auto; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+// The portfolio's art direction, explained as a motion graphic, in the site's
+// own style. Every frame is a pure function of time: window.seek(t) draws the
+// frame at t seconds (video/film.py steps through it and encodes the frames).
+// Open #outro to get the closing card instead of the explainer.
+
+const W = 1920, H = 1080;
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+// the site's tokens (src/styles.css)
+const C = {
+  bg: '#e6dbc7', surface: '#ddd0b9', ink: '#062b8a', muted: '#3a5aa8', red: '#b3291f', marker: '#f2c84b',
+  print: '#f5f0e6', edge: '#c9bca4', pen: '#1d1b19', tone1: '#d9cbb0', tone2: '#cfbe9f', ink2: '#1a3f9e', coffee: '#a88f62',
+};
+const HAND = "'Kalam', 'Comic Sans MS', cursive";
+const PALETTE = ['#d08c60', '#7fa384', '#e3b75a', '#6b7fa8'];
+
+// ---------- small maths ----------
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const ease = (p) => 1 - Math.pow(1 - p, 3);
+const easeIO = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+const lerp = (a, b, p) => a + (b - a) * p;
+function hash(n) { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); }
+let T = 0;                              // the time being drawn
+const boil = () => Math.floor(T * 8);   // pen lines re-wobble 8 times a second
+
+// ---------- pen and paper ----------
+function paper(alpha = 0.09, sp = 48) {
+  ctx.fillStyle = C.bg; ctx.fillRect(0, 0, W, H);
+  ctx.save(); ctx.strokeStyle = C.ink; ctx.globalAlpha = alpha; ctx.lineWidth = 1.5; ctx.beginPath();
+  for (let x = 0; x <= W; x += sp) { ctx.moveTo(x + 0.5, 0); ctx.lineTo(x + 0.5, H); }
+  for (let y = 0; y <= H; y += sp) { ctx.moveTo(0, y + 0.5); ctx.lineTo(W, y + 0.5); }
+  ctx.stroke(); ctx.restore();
+}
+function jit(pts, seed, amp) {
+  const b = boil();
+  return pts.map(([x, y], i) => [x + (hash(i * 7.13 + seed * 3.7 + b * 1.31) - 0.5) * amp, y + (hash(i * 3.91 + seed * 5.3 + b * 2.17) - 0.5) * amp]);
+}
+// stroke a polyline, only its first fraction p
+function strokePts(pts, p = 1, closed = false) {
+  if (p <= 0 || pts.length < 2) return;
+  const P = closed ? [...pts, pts[0]] : pts;
+  const lens = []; let L = 0;
+  for (let i = 1; i < P.length; i++) { const d = Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]); lens.push(d); L += d; }
+  let left = L * clamp(p);
+  ctx.beginPath(); ctx.moveTo(P[0][0], P[0][1]);
+  for (let i = 1; i < P.length; i++) {
+    if (left >= lens[i - 1]) { ctx.lineTo(P[i][0], P[i][1]); left -= lens[i - 1]; }
+    else { const f = left / lens[i - 1]; ctx.lineTo(lerp(P[i - 1][0], P[i][0], f), lerp(P[i - 1][1], P[i][1], f)); break; }
+  }
+  ctx.stroke();
+}
+function subdiv(a, b, n) { const o = []; for (let i = 0; i < n; i++) { const f = i / n; o.push([lerp(a[0], b[0], f), lerp(a[1], b[1], f)]); } return o; }
+function rectPts(x, y, w, h, step = 40) {
+  const c = [[x, y], [x + w, y], [x + w, y + h], [x, y + h]]; let o = [];
+  for (let i = 0; i < 4; i++) { const a = c[i], b = c[(i + 1) % 4]; o = o.concat(subdiv(a, b, Math.max(2, Math.round(Math.hypot(b[0] - a[0], b[1] - a[1]) / step)))); }
+  return o;
+}
+function pen(color = C.pen, width = 2.4) { ctx.strokeStyle = color; ctx.lineWidth = width; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; }
+function penRect(x, y, w, h, { seed = 1, p = 1, color = C.pen, width = 2.6, amp = 2.4 } = {}) {
+  ctx.save(); pen(color, width);
+  for (let k = 0; k < 2; k++) strokePts(jit(rectPts(x, y, w, h), seed + k * 11, amp), p, true);
+  ctx.restore();
+}
+// a wobbly closed loop, like the site's ink blots and circled words
+function loop(cx, cy, rx, ry, { seed = 1, p = 1, color = C.pen, width = 2.4, passes = 2, turns = 1 } = {}) {
+  ctx.save(); pen(color, width);
+  for (let k = 0; k < passes; k++) {
+    const pts = []; const start = seed + k * 1.7 + boil() * 0.9;
+    const n = Math.round(48 * turns);
+    for (let i = 0; i <= n; i++) {
+      const a = (i / 48) * Math.PI * 2 + start * 0.3;
+      const r = 1 + Math.sin(a * 3 + start) * 0.035 + Math.sin(a * 5 + start * 2) * 0.025;
+      pts.push([cx + Math.cos(a) * rx * r, cy + Math.sin(a) * ry * r]);
+    }
+    strokePts(pts, p);
+  }
+  ctx.restore();
+}
+// handwriting: the text is revealed left to right, as if written
+function write(text, x, y, { size = 48, weight = 700, color = C.ink, p = 1, align = 'left', alpha = 1 } = {}) {
+  if (p <= 0) return 0;
+  ctx.save(); ctx.globalAlpha = alpha;
+  ctx.font = `${weight} ${size}px ${HAND}`; ctx.textAlign = align; ctx.textBaseline = 'alphabetic';
+  const w = ctx.measureText(text).width;
+  const x0 = align === 'center' ? x - w / 2 : align === 'right' ? x - w : x;
+  if (p < 1) { ctx.beginPath(); ctx.rect(x0 - 12, y - size * 1.3, (w + 24) * p, size * 1.9); ctx.clip(); }
+  ctx.fillStyle = color; ctx.fillText(text, x, y);
+  ctx.restore();
+  return w;
+}
+function wrapLines(text, size, weight, maxW) {
+  ctx.font = `${weight} ${size}px ${HAND}`;
+  const lines = []; let cur = '';
+  for (const w of text.split(' ')) {
+    const test = cur ? cur + ' ' + w : w;
+    if (ctx.measureText(test).width > maxW && cur) { lines.push(cur); cur = w; } else cur = test;
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+// a note in red pen: wrapped, written line after line
+function note(text, x, y, { size = 36, color = C.red, maxW = 540, p = 1, weight = 700, lh = 1.22, align = 'left' } = {}) {
+  const lines = wrapLines(text, size, weight, maxW);
+  lines.forEach((l, i) => write(l, x, y + i * size * lh, { size, weight, color, align, p: clamp(p * lines.length - i) }));
+  return lines.length * size * lh;
+}
+function underline(x, y, w, p, { color = C.red, width = 4, seed = 3 } = {}) {
+  const pts = []; for (let i = 0; i <= 30; i++) { const f = i / 30; pts.push([x + w * f, y + Math.sin(f * 9 + seed) * 3 + f * 4]); }
+  ctx.save(); pen(color, width); strokePts(jit(pts, seed, 1.5), p); ctx.restore();
+}
+// a red-pen arrow that bows a little, with an open head (as on the project pages)
+function arrow(fx, fy, tx, ty, p = 1, { color = C.red, width = 3.4 } = {}) {
+  if (p <= 0) return;
+  const dx = tx - fx, dy = ty - fy, len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len, k = len * 0.16;
+  const c1 = [fx + dx * 0.3 + nx * k, fy + dy * 0.3 + ny * k], c2 = [fx + dx * 0.72 + nx * k * 0.5, fy + dy * 0.72 + ny * k * 0.5];
+  const pts = [];
+  for (let i = 0; i <= 40; i++) {
+    const s = i / 40, u = 1 - s;
+    pts.push([u * u * u * fx + 3 * u * u * s * c1[0] + 3 * u * s * s * c2[0] + s * s * s * tx, u * u * u * fy + 3 * u * u * s * c1[1] + 3 * u * s * s * c2[1] + s * s * s * ty]);
+  }
+  ctx.save(); pen(color, width);
+  strokePts(jit(pts, fx, 1.2), clamp(p * 1.25));
+  if (p > 0.8) {
+    const a = Math.atan2(ty - c2[1], tx - c2[0]), h = 22, s2 = 0.5;
+    strokePts([[tx - h * Math.cos(a - s2), ty - h * Math.sin(a - s2)], [tx, ty], [tx - h * Math.cos(a + s2), ty - h * Math.sin(a + s2)]], seg(p, 0.8, 1));
+  }
+  ctx.restore();
+}
+// a photo print: off-white paper, thin border, stepped edge, no blur
+function print(x, y, w, h, { rot = 0, p = 1 } = {}) {
+  ctx.save();
+  ctx.translate(x + w / 2, y + h / 2); ctx.rotate(rot); ctx.translate(-w / 2, -h / 2);
+  ctx.globalAlpha = p;
+  ctx.fillStyle = C.edge; ctx.fillRect(3, 3, w, h);
+  ctx.fillStyle = '#ddd2bd'; ctx.fillRect(1.5, 1.5, w, h);
+  ctx.fillStyle = C.print; ctx.fillRect(0, 0, w, h);
+  ctx.strokeStyle = '#d8cdb8'; ctx.lineWidth = 1.5; ctx.strokeRect(0.75, 0.75, w - 1.5, h - 1.5);
+  ctx.restore();
+}
+function tape(x, y, w, rot) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.globalAlpha = 0.85; ctx.fillStyle = C.marker; ctx.fillRect(-w / 2, -16, w, 32); ctx.restore();
+}
+function heading(title, sub, lt, { color = C.ink, subColor = C.muted, x = 120, y = 168 } = {}) {
+  write(title, x, y, { size: 84, color, p: ease(seg(lt, 0.25, 1.35)) });
+  if (sub) write(sub, x, y + 70, { size: 40, weight: 400, color: subColor, p: ease(seg(lt, 1.0, 2.0)) });
+}
+function sineDoodle(x, y, w, h, p, color = C.muted) {
+  const pts = []; for (let i = 0; i <= 60; i++) { const f = i / 60; pts.push([x + f * w, y - Math.sin(f * Math.PI * 4) * h * Math.exp(-f * 1.6)]); }
+  ctx.save(); pen(color, 2.6); strokePts(jit(pts, 9, 1.2), p);
+  strokePts([[x, y - h - 20], [x, y + h * 0.4], [x + w + 10, y + h * 0.4]], p);
+  ctx.restore();
+}
+
+// ---------- scene 1: title ----------
+function sTitle(lt) {
+  paper();
+  write('Minh Khang Thai', W / 2, 470, { size: 170, align: 'center', p: ease(seg(lt, 0.3, 2.0)) });
+  underline(560, 512, 800, ease(seg(lt, 1.8, 2.6)), { width: 6 });
+  write('the portfolio, explained', W / 2, 615, { size: 66, weight: 400, color: C.muted, align: 'center', p: ease(seg(lt, 2.3, 3.5)) });
+  note('a physicist’s notebook, drawn by hand in code', 1180, 820, { size: 40, maxW: 560, p: seg(lt, 3.6, 4.9) });
+  arrow(1240, 790, 1180, 650, ease(seg(lt, 4.4, 5.1)));
+  write('E = mc²', 190, 860, { size: 44, weight: 400, color: C.muted, p: seg(lt, 1.2, 2.2), alpha: 0.8 });
+  sineDoodle(240, 990, 300, 50, seg(lt, 2.0, 3.4));
+}
+
+// ---------- scene 2: the palette ----------
+function sPalette(lt) {
+  paper();
+  heading('The idea: a physicist’s notebook', 'Sand paper, cobalt ink, one red pen and a yellow highlighter.', lt);
+  const sw = [
+    [C.bg, 'the paper', '#e6dbc7 · every page'],
+    [C.ink, 'the ink', '#062b8a · all the text'],
+    [C.red, 'the red pen', '#b3291f · notes and arrows'],
+    [C.marker, 'the highlighter', '#f2c84b · what matters'],
+  ];
+  sw.forEach(([col, name, sub], i) => {
+    const a = 2.0 + i * 0.55, p = ease(seg(lt, a, a + 0.6));
+    if (p <= 0) return;
+    const cx = 300 + i * 440, cy = 540, r = 130 * (0.6 + 0.4 * p);
+    ctx.save(); ctx.globalAlpha = p; ctx.fillStyle = col; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+    loop(cx, cy, r, r, { seed: i * 4 + 1, p, width: 2.8 });
+    write(name, cx, cy + 200, { size: 48, align: 'center', p: seg(lt, a + 0.3, a + 0.9) });
+    write(sub, cx, cy + 250, { size: 30, weight: 400, color: C.muted, align: 'center', p: seg(lt, a + 0.5, a + 1.1) });
+  });
+  write('One handwriting, Kalam, for everything.', 120, 940, { size: 40, color: C.ink, p: ease(seg(lt, 4.6, 5.6)) });
+  note('why: it should read like someone thinking on paper, not like a template', 1020, 920, { size: 38, maxW: 780, p: seg(lt, 5.6, 7.0) });
+}
+
+// ---------- scene 3: gravity ----------
+const BODIES = [
+  { m: 1.4, rx: 560, ry: 120, w: 0.32, ph: 0.4, color: PALETTE[0] },
+  { m: 0.8, rx: 390, ry: 90, w: -0.46, ph: 2.1, color: PALETTE[1] },
+  { m: 1.1, rx: 250, ry: 70, w: 0.62, ph: 4.0, color: PALETTE[2] },
+  { m: 0.6, rx: 680, ry: 150, w: 0.24, ph: 5.2, color: PALETTE[3] },
+];
+const GC = [960, 640];
+function cursorAt(lt) {
+  // enters, circles among the masses, then leaves
+  if (lt < 3.4) return [1760, 1010];
+  if (lt < 5.0) { const p = easeIO(seg(lt, 3.4, 5.0)); return [lerp(1760, 1160, p), lerp(1010, 600, p)]; }
+  if (lt < 11.0) { const a = (lt - 5) * 0.9; return [1160 - Math.sin(a) * 260, 600 + Math.sin(a * 2) * 60 - (1 - Math.cos(a)) * 20]; }
+  const p = easeIO(seg(lt, 11.0, 12.4)); const a = 6 * 0.9; const s = [1160 - Math.sin(a) * 260, 600 + Math.sin(a * 2) * 60 - (1 - Math.cos(a)) * 20];
+  return [lerp(s[0], 1800, p), lerp(s[1], 1060, p)];
+}
+const cursorMass = (lt) => 2.2 * seg(lt, 3.8, 5.0) * (1 - seg(lt, 11.0, 12.0));
+function bodyAt(b, i, lt) {
+  const a = b.ph + b.w * lt;
+  const base = [GC[0] + Math.cos(a) * b.rx, GC[1] + Math.sin(a) * b.ry];
+  const [cx, cy] = cursorAt(lt), k = 0.34 * (cursorMass(lt) / 2.2) * (0.65 + 0.35 * hash(i + 3));
+  return [lerp(base[0], cx, k), lerp(base[1], cy, k)];
+}
+function displaced(x, y, all) {
+  let ox = 0, oy = 0; const SOFT = 105, WELL = 3000;
+  for (const b of all) {
+    const dx = b.x - x, dy = b.y - y, r2 = dx * dx + dy * dy + SOFT * SOFT, k = (WELL * b.m) / r2;
+    let px = dx * k, py = dy * k; const r = Math.sqrt(dx * dx + dy * dy), mag = Math.hypot(px, py);
+    if (mag > r * 0.8 && mag > 0) { px *= (r * 0.8) / mag; py *= (r * 0.8) / mag; }
+    const d = (39 * b.m * SOFT) / r2;
+    ox += px + (b.vx || 0) * d * 10; oy += py + (b.vy || 0) * d * 10;
+  }
+  return [x + ox, y + oy];
+}
+function bentGrid(all) {
+  const sp = 54, cols = Math.ceil(W / sp) + 3, rows = Math.ceil(H / sp) + 3, pts = [];
+  for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) pts.push(displaced(-sp + i * sp + (hash(i * 31 + j) - 0.5) * 2.4, -sp + j * sp + (hash(j * 17 + i) - 0.5) * 2.4, all));
+  ctx.save(); ctx.strokeStyle = C.ink; ctx.lineCap = 'round';
+  for (const [alpha, lw, off] of [[0.32, 1.5, 0], [0.14, 1.2, 1.3]]) {
+    ctx.globalAlpha = alpha; ctx.lineWidth = lw; ctx.beginPath();
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) { const [x, y] = pts[j * cols + i]; if (i === 0) ctx.moveTo(x + off, y); else ctx.lineTo(x + off, y); }
+    for (let i = 0; i < cols; i++) for (let j = 0; j < rows; j++) { const [x, y] = pts[j * cols + i]; if (j === 0) ctx.moveTo(x, y + off); else ctx.lineTo(x, y + off); }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+function face(b, n, cur, near) {
+  const r = (11 + b.m * 8) * 1.5, sp = Math.hypot(b.vx, b.vy);
+  const ux = sp > 0.01 ? b.vx / sp : 1, uy = sp > 0.01 ? b.vy / sp : 0;
+  const stretch = Math.min(0.12, sp * 0.06);
+  ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(Math.atan2(uy, ux)); ctx.scale(1 + stretch, 1 - stretch);
+  ctx.fillStyle = b.color; ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+  loop(b.x, b.y, r, r, { seed: n * 5 + 2, width: 2.6 });
+  const toCur = cur.m > 0.3 ? Math.hypot(cur.x - b.x, cur.y - b.y) : Infinity;
+  const mood = toCur < 210 ? 'delighted' : near < 100 ? 'worried' : sp > 1.7 ? 'whee' : 'calm';
+  let lx = ux, ly = uy;
+  if (toCur < 620) { lx = (cur.x - b.x) / toCur; ly = (cur.y - b.y) / toCur; }
+  const u = (T * 0.9 + n * 1.3) % 3.4, lid = u < 0.16 ? Math.sin((u / 0.16) * Math.PI) : 0;
+  const eyeR = r * 0.24, gap = r * 0.36, ey = b.y - r * 0.18;
+  for (const s of [-1, 1]) {
+    const ex = b.x + s * gap;
+    ctx.fillStyle = '#fbf7ef'; ctx.beginPath(); ctx.ellipse(ex, ey, eyeR, eyeR * (1 - lid * 0.92) + 0.4, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = C.pen; ctx.lineWidth = 1.8; ctx.stroke();
+    if (lid < 0.6) { ctx.fillStyle = C.pen; ctx.beginPath(); ctx.arc(ex + lx * eyeR * 0.42, ey + ly * eyeR * 0.42, eyeR * (mood === 'whee' ? 0.38 : 0.5), 0, Math.PI * 2); ctx.fill(); }
+    if (mood === 'worried') { ctx.beginPath(); ctx.moveTo(ex - s * eyeR, ey - eyeR * 1.5); ctx.lineTo(ex + s * eyeR * 0.6, ey - eyeR * 2.1); ctx.stroke(); }
+  }
+  const my = b.y + r * 0.36; ctx.strokeStyle = C.pen; ctx.lineWidth = 2.2; ctx.lineCap = 'round'; ctx.beginPath();
+  if (mood === 'whee') { ctx.fillStyle = C.pen; ctx.ellipse(b.x, my, r * 0.16, r * 0.2, 0, 0, Math.PI * 2); ctx.fill(); }
+  else if (mood === 'worried') { ctx.moveTo(b.x - r * 0.28, my + 1); ctx.quadraticCurveTo(b.x - r * 0.1, my - 4, b.x, my); ctx.quadraticCurveTo(b.x + r * 0.1, my + 4, b.x + r * 0.28, my - 1); ctx.stroke(); }
+  else if (mood === 'delighted') {
+    ctx.moveTo(b.x - r * 0.32, my - 2); ctx.quadraticCurveTo(b.x, my + r * 0.4, b.x + r * 0.32, my - 2); ctx.closePath(); ctx.fillStyle = C.pen; ctx.fill();
+    ctx.fillStyle = 'rgb(200 80 80 / 0.35)'; ctx.beginPath(); ctx.arc(b.x - r * 0.6, my - 2, r * 0.14, 0, Math.PI * 2); ctx.arc(b.x + r * 0.6, my - 2, r * 0.14, 0, Math.PI * 2); ctx.fill();
+  } else { ctx.moveTo(b.x - r * 0.26, my - 1); ctx.quadraticCurveTo(b.x, my + r * 0.22, b.x + r * 0.26, my - 1); ctx.stroke(); }
+  if (sp > 0.05) {
+    const len = r + 20 + sp * 30, ex = b.x + ux * len, ey2 = b.y + uy * len;
+    ctx.save(); pen(C.red, 2.6); ctx.beginPath();
+    ctx.moveTo(b.x + ux * (r + 8), b.y + uy * (r + 8)); ctx.lineTo(ex, ey2);
+    ctx.moveTo(ex, ey2); ctx.lineTo(ex - ux * 12 - uy * 7, ey2 - uy * 12 + ux * 7);
+    ctx.moveTo(ex, ey2); ctx.lineTo(ex - ux * 12 + uy * 7, ey2 - uy * 12 - ux * 7); ctx.stroke(); ctx.restore();
+  }
+  write(`m${n + 1}`, b.x + r + 8, b.y - r - 4, { size: 26, color: C.red });
+}
+function drawCursor(x, y, alpha = 1) {
+  ctx.save(); ctx.globalAlpha = alpha; ctx.translate(x, y);
+  const pts = [[0, 0], [0, 44], [11, 34], [19, 52], [27, 48], [19, 31], [33, 31]];
+  ctx.fillStyle = '#fbf7ef'; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a, b) : ctx.moveTo(a, b))); ctx.closePath(); ctx.fill();
+  pen(C.pen, 2.6); strokePts(jit(pts, 4, 1.2), 1, true);
+  ctx.restore();
+}
+function sGravity(lt) {
+  paper(0.0);
+  const dt = 1 / 30;
+  const bodies = BODIES.map((b, i) => {
+    const [x, y] = bodyAt(b, i, lt), [px, py] = bodyAt(b, i, lt - dt);
+    return { ...b, x, y, vx: x - px, vy: y - py };
+  });
+  const [cx, cy] = cursorAt(lt), cm = cursorMass(lt);
+  const cur = { x: cx, y: cy, m: cm, vx: 0, vy: 0 };
+  bentGrid(cm > 0.02 ? [...bodies, cur] : bodies);
+  bodies.forEach((b, n) => {
+    const near = bodies.reduce((d, o) => (o === b ? d : Math.min(d, Math.hypot(o.x - b.x, o.y - b.y))), Infinity);
+    face(b, n, cur, near);
+  });
+  if (lt > 3.2) drawCursor(cx, cy, seg(lt, 3.2, 3.6) * (1 - seg(lt, 12.2, 12.6)));
+  // the heading sits on a patch of plain paper so the bent grid stays legible
+  ctx.save(); ctx.fillStyle = C.bg; ctx.globalAlpha = 0.92; ctx.fillRect(90, 80, 1120, 210); ctx.restore();
+  heading('Gravity: the cursor has mass', 'The squared paper is a grid that bends around moving masses.', lt);
+  if (lt > 5.4 && lt < 11.2) {
+    const p = seg(lt, 5.4, 6.4);
+    note('your cursor: a heavy mass, m = 2.2', cx + 70, cy - 70, { size: 34, maxW: 420, p });
+  }
+  const p2 = seg(lt, 7.2, 8.6);
+  ctx.save(); ctx.fillStyle = C.bg; ctx.globalAlpha = 0.9 * clamp(p2 * 3); ctx.fillRect(100, 880, 820, 150); ctx.restore();
+  write('pull = m · r / (r² + ε²)', 130, 945, { size: 50, color: C.red, p: p2 });
+  write('on every grid point, from every mass', 130, 1000, { size: 34, weight: 400, color: C.ink, p: seg(lt, 8.2, 9.2) });
+  const p3 = seg(lt, 9.2, 10.8);
+  ctx.save(); ctx.fillStyle = C.bg; ctx.globalAlpha = 0.92 * clamp(p3 * 3); ctx.fillRect(1270, 80, 600, 180); ctx.restore();
+  note('the masses are characters: they blink, watch your cursor, and look worried when they get too close', 1290, 130, { size: 32, maxW: 560, p: p3 });
+}
+
+// ---------- scene 4: the letter, token by token ----------
+const OPT = {
+  greet: [['Hello,', 3], ['Hi,', 2.4], ['Dear reader,', 2], ['Greetings, fellow particle,', 0.3], ['Ahoy,', -0.6]],
+  feel: [['fascinated', 3], ['curious', 2.6], ['obsessed', 1.2], ['slightly haunted', -0.2], ['emotionally entangled', -0.8]],
+  topic: [['mathematics and physics', 3], ['the maths behind physics', 2.5], ['equations that describe the world', 1.8], ['anything with a Greek letter in it', 0.2], ['the secret life of vectors', -0.7]],
+  rule: [['simple rules', 3], ['a few equations', 2.2], ['tiny interactions', 1.6], ['three lines of code', 0.4], ['one bored electron', -1]],
+  emerge: [['complex behaviour', 3], ['whole systems', 2.4], ['patterns nobody planned', 1.8], ['galaxies and stock markets', 0.5], ['absolute chaos, beautifully', -0.5]],
+};
+const PIECES = [
+  { slot: 'greet', pick: 0 }, ' I’m Minh Khang, and I have always been ', { slot: 'feel', pick: 0 }, ' by ',
+  { slot: 'topic', pick: 3 }, '. What I love most is how ', { slot: 'rule', pick: 0 }, ' can give rise to ', { slot: 'emerge', pick: 4 }, '.',
+];
+const softmax = (o, t) => { const z = o.map(([, l]) => l / Math.max(t, 0.05)), m = Math.max(...z), e = z.map((v) => Math.exp(v - m)), s = e.reduce((a, b) => a + b, 0); return e.map((v) => v / s); };
+// temperature: calm, then turned right up before the rare words win
+const tempAt = (lt) => lerp(0.8, 1.9, easeIO(seg(lt, 4.6, 5.8)));
+const TOK_T0 = 2.2, CPS = 46, SLOT = 0.75;
+const TIMELINE = (() => { let t = TOK_T0; return PIECES.map((p) => { const d = typeof p === 'string' ? p.length / CPS : SLOT; const e = { p, a: t, b: t + d }; t += d; return e; }); })();
+function sTokens(lt) {
+  paper();
+  heading('A tiny model writes the letter', 'token by token, each blank sampled from a softmax', lt);
+  // the letter card
+  const cx = 120, cy = 290, cw = 1020, ch = 480;
+  print(cx, cy, cw, ch, { rot: -0.008, p: seg(lt, 0.6, 1.2) });
+  // lay the letter out word by word, revealing it with time
+  const size = 46, lh = 66, maxW = cw - 110; let x = cx + 56, y = cy + 100;
+  ctx.font = `400 ${size}px ${HAND}`;
+  let active = null;
+  for (const e of TIMELINE) {
+    if (lt < e.a) break;
+    if (typeof e.p === 'string') {
+      const shown = e.p.slice(0, Math.floor((lt - e.a) * CPS));
+      for (const w of shown.split(/(\s+)/)) {
+        if (!w) continue;
+        ctx.font = `400 ${size}px ${HAND}`;
+        const ww = ctx.measureText(w).width;
+        if (x + ww > cx + 56 + maxW && w.trim()) { x = cx + 56; y += lh; }
+        if (w.trim()) write(w, x, y, { size, weight: 400 });
+        x += ww;
+      }
+    } else {
+      const opts = OPT[e.p.slot];
+      if (lt < e.b) { active = { e, opts }; continue; }
+      active = { e, opts, done: true };
+      const word = opts[e.p.pick][0], rare = e.p.pick >= 3;
+      ctx.font = `700 ${size}px ${HAND}`;
+      const ww = ctx.measureText(word).width;
+      if (x + ww > cx + 56 + maxW) { x = cx + 56; y += lh; }
+      ctx.save(); ctx.fillStyle = C.marker; ctx.globalAlpha = 0.75 * ease(seg(lt, e.b, e.b + 0.25)); ctx.fillRect(x - 4, y - size * 0.78, ww + 8, size * 0.98); ctx.restore();
+      write(word, x, y, { size, color: rare ? C.red : C.ink });
+      x += ww;
+    }
+  }
+  // the next-token panel
+  const px = 1240, py = 300;
+  const shownSlot = active || { e: TIMELINE[0], opts: OPT.greet };
+  const pp = seg(lt, 1.2, 1.8);
+  if (pp > 0) {
+    write('next token', px, py + 40, { size: 44, p: pp });
+    const probs = softmax(shownSlot.opts, tempAt(lt));
+    shownSlot.opts.forEach(([tok], i) => {
+      const yy = py + 110 + i * 92, pr = probs[i], picked = shownSlot.done && i === shownSlot.e.p.pick;
+      write(tok.length > 24 ? tok.slice(0, 23) + '…' : tok, px, yy, { size: 30, weight: picked ? 700 : 400, color: picked ? C.red : C.ink, p: pp });
+      ctx.save(); ctx.globalAlpha = pp;
+      ctx.fillStyle = C.tone2; ctx.fillRect(px, yy + 16, 440, 14);
+      ctx.fillStyle = picked ? C.red : C.ink; ctx.fillRect(px, yy + 16, 440 * pr, 14);
+      ctx.restore();
+      write(`${Math.round(pr * 100)}%`, px + 460, yy + 30, { size: 28, color: C.muted, p: pp });
+    });
+    // the temperature slider
+    const T0 = tempAt(lt), sy = py + 600;
+    write(`temperature  ${T0.toFixed(2)}`, px, sy, { size: 34, p: pp });
+    ctx.save(); ctx.globalAlpha = pp; pen(C.ink, 4); ctx.beginPath(); ctx.moveTo(px, sy + 40); ctx.lineTo(px + 520, sy + 40); ctx.stroke();
+    const kx = px + ((T0 - 0.2) / 1.8) * 520; ctx.fillStyle = C.ink; ctx.beginPath(); ctx.arc(kx, sy + 40, 15, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+  }
+  note('turn the temperature up and the rare words start to win', 1240, 1000, { size: 32, maxW: 620, p: seg(lt, 5.4, 6.6) });
+  const pf = seg(lt, 9.0, 10.4);
+  note('the facts live in the fixed text, so temperature changes the style, never what is true', 130, 860, { size: 34, maxW: 1000, p: pf });
+}
+
+// ---------- scene 5: everything is sketched ----------
+function sSketch(lt) {
+  paper();
+  heading('Everything is drawn by hand', 'pen outlines that boil, paper prints and tape, no soft shadows', lt);
+  // the usual: a clean template card
+  const pa = ease(seg(lt, 1.4, 2.0));
+  if (pa > 0) {
+    ctx.save(); ctx.globalAlpha = pa; ctx.shadowColor = 'rgba(0,0,0,0.18)'; ctx.shadowBlur = 40; ctx.shadowOffsetY = 18;
+    ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.roundRect(170, 360, 640, 400, 22); ctx.fill(); ctx.restore();
+    ctx.save(); ctx.globalAlpha = pa; ctx.fillStyle = '#9aa3b5'; ctx.font = '600 40px system-ui, sans-serif'; ctx.fillText('A template card', 220, 450);
+    ctx.fillStyle = '#d6dae3'; [520, 570, 620].forEach((yy, i) => ctx.fillRect(220, yy - 18, [480, 420, 300][i], 18)); ctx.restore();
+    write('the usual: a clean box and a soft shadow', 170, 830, { size: 36, color: C.muted, p: seg(lt, 2.0, 2.9) });
+  }
+  // crossed out in red
+  const px = ease(seg(lt, 3.1, 3.7));
+  if (px > 0) { ctx.save(); pen(C.red, 5); strokePts(jit([[200, 380], [780, 740]], 2, 3), px); strokePts(jit([[780, 380], [200, 740]], 5, 3), seg(lt, 3.4, 3.9)); ctx.restore(); }
+  // ours: a print, pen outline drawn on, tape
+  const bx = 1040, by = 360, bw = 700, bh = 400;
+  if (lt > 2.4) {
+    print(bx, by, bw, bh, { p: ease(seg(lt, 2.4, 2.9)) });
+    penRect(bx - 6, by - 6, bw + 12, bh + 12, { p: ease(seg(lt, 2.6, 4.0)), seed: 7 });
+    write('a page from the notebook', bx + 50, by + 100, { size: 46, p: seg(lt, 3.6, 4.6) });
+    underline(bx + 50, by + 124, 420, seg(lt, 4.4, 5.0), { width: 3.5 });
+    sineDoodle(bx + 70, by + 300, 320, 60, seg(lt, 4.4, 5.6));
+    if (lt > 5.0) { tape(bx + 40, by + 4, 130, -0.5); }
+    if (lt > 5.2) { tape(bx + bw - 40, by + bh - 6, 130, -0.5); }
+  }
+  note('every outline is a pen line, pushed through a turbulence filter', 1040, 860, { size: 32, maxW: 760, p: seg(lt, 4.6, 5.8) });
+  note('it boils a few times a second, like stop-motion ink', 1040, 950, { size: 32, maxW: 760, p: seg(lt, 6.0, 7.0) });
+  note('paper has thickness, not elevation: a stepped edge, never a blur', 170, 920, { size: 32, maxW: 760, p: seg(lt, 6.8, 8.0) });
+  arrow(820, 900, 1036, 770, ease(seg(lt, 7.6, 8.3)));
+}
+
+// ---------- scene 6: the notebook ----------
+const EQS = [['∇·E = ρ/ε₀', 90, 380], ['E = mc²', 1620, 330], ['S = −k Σ p ln p', 1560, 980], ['ẋ = σ(y − x)', 120, 1000], ['F = ma', 1640, 700], ['λ = h / p', 120, 700]];
+const SPREADS = [
+  { cat: 'A studio of AI agents', name: 'ai-workspace', n: '1 / 5' },
+  { cat: 'Medical imaging platform', name: 'MRI Annotation', n: '2 / 5' },
+  { cat: 'Housing intelligence assistant', name: 'LifeIsGood', n: '3 / 5' },
+];
+function pageBg(x, y, w, h) {
+  ctx.fillStyle = C.bg; ctx.fillRect(x, y, w, h);
+  ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip(); ctx.strokeStyle = C.ink; ctx.globalAlpha = 0.08; ctx.lineWidth = 1; ctx.beginPath();
+  for (let gx = x; gx <= x + w; gx += 24) { ctx.moveTo(gx + 0.5, y); ctx.lineTo(gx + 0.5, y + h); }
+  for (let gy = y; gy <= y + h; gy += 24) { ctx.moveTo(x, gy + 0.5); ctx.lineTo(x + w, gy + 0.5); }
+  ctx.stroke(); ctx.restore();
+}
+function leftPage(s, x, y, w, h) {
+  pageBg(x, y, w, h);
+  write(s.cat, x + 44, y + 64, { size: 24, color: C.muted });
+  write(s.name, x + 44, y + 126, { size: 56 });
+  underline(x + 44, y + 146, 260, 1, { width: 3 });
+  print(x + 50, y + 180, w - 110, 250, { rot: -0.02 });
+  ctx.fillStyle = '#20263a'; ctx.fillRect(x + 64, y + 196, w - 140, 200);
+  ctx.fillStyle = C.muted; ctx.globalAlpha = 0.5; [0, 1, 2].forEach((k) => ctx.fillRect(x + 88 + k * 128, y + 250, 100, 90)); ctx.globalAlpha = 1;
+  ctx.fillStyle = C.ink; ctx.fillRect(x + 48, y + 470, 200, 52);
+  write('Open the project', x + 64, y + 506, { size: 24, color: C.bg });
+}
+function rightPage(s, x, y, w, h) {
+  pageBg(x, y, w, h);
+  ctx.save(); ctx.fillStyle = C.red; ctx.globalAlpha = 0.55; ctx.fillRect(x + 52, y, 2, h); ctx.restore();
+  ctx.save(); pen(C.muted, 3); ctx.globalAlpha = 0.6;
+  for (let k = 0; k < 5; k++) { const ww = [400, 380, 410, 360, 240][k]; strokePts(jit(subdiv([x + 80, y + 70 + k * 36], [x + 80 + ww, y + 70 + k * 36], 12), k + 3, 1.4)); }
+  ctx.restore();
+  write('What it taught me', x + 80, y + 300, { size: 28 });
+  for (let k = 0; k < 3; k++) {
+    ctx.fillStyle = C.red; ctx.beginPath(); ctx.arc(x + 92, y + 340 + k * 40, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.save(); pen(C.muted, 3); ctx.globalAlpha = 0.6; strokePts(jit(subdiv([x + 110, y + 342 + k * 40], [x + 110 + [300, 340, 260][k], y + 342 + k * 40], 10), k + 9, 1.2)); ctx.restore();
+  }
+  write(s.n, x + w - 40, y + h - 36, { size: 26, color: C.red, align: 'right' });
+}
+function sNotebook(lt) {
+  ctx.fillStyle = C.ink; ctx.fillRect(0, 0, W, H);
+  EQS.forEach(([e, x, y], i) => write(e, x, y, { size: 40, weight: 400, color: C.bg, alpha: 0.3, p: seg(lt, 0.2 + i * 0.15, 0.9 + i * 0.15) }));
+  heading('The projects live in a notebook', 'one spread per project, and the pages really turn', lt, { color: C.bg, subColor: '#c9d3ee' });
+  const pw = 520, ph = 600, sx = 960, top = 330;
+  // hard shadow, then the two pages
+  ctx.fillStyle = 'rgb(1 10 40 / 0.45)'; ctx.fillRect(sx - pw + 14, top + 16, pw * 2, ph);
+  // two turns: spread 0 -> 1 -> 2
+  const turns = [[3.0, 4.5], [6.0, 7.5]];
+  let k = 0; turns.forEach(([a, b]) => { if (lt >= b) k++; });
+  const turning = turns.findIndex(([a, b]) => lt >= a && lt < b);
+  const from = SPREADS[k], to = SPREADS[Math.min(k + 1, 2)];
+  leftPage(from, sx - pw, top, pw, ph);
+  rightPage(turning >= 0 ? to : from, sx, top, pw, ph);
+  if (turning >= 0) {
+    const [a, b] = turns[turning], th = Math.PI * easeIO(seg(lt, a, b)), c = Math.cos(th);
+    // the shadow the leaf throws on the page underneath
+    ctx.save(); ctx.globalAlpha = Math.sin(th) * 0.22; ctx.fillStyle = C.ink;
+    if (c > 0) ctx.fillRect(sx, top, pw * c + 40 * Math.sin(th), ph); else ctx.fillRect(sx - pw * -c - 40 * Math.sin(th), top, pw * -c + 40 * Math.sin(th), ph);
+    ctx.restore();
+    ctx.save(); ctx.translate(sx, top);
+    // past the spine the leaf shows its back: the next spread's left page
+    if (c > 0) { ctx.transform(c, -0.06 * Math.sin(th), 0, 1, 0, 0); rightPage(from, 0, 0, pw, ph); }
+    else { ctx.transform(-c, 0.06 * Math.sin(th), 0, 1, 0, 0); leftPage(to, -pw, 0, pw, ph); }
+    ctx.fillStyle = C.ink; ctx.globalAlpha = (1 - Math.abs(c)) * 0.3; ctx.fillRect(c > 0 ? 0 : -pw, 0, pw, ph);
+    ctx.restore();
+  }
+  // pen outline and the double spine
+  penRect(sx - pw, top, pw * 2, ph, { seed: 21, width: 3 });
+  ctx.save(); pen(C.pen, 2.6); strokePts(jit(subdiv([sx - 4, top], [sx - 4, top + ph], 12), 30, 1.4)); strokePts(jit(subdiv([sx + 4, top], [sx + 4, top + ph], 12), 31, 1.4)); ctx.restore();
+  // bookmark ribbons behind the right page
+  const rib = [[C.marker, C.ink], [C.red, C.bg], [C.ink2, C.bg], [C.coffee, C.ink], [C.marker, C.ink]];
+  const names = ['ai-workspace', 'MRI', 'LifeIsGood', 'MesSous', 'Retina'];
+  rib.forEach(([bg, fg], i) => {
+    const on = i === Math.min(k + (turning >= 0 && lt > turns[turning][0] + 0.7 ? 1 : 0), 4);
+    const rx = sx + 16 + i * 100, ry = top - (on ? 70 : 54);
+    ctx.fillStyle = bg; ctx.fillRect(rx, ry, 94, on ? 70 : 54);
+    write(names[i], rx + 47, ry + 30, { size: names[i].length > 8 ? 15 : 18, color: fg, align: 'center' });
+  });
+  note('a damped spring and a curl: drag a corner, or flick it', 1500, 480, { size: 32, maxW: 380, color: C.marker, p: seg(lt, 3.6, 4.8) });
+  arrow(1520, 580, 1440, 620, ease(seg(lt, 4.4, 5.0)), { color: C.marker });
+  note('bookmark ribbons jump straight to a project', 1500, 210, { size: 30, maxW: 400, color: C.marker, p: seg(lt, 6.2, 7.2) });
+}
+
+// ---------- scene 7: the lab log ----------
+const shot = new Image();
+const shotReady = new Promise((r) => { shot.onload = r; shot.onerror = r; });
+shot.src = 'assets/07-annotation.webp';
+function sLabLog(lt) {
+  paper();
+  heading('Every project is an annotated lab log', 'the key screens, with the notes I would write in the margin', lt);
+  const fx = 150, fy = 420, fw = 1000, fh = 562;
+  const pp = ease(seg(lt, 0.8, 1.4));
+  ctx.save(); ctx.translate(fx + fw / 2, fy + fh / 2); ctx.rotate(-0.01); ctx.translate(-fx - fw / 2, -fy - fh / 2);
+  print(fx - 14, fy - 14, fw + 28, fh + 28, { p: pp });
+  if (shot.complete && shot.naturalWidth) { ctx.globalAlpha = pp; ctx.drawImage(shot, fx, fy, fw, fh); }
+  ctx.restore();
+  const at = (ix, iy) => [fx + (fw * ix) / 100, fy + (fh * iy) / 100];
+  const N = [
+    ['the 3D volume, built from the slices', 150, 345, at(25, 47), 1.6],
+    ['paint the tumour, one slice at a time', 740, 345, at(76, 38), 2.6],
+  ];
+  N.forEach(([text, x, y, [tx, ty], a]) => {
+    note(text, x, y, { size: 32, maxW: 600, p: seg(lt, a, a + 0.8) });
+    arrow(x + 120, y + 16, tx, ty, ease(seg(lt, a + 0.5, a + 1.2)));
+  });
+  if (shot.complete && shot.naturalWidth) loop(at(25, 47)[0], at(25, 47)[1], 120, 110, { seed: 5, p: ease(seg(lt, 2.0, 2.6)), color: C.red, width: 3, passes: 1, turns: 1.05 });
+  // the rest of the page, as slips
+  const sx = 1320;
+  write('then:', sx, 470, { size: 40, p: seg(lt, 4.4, 4.9) });
+  const slips = [['a video, framed like a photo', C.print], ['a reel of every screen', C.tone1], ['what it taught me', C.marker]];
+  slips.forEach(([text, bg], i) => {
+    const p = ease(seg(lt, 4.8 + i * 0.5, 5.3 + i * 0.5)); if (p <= 0) return;
+    ctx.save(); ctx.translate(sx + 230, 560 + i * 130); ctx.rotate([-0.014, 0.01, -0.006][i]); ctx.globalAlpha = p;
+    ctx.fillStyle = bg; ctx.fillRect(-230, -48, 470, 96); ctx.restore();
+    penRect(sx, 512 + i * 130, 470, 96, { seed: 40 + i, p, width: 2.2, amp: 2 });
+    write(text, sx + 26, 572 + i * 130, { size: 32, p });
+  });
+}
+
+// ---------- scene 8: on to the tour ----------
+function sToTour(lt) {
+  paper();
+  write('Now, a tour of the site', W / 2, 520, { size: 120, align: 'center', p: ease(seg(lt, 0.2, 1.6)) });
+  arrow(1420, 640, 1720, 640, ease(seg(lt, 1.4, 2.2)));
+  write('mika1011-blip.github.io', W / 2, 660, { size: 50, weight: 400, color: C.muted, align: 'center', p: seg(lt, 1.8, 2.8) });
+}
+
+// ---------- closing card (#outro) ----------
+function sOutro(lt) {
+  paper();
+  write('Minh Khang Thai', W / 2, 450, { size: 150, align: 'center', p: ease(seg(lt, 0.2, 1.6)) });
+  underline(600, 490, 720, ease(seg(lt, 1.4, 2.1)), { width: 6 });
+  write('mika1011-blip.github.io', W / 2, 600, { size: 58, color: C.ink, align: 'center', p: seg(lt, 1.6, 2.6) });
+  write('AI engineering student at EFREI · mr.thaiminhkhang@gmail.com', W / 2, 680, { size: 38, weight: 400, color: C.muted, align: 'center', p: seg(lt, 2.2, 3.2) });
+  note('built with Vite and plain JavaScript, every line drawn in code', W / 2, 860, { size: 36, maxW: 1200, align: 'center', p: seg(lt, 3.0, 4.2) });
+}
+
+const OUTRO = location.hash === '#outro';
+const SCENES = OUTRO ? [[sOutro, 0, 6]] : [
+  [sTitle, 0, 6], [sPalette, 6, 14], [sGravity, 14, 27], [sTokens, 27, 39],
+  [sSketch, 39, 48.5], [sNotebook, 48.5, 57.5], [sLabLog, 57.5, 65.5], [sToTour, 65.5, 69],
+];
+window.DURATION = SCENES[SCENES.length - 1][2];
+window.FPS = 30;
+// sound cues for film.py's soundtrack: [time, kind]
+window.CUES = OUTRO ? [[0.3, 'write'], [1.6, 'write'], [3.0, 'write']] : [
+  [0.3, 'write'], [2.3, 'write'], [3.6, 'write'], [6.25, 'write'], [8.0, 'pop'], [8.55, 'pop'], [9.1, 'pop'], [9.65, 'pop'],
+  [14.25, 'write'], [17.4, 'swell'], [21.2, 'write'], [23.2, 'write'],
+  ...TIMELINE.filter((e) => typeof e.p !== 'string').map((e) => [27 + e.b, 'tick']), [27.25, 'write'],
+  [39.25, 'write'], [42.1, 'scratch'], [44.0, 'pop'], [44.2, 'pop'],
+  [48.75, 'write'], [51.5, 'page'], [54.5, 'page'],
+  [57.75, 'write'], [59.1, 'scratch'], [60.1, 'scratch'], [62.3, 'pop'], [62.8, 'pop'], [63.3, 'pop'],
+  [65.7, 'write'], [66.9, 'swoosh'],
+];
+window.ready = Promise.all([document.fonts.load(`700 80px ${HAND}`), document.fonts.load(`400 40px ${HAND}`), shotReady]).then(() => document.fonts.ready);
+window.seek = (t) => {
+  T = t;
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1;
+  for (const [fn, a, b] of SCENES) {
+    if (t < a || t >= b) continue;
+    const lt = t - a, d = b - a;
+    ctx.save(); fn(lt, d); ctx.restore();
+    // a short blink to blank paper between scenes
+    const fade = Math.min(OUTRO && a === 0 ? 1 : seg(lt, 0, 0.3), 1 - seg(lt, d - 0.3, d));
+    if (fade < 1) { ctx.fillStyle = C.bg; ctx.globalAlpha = 1 - fade; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1; }
+  }
+};
+// preview in a browser: plays in real time; ?t=12 freezes on one frame
+window.ready.then(() => {
+  const q = new URLSearchParams(location.search);
+  if (q.has('t')) { window.seek(Number(q.get('t'))); return; }
+  if (q.has('render')) return;
+  const t0 = performance.now();
+  const tick = () => { window.seek(((performance.now() - t0) / 1000) % window.DURATION); requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+});
+</script>
+</body>
+</html>
