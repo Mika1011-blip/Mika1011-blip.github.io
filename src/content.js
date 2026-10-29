@@ -17,6 +17,106 @@ export const CONTACT = {
 // Copy in [BRACKETS] is still to be written.
 export const PROJECTS = [
   {
+    id: 'aiworkspace',
+    repo: 'https://github.com/Mika1011-blip/ai-workspace',
+    cover: { src: 'media/aiworkspace/01-office.webp', w: 1440, h: 860 },
+    stack: ['Python', 'FastAPI', 'Claude Agent SDK', 'MCP', 'React', 'TypeScript', 'Docker', 'Playwright', 'ffmpeg'],
+    figures: [
+      {
+        src: 'media/aiworkspace/01-office.webp', w: 1440, h: 860, side: 'left',
+        alt: {
+          en: 'The ai-workspace office in isometric 3D: one labelled desk per worker, a big robot for the app-master, a showroom building, the roster of workers down the left and a legend for the desk lamps.',
+          fr: 'Le bureau d’ai-workspace en 3D isométrique : un bureau étiqueté par agent, un grand robot pour l’app-master, un bâtiment showroom, la liste des agents à gauche et la légende des lampes de bureau.',
+        },
+        head: { en: 'A studio you can watch', fr: 'Un studio qu’on regarde travailler' },
+        body: {
+          en: ['Every worker is a Claude agent with its own job description, a desk in the office and only the tools it is given. The app-master reads the roster, assigns the tasks and decides each hand-off, and every hand-off is logged.', 'Desk lamps show what each worker is doing, streamed live from its running session.'],
+          fr: ['Chaque agent est un agent Claude avec sa propre fiche de poste, un bureau dans l’open space et seulement les outils qu’on lui donne. L’app-master lit l’équipe, attribue les tâches et décide de chaque passage de relais, et chacun est enregistré.', 'Les lampes de bureau montrent ce que fait chaque agent, en direct depuis sa session.'],
+        },
+        notes: [
+          { text: { en: 'the roster: one badge per worker', fr: 'l’équipe : un badge par agent' }, at: [2, 0], w: 27, from: [9, 7.5], to: [5, 32] },
+          { text: { en: 'one desk per worker, each a Claude agent', fr: 'un bureau par agent, chacun un agent Claude' }, at: [46, 0], w: 30, from: [57, 8], to: [56.6, 40] },
+          { text: { en: 'the app-master, the lead agent, hands out the work', fr: 'l’app-master, l’agent principal, distribue le travail' }, at: [4, 90], w: 34, from: [26, 90], to: [37.4, 50], ring: [5, 9] },
+          { text: { en: 'desk lamps: thinking, using a tool, waiting, error', fr: 'lampes : réflexion, outil, attente, erreur' }, at: [62, 90.5], w: 36, from: [81, 90], to: [82, 86] },
+        ],
+      },
+      {
+        src: 'media/aiworkspace/02-worker-chat.webp', w: 1440, h: 860, side: 'right',
+        alt: {
+          en: 'A worker’s panel open over the office: the style-explainer worker with its context use, cost and turns, a live log of thinking steps and tool calls, its last reply, and a box to start a session; its desk is highlighted in the office.',
+          fr: 'Le panneau d’un agent ouvert sur le bureau : l’agent style-explainer avec son contexte utilisé, son coût et ses tours, un journal en direct des réflexions et des appels d’outils, sa dernière réponse et un champ pour lancer une session ; son bureau est mis en avant dans l’open space.',
+        },
+        head: { en: 'One worker, up close', fr: 'Un agent, de près' },
+        body: {
+          en: ['Opening a worker shows its session as it runs: every thought and tool call, with its context use, cost and turns. Its stats keep the history of its runs.', 'It is safe by default: a worker sees only its own folder, and tools, MCP servers and skills are attached one by one from a vetted catalogue.'],
+          fr: ['Ouvrir un agent montre sa session en direct : chaque réflexion et chaque appel d’outil, avec son contexte utilisé, son coût et ses tours. Ses statistiques gardent l’historique de ses sessions.', 'Sûr par défaut : un agent ne voit que son propre dossier, et les outils, serveurs MCP et skills lui sont attachés un par un depuis un catalogue vérifié.'],
+        },
+        notes: [
+          { text: { en: 'context, cost and turns, live', fr: 'contexte, coût et tours, en direct' }, at: [2, 0], w: 27, from: [12, 7.5], to: [14, 17] },
+          { text: { en: 'every thought and tool call, streamed', fr: 'chaque réflexion et appel d’outil, en direct' }, at: [34, 0], w: 30, from: [40, 8], to: [25, 30] },
+          { text: { en: 'its desk lights up in the office', fr: 'son bureau s’allume dans l’open space' }, at: [70, 0], w: 28, from: [76, 7.5], to: [64, 39.5] },
+          { text: { en: 'start a session: only its folder and its toolkit', fr: 'lancer une session : son dossier et ses outils, rien de plus' }, at: [2, 90], w: 36, from: [30, 90.5], to: [24, 80] },
+        ],
+      },
+    ],
+    video: {
+      src: { en: 'media/aiworkspace/build-story-en.mp4', fr: 'media/aiworkspace/build-story-fr.mp4' },
+      poster: 'media/aiworkspace/12-rendered-video-a.webp',
+    },
+    gallery: [
+      { src: 'media/aiworkspace/01-office.webp', w: 1440, h: 860, caption: { en: 'The office: one desk per worker; the big robot is the app-master.', fr: 'Le bureau : un poste par agent ; le grand robot est l’app-master.' } },
+      { src: 'media/aiworkspace/02-worker-chat.webp', w: 1440, h: 860, caption: { en: 'A worker’s live session: thoughts and tool calls.', fr: 'La session en direct d’un agent : réflexions et appels d’outils.' } },
+      { src: 'media/aiworkspace/03-worker-stats.webp', w: 1440, h: 860, caption: { en: 'A worker’s stats: runs, success rate, cost and turns.', fr: 'Les statistiques d’un agent : sessions, taux de réussite, coût et tours.' } },
+      { src: 'media/aiworkspace/04-worker-settings.webp', w: 1440, h: 860, caption: { en: 'A worker’s settings: its CLAUDE.md and its toolkit.', fr: 'Les réglages d’un agent : son CLAUDE.md et ses outils.' } },
+      { src: 'media/aiworkspace/05-new-worker.webp', w: 1440, h: 860, caption: { en: 'Creating a worker: the preview is exactly its CLAUDE.md.', fr: 'Créer un agent : l’aperçu est exactement son CLAUDE.md.' } },
+      { src: 'media/aiworkspace/06-showroom.webp', w: 1440, h: 860, caption: { en: 'The showroom of finished videos.', fr: 'Le showroom des vidéos terminées.' } },
+      { src: 'media/aiworkspace/12-rendered-video-a.webp', w: 1920, h: 1080, caption: { en: 'A video the studio made with code.', fr: 'Une vidéo faite par le studio, avec du code.' } },
+      { src: 'media/aiworkspace/12-rendered-video-b.webp', w: 1920, h: 1080, caption: { en: 'Another beat of the same video.', fr: 'Un autre moment de la même vidéo.' } },
+      { src: 'media/aiworkspace/07-theme.webp', w: 1440, h: 860, caption: { en: 'Themes, edge lines and hand-drawn grain.', fr: 'Thèmes, contours et grain dessiné à la main.' } },
+      { src: 'media/aiworkspace/09-filter-workers.webp', w: 1440, h: 860, caption: { en: 'Filtering the workers.', fr: 'Filtrer les agents.' } },
+      { src: 'media/aiworkspace/10-project-gallery.webp', w: 1440, h: 860, caption: { en: 'The studio gallery of projects.', fr: 'La galerie des projets du studio.' } },
+    ],
+    en: {
+      name: 'ai-workspace',
+      category: 'A studio of AI agents',
+      body: 'I wanted to master Claude, so I built a side project to practise on: an office where a lead agent recruits, briefs and runs a team of AI agents, which you can watch at work in 3D. Give it a prompt and the team makes a video, entirely with code.',
+      circle: 'a team of AI agents',
+      learned: ['Preparing the workspace: tests, git, hooks', 'Context engineering: CLAUDE.md, skills, tools', 'Orchestration: specialists and an outside reviewer', 'Automation: background agents with guardrails', 'Shipping it: a plugin, evals, the Agent SDK'],
+      // the project page has room for the five skills in full
+      learnedLong: [
+        'Preparing the workspace to control development: plan, code, test and review, with git as a safety net. Knowing what the agent may touch, fencing it in, and adding hooks: rules that fire on their own, every time.',
+        'Controlling what the model sees (context engineering). Everything Claude reads each turn shapes the result: clear instructions, a good CLAUDE.md and examples, plus skills and tools that load only when they are needed.',
+        'Orchestration. A generalist agent is good; a team of specialists is better. Each agent gets one domain and precise instructions, and they run in parallel or together, with a reviewer that never grades its own work.',
+        'Automation. With many agents running at once you cannot read everything, and you have to sleep some day. Development runs in the background, with enough guardrails that nothing has burnt down when you come back.',
+        'Shipping it: packaging the setup as a plugin, checking with evals that it really helps, and using the Agent SDK to put Claude inside my own app.',
+      ],
+      alt: 'The ai-workspace office: one desk per worker, the big robot is the app-master.',
+      caption: 'The office: one desk per worker; the big robot is the app-master.',
+      role: 'Solo side project: idea, architecture, back end, front end and the agent setup',
+      year: '2026',
+      videoCaption: 'The build story: how ai-workspace came together.',
+    },
+    fr: {
+      name: 'ai-workspace',
+      category: 'Un studio d’agents IA',
+      body: 'J’ai voulu maîtriser Claude, alors j’ai construit un projet pour pratiquer : un bureau où un agent principal recrute, briefe et pilote une équipe d’agents IA, qu’on voit travailler en 3D. On lui donne une consigne et l’équipe en fait une vidéo, entièrement avec du code.',
+      circle: 'une équipe d’agents IA',
+      learned: ['Préparer l’espace de travail : tests, git, hooks', 'Le context engineering : CLAUDE.md, skills, outils', 'L’orchestration : des spécialistes et un relecteur', 'L’automatisation : des agents encadrés', 'Le livrer : un plugin, des evals, l’Agent SDK'],
+      learnedLong: [
+        'Préparer son espace de travail pour contrôler le développement : planifier, coder, tester, relire, avec git comme filet de sécurité. Savoir ce que l’agent peut toucher, le délimiter, et ajouter des hooks : des règles qui se déclenchent toutes seules, à chaque fois.',
+        'Contrôler ce que voit le modèle (context engineering). Tout ce que Claude lit à chaque tour influence le résultat : des instructions claires, un bon CLAUDE.md et des exemples, plus des skills et des outils chargés seulement quand il en a besoin.',
+        'L’orchestration. Un agent généraliste, c’est bien ; une équipe de spécialistes, c’est mieux. Chaque agent a un seul domaine et des consignes précises, et ils tournent en parallèle ou travaillent ensemble, avec un relecteur qui ne note pas son propre travail.',
+        'L’automatisation. Quand beaucoup d’agents tournent en même temps, impossible de tout relire, et il faut bien dormir un jour. Le développement tourne en arrière-plan, avec assez de garde-fous pour que rien ne soit réduit en cendres à notre retour.',
+        'Le livrer : emballer son setup dans un plugin, vérifier avec des evals qu’il aide vraiment, et utiliser l’Agent SDK pour mettre Claude dans sa propre app.',
+      ],
+      alt: 'Le bureau d’ai-workspace : un poste par agent, le grand robot est l’app-master.',
+      caption: 'Le bureau : un poste par agent ; le grand robot est l’app-master.',
+      role: 'Projet personnel, en solo : idée, architecture, back-end, front-end et la mise en place des agents',
+      year: '2026',
+      videoCaption: 'L’histoire de sa construction.',
+    },
+  },
+  {
     id: 'tumor',
     repo: 'https://github.com/Mika1011-blip/mid-projects/tree/main/2025-2026/ML-tumorDetectorApp',
     cover: { src: 'media/tumor/07-annotation.png', w: 3840, h: 2160 },

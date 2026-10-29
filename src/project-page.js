@@ -67,15 +67,16 @@ function lede(t) {
   return body.replace(esc(t.circle), `<span class="circled">${esc(t.circle)}${circled}</span>`);
 }
 
-function video(p, t, base, u) {
+function video(p, t, base, u, lang) {
   const v = p.video;
   if (!v) return '';
+  const src = typeof v.src === 'object' ? v.src[lang] : v.src; // a narrated video may come in each language
   const media = v.href
     ? `<a class="pp-watch" href="${v.href}" target="_blank" rel="noopener">
         <img src="${base}${v.poster}" alt="" loading="lazy" decoding="async" width="1600" height="900">
         <span class="pp-watch-label"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="36"/><path d="M32 26 L56 40 L32 54 Z"/></svg>${u.watch} <span class="visually-hidden">(YouTube)</span></span>
       </a>`
-    : `<video controls muted playsinline preload="none" poster="${base}${v.poster}" width="1600" height="900"><source src="${base}${v.src}" type="video/mp4"></video>`;
+    : `<video controls muted playsinline preload="none" poster="${base}${v.poster}" width="1600" height="900"><source src="${base}${src}" type="video/mp4"></video>`;
   return `<figure class="pp-video">${media}<figcaption>${esc(t.videoCaption || '')}</figcaption></figure>`;
 }
 
@@ -142,9 +143,9 @@ export function renderProjectPage({ id, lang, base }) {
     <section class="pp-learn${p.video ? '' : ' is-solo'}" aria-labelledby="learned-h">
       <div class="pp-lessons">
         <h2 id="learned-h">${u.learnedHead}</h2>
-        <div class="slips">${t.learned.map((l) => `<p class="slip">${esc(l)}${inkSvg()}</p>`).join('')}</div>
+        <div class="slips">${(t.learnedLong || t.learned).map((l) => `<p class="slip">${esc(l)}${inkSvg()}</p>`).join('')}</div>
       </div>
-      ${video(p, t, base, u)}
+      ${video(p, t, base, u, lang)}
     </section>
 
     ${gallery(p, lang, base, u)}
