@@ -361,6 +361,243 @@ export const PROJECTS = [
       videoCaption: 'Une présentation vidéo, sur YouTube.',
     },
   },
+  {
+    "id": "skillsbridge",
+    "repo": null,
+    "cover": {
+      "src": "media/skillsbridge/01-pictograms.webp",
+      "w": 1600,
+      "h": 900
+    },
+    "stack": [
+      "Flutter / Dart",
+      "Python / FastAPI",
+      "LLM",
+      "Hugging Face",
+      "PostgreSQL",
+      "MinIO",
+      "SQLite",
+      "Docker"
+    ],
+    "video": {
+      "src": "media/skillsbridge/demo-fr.mp4",
+      "poster": "media/skillsbridge/01-pictograms.webp"
+    },
+    "figures": [
+      {
+        "src": "media/skillsbridge/01-pictograms.webp",
+        "w": 1600,
+        "h": 900,
+        "side": "left",
+        "alt": {
+          "en": "SkillsBridge demonstration showing pictogram selection and two AI-generated sentences about a snack.",
+          "fr": "Démonstration de SkillsBridge montrant la sélection de pictogrammes et deux phrases proposées par l’IA au sujet d’un goûter."
+        },
+        "head": {
+          "en": "From pictograms to a sentence",
+          "fr": "Des pictogrammes à une phrase"
+        },
+        "body": {
+          "en": [
+            "During my R&D internship at Skills4Mind, I designed and developed a communication assistance application for autistic people, from understanding everyday needs to integrating the Flutter interface and FastAPI services.",
+            "The multimodal pipeline generates concepts with an LLM, retrieves pictograms through multilingual semantic similarity, enriches their visual descriptions and validates them in context. Suggestions use the selected pictograms and conversation history."
+          ],
+          "fr": [
+            "Lors de mon stage R&D chez Skills4Mind, j’ai conçu et développé une application d’assistance à la communication pour des personnes autistes, de l’étude des besoins à l’intégration de l’interface Flutter et des services FastAPI.",
+            "Le pipeline multimodal génère des concepts par LLM, retrouve des pictogrammes par similarité sémantique multilingue, enrichit leur description visuelle et les valide en contexte. Les recommandations s’appuient sur les sélections et l’historique de la conversation."
+          ]
+        },
+        "notes": [
+          {
+            "text": {
+              "en": "choose pictograms to express an idea",
+              "fr": "choisir des pictogrammes pour exprimer une idée"
+            },
+            "at": [
+              2,
+              0
+            ],
+            "w": 34,
+            "from": [
+              17,
+              8
+            ],
+            "to": [
+              19,
+              70
+            ]
+          },
+          {
+            "text": {
+              "en": "the AI proposes complete sentences",
+              "fr": "l’IA propose des phrases complètes"
+            },
+            "at": [
+              61,
+              90
+            ],
+            "w": 37,
+            "from": [
+              78,
+              90
+            ],
+            "to": [
+              85,
+              48
+            ]
+          }
+        ]
+      },
+      {
+        "src": "media/skillsbridge/02-interpretation.webp",
+        "w": 1600,
+        "h": 900,
+        "side": "right",
+        "alt": {
+          "en": "A SkillsBridge demo message is interpreted as a sequence of pictograms.",
+          "fr": "Un message de la démonstration SkillsBridge est interprété sous forme d’une séquence de pictogrammes."
+        },
+        "head": {
+          "en": "Helping interpret a message",
+          "fr": "Aider à interpréter un message"
+        },
+        "body": {
+          "en": [
+            "I implemented three ways to interpret messages: direct, reformulated and explored through vision. Visual descriptions are saved for reuse, reducing repeated processing.",
+            "The modular architecture separates navigation, infrastructure, presentation, business logic and data access. Server storage uses PostgreSQL and MinIO, while SQLite and private application files handle local storage. I also implemented API authentication and security, automated tests and Docker deployment."
+          ],
+          "fr": [
+            "J’ai implémenté trois modes d’interprétation des messages : direct, reformulé et exploratoire par la vision. Les descriptions visuelles sont enregistrées pour être réutilisées et limiter les retraitements.",
+            "L’architecture modulaire sépare navigation, infrastructure, présentation, logique métier et accès aux données. PostgreSQL et MinIO assurent le stockage serveur, SQLite et les fichiers privés celui de l’application. J’ai également mis en place l’authentification et la sécurité des API, les tests automatisés et le déploiement avec Docker."
+          ]
+        },
+        "notes": [
+          {
+            "text": {
+              "en": "a message can be read as pictograms",
+              "fr": "un message peut se lire en pictogrammes"
+            },
+            "at": [
+              3,
+              0
+            ],
+            "w": 35,
+            "from": [
+              20,
+              8
+            ],
+            "to": [
+              21,
+              40
+            ]
+          },
+          {
+            "text": {
+              "en": "preserve the order of the message",
+              "fr": "conserver l’ordre du message"
+            },
+            "at": [
+              60,
+              90
+            ],
+            "w": 37,
+            "from": [
+              78,
+              90
+            ],
+            "to": [
+              74,
+              53
+            ]
+          }
+        ]
+      }
+    ],
+    "gallery": [
+      {
+        "src": "media/skillsbridge/03-context.webp",
+        "w": 1600,
+        "h": 900,
+        "caption": {
+          "en": "Setting the context of a conversation.",
+          "fr": "Définir le contexte de la conversation."
+        }
+      },
+      {
+        "src": "media/skillsbridge/01-pictograms.webp",
+        "w": 1600,
+        "h": 900,
+        "caption": {
+          "en": "Pictograms and suggested sentences.",
+          "fr": "Les pictogrammes et les phrases suggérées."
+        }
+      },
+      {
+        "src": "media/skillsbridge/02-interpretation.webp",
+        "w": 1600,
+        "h": 900,
+        "caption": {
+          "en": "Interpreting a message through pictograms.",
+          "fr": "Interpréter un message en pictogrammes."
+        }
+      },
+      {
+        "src": "media/skillsbridge/04-summary.webp",
+        "w": 1600,
+        "h": 900,
+        "caption": {
+          "en": "An AI summary of the conversation.",
+          "fr": "Un résumé IA de la conversation."
+        }
+      }
+    ],
+    "en": {
+      "name": "SkillsBridge",
+      "category": "Communication assistance · Skills4Mind",
+      "body": "During my R&D internship at Skills4Mind, I built a communication assistance application for autistic people. It connects pictograms, text and AI to help express an idea and interpret a message.",
+      "circle": "pictograms, text and AI",
+      "learned": [
+        "Start with everyday communication needs",
+        "Retrieve pictograms by semantic similarity",
+        "Use selections and history for suggestions",
+        "Connect a Flutter app to modular APIs"
+      ],
+      "learnedLong": [
+        "Understanding everyday communication needs before choosing the models and interface.",
+        "Using multilingual semantic similarity to find pictograms beyond an exact keyword match, with contextual LLM validation.",
+        "Reusing saved visual descriptions and conversation history to support recommendations and interpretation.",
+        "Building the application end to end with a modular architecture, API security, automated tests and Docker deployment."
+      ],
+      "alt": "SkillsBridge demo: a pictogram conversation and AI sentence suggestions.",
+      "caption": "Two pictograms, several ways to express an idea.",
+      "role": "R&D AI Developer intern · end-to-end design and development at Skills4Mind",
+      "year": "April–August 2026",
+      "videoCaption": "French demonstration · 2 min 13 s. Stills on this page come from this video."
+    },
+    "fr": {
+      "name": "SkillsBridge",
+      "category": "Assistance à la communication · Skills4Mind",
+      "body": "Pendant mon stage R&D chez Skills4Mind, j’ai développé une application d’assistance à la communication pour des personnes autistes. Elle relie pictogrammes, texte et IA pour aider à exprimer une idée et à interpréter un message.",
+      "circle": "pictogrammes, texte et IA",
+      "learned": [
+        "Partir des besoins de communication du quotidien",
+        "Retrouver les pictogrammes par similarité sémantique",
+        "Exploiter les sélections et l’historique",
+        "Relier une app Flutter à des API modulaires"
+      ],
+      "learnedLong": [
+        "Comprendre les besoins de communication du quotidien avant de choisir les modèles et l’interface.",
+        "Retrouver des pictogrammes en plusieurs langues par similarité sémantique, avec une validation contextuelle par LLM.",
+        "Réutiliser les descriptions visuelles et l’historique pour alimenter les recommandations et l’interprétation.",
+        "Construire l’application de bout en bout avec une architecture modulaire, la sécurité des API, des tests automatisés et un déploiement Docker."
+      ],
+      "alt": "Démonstration SkillsBridge : conversation en pictogrammes et phrases suggérées par l’IA.",
+      "caption": "Deux pictogrammes, plusieurs façons d’exprimer une idée.",
+      "role": "Stagiaire R&D AI Developer · conception et développement de bout en bout chez Skills4Mind",
+      "year": "Avril–août 2026",
+      "videoCaption": "Démonstration en français · 2 min 13 s. Les captures de cette page sont extraites de la vidéo."
+    }
+  },
 ];
 
 export const UI = {
@@ -384,7 +621,7 @@ export const UI = {
     introNote: 'I like systems where simple rules produce rich behaviour: particles, markets, neural networks. I learn by building, and I build to understand.',
     facts: [
       ['EFREI', 'Engineering, Big Data & Machine Learning'],
-      [`${PROJECTS.length} projects`, 'Medical imaging, AI agents, housing and budgeting'],
+      [`${PROJECTS.length} projects`, 'Medical imaging, AI agents, communication, housing and budgeting'],
       ['3 languages', 'English C1 · French B2–C1 · Vietnamese'],
       ['Off the desk', 'Gym 6+ years · boxing · skiing · chess'],
     ],
@@ -447,7 +684,7 @@ export const UI = {
     introNote: 'J’aime les systèmes où des règles simples produisent des comportements riches : particules, marchés, réseaux de neurones. J’apprends en construisant, et je construis pour comprendre.',
     facts: [
       ['EFREI', 'Ingénieur, Big Data & Machine Learning'],
-      [`${PROJECTS.length} projets`, 'Imagerie médicale, agents IA, immobilier et budget'],
+      [`${PROJECTS.length} projets`, 'Imagerie médicale, agents IA, communication, immobilier et budget'],
       ['3 langues', 'Anglais C1 · Français B2–C1 · Vietnamien'],
       ['Hors du bureau', 'Muscu 6+ ans · boxe · ski · échecs'],
     ],

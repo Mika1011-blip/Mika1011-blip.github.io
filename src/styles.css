@@ -139,7 +139,7 @@ h2 { font-size: var(--step-head); }
 .book { position: relative; max-width: 1120px; margin: 0 auto; outline: none; }
 .book-body { position: relative; padding-top: 56px; }
 /* bookmark ribbons, tucked behind the top edge of the right-hand page */
-.ribbons { position: absolute; z-index: 0; top: 0; left: 53.6%; right: 36px; height: 110px; display: flex; gap: 8px; align-items: flex-start; }
+.ribbons { position: absolute; z-index: 0; top: 0; left: 8%; right: 36px; height: 110px; display: flex; gap: 8px; align-items: flex-start; }
 .ribbon {
   --c: var(--marker); --t: var(--ink);
   flex: 1 1 0; min-width: 0; height: 110px; padding: 8px 6px 0; border: 0; border-radius: 2px 2px 0 0; cursor: pointer;
@@ -437,7 +437,7 @@ input[type='range']::-moz-range-thumb { width: 26px; height: 26px; border: 0; bo
   .sc-osc, .sc-zigzag { display: none; }
   .eq.is-low, .sketch.is-low { display: none; }
   .marker-ribbon { left: 88%; }
-  .ribbons { left: 46%; right: 12px; gap: 6px; }
+  .ribbons { left: 6%; right: 12px; gap: 6px; }
   .ribbon { font-size: 14px; }
 }
 @media (max-width: 900px) {
